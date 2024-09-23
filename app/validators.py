@@ -1,6 +1,8 @@
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from fastapi import HTTPException, Request
+from sqlalchemy.orm import Session
+from . import models
 import json
 import re
 
@@ -49,6 +51,17 @@ def check_malicious_input(*args):
     for arg in args:
         if pattern.search(arg):
             raise ValidationException("Malicious input detected")
+        
+def validate_category(db: Session, category_id: int):
+    category = db.query(models.Category).filter(models.Category.id == category_id).first()
+
+    if not category:
+        raise HTTPException(status_code=404, detail="Category not found")
+    
+def validate_user(db: Session, user_id: int):
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
 
 class ValidationException(HTTPException):
     def __init__(self, message: str):

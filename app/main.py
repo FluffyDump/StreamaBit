@@ -31,7 +31,7 @@ def create_user(user: schemas.UserCreate, request: Request, db: Session = Depend
         validators.validate_email(user.email)
         validators.validate_password(user.password)
 
-        existing_user = crud.get_user_by_username_or_email(db=db, username=user.username, email=user.email)
+        existing_user = crud.get_user_by_username_email_id(db=db, username=user.username, email=user.email)
         if existing_user:
             raise HTTPException(status_code=409, detail="Username or email already in use")
         
@@ -43,7 +43,7 @@ def create_user(user: schemas.UserCreate, request: Request, db: Session = Depend
 def read_user(username: str, db: Session = Depends(get_db)):
     validators.check_malicious_input(username)
 
-    db_user = crud.get_user_by_username_or_email(db=db, username=username)
+    db_user = crud.get_user_by_username_email_id(db=db, username=username)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
@@ -90,7 +90,7 @@ def delete_user(username: str, db: Session = Depends(get_db), data: schemas.User
 
     crud.delete_user(db=db, user_id=db_user.id)
 
-@app.get("/admin/users", status_code=200)
+@app.get("/admin/users", status_code=200) #Done list all
 def list_users(db: Session = Depends(get_db)): #current_user: schemas.User = Depends(get_current_active_user)):    #Admino checkas
     #if current_user.role != "admin":  #Admino checkas
         #raise HTTPException(status_code=403, detail="Not authorized to perform this action")
@@ -101,34 +101,124 @@ def list_users(db: Session = Depends(get_db)): #current_user: schemas.User = Dep
 
 
 
-@app.post("admin/categories/", response_model=schemas.Category)
+@app.post("/admin/categories/", response_model=schemas.Category, status_code=201) #Done C
 def create_category(category: schemas.CategoryCreate, db: Session = Depends(get_db)):
+    validators.check_malicious_input(category.name, category.description)
+
+    existing_category = crud.get_category_by_name(db=db, name=category.name)
+    if existing_category:
+        raise HTTPException(status_code=409, detail="Category already exists")
+
     return crud.create_category(db=db, category=category)
 
-@app.get("/categories/{category_id}", response_model=schemas.Category)
-def read_category(category_id: int, db: Session = Depends(get_db)):
-    db_category = crud.get_category(db=db, category_id=category_id)
+@app.get("/categories/{category_name}", response_model=schemas.Category) #Done R
+def read_category(category_name: str, db: Session = Depends(get_db)):
+    validators.check_malicious_input(category_name)
+
+    db_category = crud.get_category(db=db, category_name=category_name)
+
     if db_category is None:
         raise HTTPException(status_code=404, detail="Category not found")
+    
     return db_category
 
-@app.get("/categories/", response_model=List[schemas.Category])
+@app.patch("/admin/categories/{category_name}/description", response_model=schemas.Category) #Done U
+def update_category_description(category_name: str, category_update: schemas.CategoryUpdate, db: Session = Depends(get_db)):
+    validators.check_malicious_input(category_name, category_update.description)
+
+    return crud.update_category_description(db=db, category_name=category_name, description=category_update.description)
+
+@app.delete("/admin/categories/{category_name}", status_code=204) #Done D
+def delete_category(category_name: str, db: Session = Depends(get_db)):
+    validators.check_malicious_input(category_name)
+
+    return crud.delete_category_by_name(db=db, category_name=category_name)
+
+
+@app.get("/categories/", status_code=200) #Done list all
 def list_categories(db: Session = Depends(get_db)):
-    return crud.list_categories(db=db)
+
+    return crud.get_all_categories(db=db)
+
+@app.get("/categories/{category_name}/files/")
+def list_files_in_category(category_name: str, db: Session = Depends(get_db)):
+    validators.check_malicious_input(category_name)
+
+    return crud.get_files_by_category(db=db, category_name=category_name)
 
 
 
-@app.post("/files/", response_model=schemas.File)
+
+@app.post("/files/", response_model=schemas.File, status_code=201) #Done C
 def upload_file(file: schemas.FileCreate, user_id: int, db: Session = Depends(get_db)):
-    return crud.create_file(db=db, file=file, user_id=user_id)
+    validators.check_malicious_input(file.title)
 
-@app.get("/files/{file_id}", response_model=schemas.File)
+    category_id = 13
+    security_status = False
+    views = 0
+
+    validators.validate_category(db=db, category_id=category_id)
+    validators.validate_user(db=db, user_id=user_id)
+
+    file_path = rf"C:\Temp\{file.title}"
+
+    return crud.create_file(
+        db=db,
+        file=file,
+        user_id=user_id,
+        file_path=file_path,
+        category_id=category_id,
+        security_status=security_status,
+        views=views
+    )
+
+@app.get("/files/titles", response_model=schemas.TitleList)
+def list_file_titles(db: Session = Depends(get_db)):
+    return {"titles": crud.get_file_titles(db=db)}
+
+@app.get("/files/{file_id}", response_model=schemas.File) #Done R
 def read_file(file_id: int, db: Session = Depends(get_db)):
+
     db_file = crud.get_file(db=db, file_id=file_id)
+
     if db_file is None:
         raise HTTPException(status_code=404, detail="File not found")
+    
     return db_file
 
-@app.get("/files/", response_model=List[schemas.File])
-def list_files(db: Session = Depends(get_db)):
-    return crud.list_files(db=db)
+@app.patch("/files/{file_id}/title", response_model=schemas.FileTitleUpdated, status_code=200) #Done U
+def update_file_title(file_id: int, data: schemas.FileTitleUpdate, db: Session = Depends(get_db)):
+    validators.check_malicious_input(data.new_title, data.password)
+
+    db_user = crud.get_user_by_username_email_id(db=db, id=data.user_id)
+    if db_user.password_hash != data.password:
+        raise HTTPException(status_code=404, detail="User not found or password incorrect")
+    
+    db_file = crud.get_file(db=db, file_id=file_id)
+    if not db_file:
+        raise HTTPException(status_code=404, detail="File not found")
+    
+    if db_file.user_id != db_user.id:
+        raise HTTPException(status_code=403, detail="Forbidden")
+
+    updated_file = crud.update_file_title(db=db, file_id=file_id, new_title=data.new_title)
+
+    return updated_file
+
+@app.delete("/files/{file_id}", status_code=204) #Done D
+def delete_file(file_id: int, data: schemas.FileDelete, db: Session = Depends(get_db)):
+
+    validators.check_malicious_input(data.password)
+
+    db_user = crud.get_user_by_username_email_id(db=db, id=data.user_id)
+    if db_user is None or db_user.password_hash != data.password:
+        raise HTTPException(status_code=404, detail="User not found or password incorrect")
+    
+    db_file = crud.get_file(db=db, file_id=file_id)
+    if not db_file:
+        raise HTTPException(status_code=404, detail="File not found")
+    
+    if db_file.user_id != db_user.id:
+        raise HTTPException(status_code=403, detail="User has no access to the file")
+
+    return crud.delete_file(db=db, file_id=file_id)

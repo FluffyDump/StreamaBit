@@ -40,7 +40,7 @@ def update_user(db: Session, user_id: int, new_password: str):
         db.rollback()
         raise HTTPException(status_code=500, detail="An unexpected error occurred")
 
-def get_user_by_username_or_email(db: Session, username: str = None, email: str = None):
+def get_user_by_username_email_id(db: Session, username: str = None, email: str = None, id: int = None):
     query = db.query(models.User)
     
     if username:
@@ -48,6 +48,9 @@ def get_user_by_username_or_email(db: Session, username: str = None, email: str 
     
     if email:
         query = query.filter(models.User.email == email)
+
+    if id:
+        query = query.filter(models.User.id == id)
 
     return query.first()
 
@@ -80,6 +83,13 @@ def get_all_users(db: Session):
 
 
 
+def get_category_by_name(db: Session, name: str):
+    query = db.query(models.Category)
+    
+    query = query.filter(models.Category.name == name)
+
+    return query.first()
+
 def create_category(db: Session, category: schemas.CategoryCreate):
     db_category = models.Category(**category.dict())
 
@@ -92,21 +102,112 @@ def create_category(db: Session, category: schemas.CategoryCreate):
         db.rollback()
         raise HTTPException(status_code=500, detail="An unexpected error occurred")
 
-def get_category(db: Session, category_id: int):
-    return db.query(models.Category).filter(models.Category.id == category_id).first()
+def get_category(db: Session, category_name: str):
+    return db.query(models.Category).filter(models.Category.name == category_name).first()
 
-def list_categories(db: Session):
-    return db.query(models.Category).all()
+def update_category_description(db: Session, category_name: str, description: str):
+    category = db.query(models.Category).filter(models.Category.name == category_name).first()
+    
+    if not category:
+        raise HTTPException(status_code=404, detail="Category not found")
 
-def create_file(db: Session, file: schemas.FileCreate, user_id: int):
-    db_file = models.File(**file.dict(), user_id=user_id)
-    db.add(db_file)
-    db.commit()
-    db.refresh(db_file)
-    return db_file
+    category.description = description
+
+    try:
+        db.commit()
+        db.refresh(category)
+        return category
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail="An unexpected error occurred")
+    
+def delete_category_by_name(db: Session, category_name: str):
+    category = db.query(models.Category).filter(models.Category.name == category_name).first()
+    
+    if not category:
+        raise HTTPException(status_code=404, detail="Category not found")
+
+    try:
+        db.delete(category)
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail="An unexpected error occurred")
+
+def get_all_categories(db: Session):
+    categories = db.query(models.Category.name).all()
+    categories_list = [category[0] for category in categories]
+    return schemas.CategorieList(name=categories_list)
+
+def get_files_by_category(db: Session, category_name: str):
+    category = db.query(models.Category).filter(models.Category.name == category_name).first()
+
+    if not category:
+        raise HTTPException(status_code=404, detail="Category not found")
+
+    files = db.query(models.File).filter(models.File.category_id == category.id).all()
+    
+    files_list = [file.title for file in files]
+
+    if not files_list:
+        raise HTTPException(status_code=404, detail="No files found in this category")
+
+    return {"name": files_list}
+
+
+
+
+
+
+
+
+
+def create_file(db: Session, file: schemas.FileCreate, user_id: int, file_path: str, category_id: int, security_status: bool, views: int):
+    db_file = models.File(
+        user_id=user_id,
+        title=file.title,
+        category_id=category_id,
+        file_path=file_path,
+        public=file.public,
+        max_downloads=file.max_downloads,
+        security_status=security_status,
+        views=views,
+        expiration_date=file.expiration_date,
+        description=file.description
+    )
+
+    try:
+        db.add(db_file)
+        db.commit()
+        db.refresh(db_file)
+        return db_file
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail="An unexpected error occurred")
+
+def update_file_title(db: Session, file_id: int, new_title: str):
+    db_file = get_file(db, file_id)
+    if db_file:
+        db_file.title = new_title
+        try:
+            db.commit()
+            db.refresh(db_file)
+            return db_file
+        except Exception as e:
+            db.rollback()
+            raise HTTPException(status_code=500, detail="An unexpected error occurred")
+    return None
 
 def get_file(db: Session, file_id: int):
     return db.query(models.File).filter(models.File.id == file_id).first()
 
-def list_files(db: Session):
-    return db.query(models.File).all()
+def delete_file(db: Session, file_id: int):
+    db_file = db.query(models.File).filter(models.File.id == file_id).first()
+    if db_file:
+        db.delete(db_file)
+        db.commit()
+
+def get_file_titles(db: Session):
+    titles = db.query(models.File.title).all()
+    titles_list = [title[0] for title in titles]
+    return titles_list
