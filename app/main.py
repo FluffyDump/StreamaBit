@@ -22,7 +22,10 @@ def get_db():
         db.close()
 
 
-@app.post("/users/", response_model=schemas.User, status_code=201)  #Done C
+@app.post("/users/", response_model=schemas.User, status_code=201,
+        summary="Create a new user", 
+        description="This endpoint allows you to create a new user by providing a username, email, and password. The input is validated for malicious content, and both username and email must follow the appropriate format. If the username or email is already in use, a 409 error is returned.",
+        tags=["User Management"])  #Done C
 def create_user(user: schemas.UserCreate, request: Request, db: Session = Depends(get_db)):
     try:
         validators.check_malicious_input(user.username, user.email, user.password)
@@ -39,7 +42,10 @@ def create_user(user: schemas.UserCreate, request: Request, db: Session = Depend
     except validators.ValidationException as validation_exception:
         raise HTTPException(status_code=400, detail=str(validation_exception))
 
-@app.get("/users/{username}", response_model=schemas.User) #Done R
+@app.get("/users/{username}", response_model=schemas.User,
+        summary="Retrieve user information", 
+        description="Fetch details of a user by their username. If the user does not exist, a 404 error is returned.",
+        tags=["User Management"]) #Done R
 def read_user(username: str, db: Session = Depends(get_db)):
     validators.check_malicious_input(username)
 
@@ -48,7 +54,10 @@ def read_user(username: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
 
-@app.patch("/users/{username}/password", response_model=schemas.User, status_code=200) #Done U
+@app.patch("/users/{username}/password", response_model=schemas.User, status_code=200, 
+        summary="Update user password", 
+        description="Update the password of a user by providing the username, email, old password, and new password. The input is validated to ensure that the old and new passwords are different. If the user is not found, a 404 error is returned.",
+        tags=["User Management"]) #Done U
 def update_user_password(username: str, data: schemas.UserUpdatePassword, db: Session = Depends(get_db)):
 
     validators.check_malicious_input(username, data.email, data.old_password, data.new_password)
@@ -70,7 +79,10 @@ def update_user_password(username: str, data: schemas.UserUpdatePassword, db: Se
 
     return db_user
 
-@app.delete("/users/{username}", status_code=204) #Done D
+@app.delete("/users/{username}", status_code=204, 
+        summary="Delete a user", 
+        description="Delete a user from the database using their username, email, and password. If the user does not exist, a 404 error is returned. This operation requires valid credentials.",
+        tags=["User Management"]) #Done D
 def delete_user(username: str, db: Session = Depends(get_db), data: schemas.UserDelete = None):
     if data:
         validators.check_malicious_input(username, data.email, data.password)
@@ -90,7 +102,10 @@ def delete_user(username: str, db: Session = Depends(get_db), data: schemas.User
 
     crud.delete_user(db=db, user_id=db_user.id)
 
-@app.get("/admin/users", status_code=200) #Done list all
+@app.get("/admin/users", status_code=200,
+        summary="List all users", 
+        description="Retrieve a list of all registered users. This endpoint is generally restricted to admin access and returns a list of users in the system.",
+        tags=["User Management"]) #Done list all
 def list_users(db: Session = Depends(get_db)): #current_user: schemas.User = Depends(get_current_active_user)):    #Admino checkas
     #if current_user.role != "admin":  #Admino checkas
         #raise HTTPException(status_code=403, detail="Not authorized to perform this action")
@@ -101,7 +116,10 @@ def list_users(db: Session = Depends(get_db)): #current_user: schemas.User = Dep
 
 
 
-@app.post("/admin/categories/", response_model=schemas.Category, status_code=201) #Done C
+@app.post("/admin/categories/", response_model=schemas.Category, status_code=201,
+        summary="Create a new category", 
+        description="This endpoint allows an admin to create a new category by providing a name and an optional description. Input is validated for malicious content, and a 409 error is returned if the category already exists.",
+        tags=["Category Management"]) #Done C
 def create_category(category: schemas.CategoryCreate, db: Session = Depends(get_db)):
     validators.check_malicious_input(category.name, category.description)
 
@@ -111,7 +129,10 @@ def create_category(category: schemas.CategoryCreate, db: Session = Depends(get_
 
     return crud.create_category(db=db, category=category)
 
-@app.get("/categories/{category_name}", response_model=schemas.Category) #Done R
+@app.get("/categories/{category_name}", response_model=schemas.Category,
+        summary="Retrieve category details", 
+        description="Fetch details of a category by its name. If the category is not found, a 404 error is returned.",
+        tags=["Category Management"]) #Done R
 def read_category(category_name: str, db: Session = Depends(get_db)):
     validators.check_malicious_input(category_name)
 
@@ -122,25 +143,36 @@ def read_category(category_name: str, db: Session = Depends(get_db)):
     
     return db_category
 
-@app.patch("/admin/categories/{category_name}/description", response_model=schemas.Category) #Done U
+@app.patch("/admin/categories/{category_name}/description", response_model=schemas.Category,
+        summary="Update category description", 
+        description="Update the description of an existing category. The name of the category and the new description are required. Input is validated, and the updated category details are returned.",
+        tags=["Category Management"]) #Done U
 def update_category_description(category_name: str, category_update: schemas.CategoryUpdate, db: Session = Depends(get_db)):
     validators.check_malicious_input(category_name, category_update.description)
 
     return crud.update_category_description(db=db, category_name=category_name, description=category_update.description)
 
-@app.delete("/admin/categories/{category_name}", status_code=204) #Done D
+@app.delete("/admin/categories/{category_name}", status_code=204,
+        summary="Delete a category", 
+        description="Delete a category by its name. If the category is not found, a 404 error is returned. Only admins can perform this action.",
+        tags=["Category Management"]) #Done D
 def delete_category(category_name: str, db: Session = Depends(get_db)):
     validators.check_malicious_input(category_name)
 
     return crud.delete_category_by_name(db=db, category_name=category_name)
 
-
-@app.get("/categories/", status_code=200) #Done list all
+@app.get("/categories/", status_code=200, 
+        summary="List all categories", 
+        description="Retrieve a list of all categories in the system. This is a public endpoint and returns the names and descriptions of the categories.",
+        tags=["Category Management"]) #Done list all
 def list_categories(db: Session = Depends(get_db)):
 
     return crud.get_all_categories(db=db)
 
-@app.get("/categories/{category_name}/files/")
+@app.get("/categories/{category_name}/files/", status_code=200,
+        summary="List files in a category", 
+        description="Retrieve a list of files that belong to a specific category. The category name is required, and input is validated to ensure no malicious content.",
+        tags=["Category Management"])
 def list_files_in_category(category_name: str, db: Session = Depends(get_db)):
     validators.check_malicious_input(category_name)
 
@@ -149,7 +181,10 @@ def list_files_in_category(category_name: str, db: Session = Depends(get_db)):
 
 
 
-@app.post("/files/", response_model=schemas.File, status_code=201) #Done C
+@app.post("/files/", response_model=schemas.File, status_code=201,
+        summary="Upload a new file", 
+        description="This endpoint allows users to upload a new file by providing a title. The file's path is generated and stored in the database.",
+        tags=["File Management"]) #Done C
 def upload_file(file: schemas.FileCreate, user_id: int, db: Session = Depends(get_db)):
     validators.check_malicious_input(file.title)
 
@@ -172,11 +207,17 @@ def upload_file(file: schemas.FileCreate, user_id: int, db: Session = Depends(ge
         views=views
     )
 
-@app.get("/files/titles", response_model=schemas.TitleList)
+@app.get("/files/titles", response_model=schemas.TitleList,
+        summary="List all file titles", 
+        description="Retrieve a list of all file titles currently stored in the system. No user authentication is required for this endpoint.",
+        tags=["File Management"])
 def list_file_titles(db: Session = Depends(get_db)):
     return {"titles": crud.get_file_titles(db=db)}
 
-@app.get("/files/{file_id}", response_model=schemas.File) #Done R
+@app.get("/files/{file_id}", response_model=schemas.File,
+        summary="Retrieve file details", 
+        description="Fetch the details of a file by its ID. If the file is not found, a 404 error is returned.",
+        tags=["File Management"]) #Done R
 def read_file(file_id: int, db: Session = Depends(get_db)):
 
     db_file = crud.get_file(db=db, file_id=file_id)
@@ -186,7 +227,10 @@ def read_file(file_id: int, db: Session = Depends(get_db)):
     
     return db_file
 
-@app.patch("/files/{file_id}/title", response_model=schemas.FileTitleUpdated, status_code=200) #Done U
+@app.patch("/files/{file_id}/title", response_model=schemas.FileTitleUpdated, status_code=200,
+        summary="Update file title", 
+        description="Allows the owner of a file to update its title. The user must provide the correct user ID and password for validation. If the file does not belong to the user or if the password is incorrect, appropriate error messages are returned.",
+        tags=["File Management"]) #Done U
 def update_file_title(file_id: int, data: schemas.FileTitleUpdate, db: Session = Depends(get_db)):
     validators.check_malicious_input(data.new_title, data.password)
 
@@ -205,7 +249,10 @@ def update_file_title(file_id: int, data: schemas.FileTitleUpdate, db: Session =
 
     return updated_file
 
-@app.delete("/files/{file_id}", status_code=204) #Done D
+@app.delete("/files/{file_id}", status_code=204,
+        summary="Delete a file", 
+        description="Delete a file by its ID. The user must provide their user ID and password for validation. If the file does not belong to the user or if the password is incorrect, an error is returned. The file is permanently removed from the database.",
+        tags=["File Management"]) #Done D
 def delete_file(file_id: int, data: schemas.FileDelete, db: Session = Depends(get_db)):
 
     validators.check_malicious_input(data.password)
