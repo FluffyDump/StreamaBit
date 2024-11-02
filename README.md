@@ -22,7 +22,7 @@ Sukurta platforma skirta laikinai, lengvai, saugiai ir greitai dalintis failais 
 
 5.	Viešai pasidalinti failai reikalauja administratorių patvirtinimo; 
 
-6.	Hierarchinė failų saugojimo struktūra, naršant kategorijose bus galima pasiekti tokias hierarchines struktūras kaip: StreamaBit.com/music/music_track1. Tokia struktūra suteiks galimybę peržvelgti muzikos aplanko turinį, atsidaryti norimo artisto kolekciją ir tuomet pasiekti specifinio muzikos takelio puslapius ir peržiūrėti visus komentarus;
+6.	Hierarchinė failų saugojimo struktūra, naršant kategorijose bus galima pasiekti tokias hierarchines struktūras kaip: StreamaBit.com/music/music_track1. Tokia struktūra suteiks galimybę peržvelgti muzikos kategorijos turinį, peržiūrėti visus muzikinio failo komentarus bei atsisiųsti failą;
 
 7.	Svetainė palaiko apsaugotus atsisiuntimus slaptažodžiu;
 
