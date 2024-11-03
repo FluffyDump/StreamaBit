@@ -5,7 +5,19 @@ from . import models, schemas
 from sqlalchemy import exc
 
 def create_user(db: Session, user: schemas.UserCreate):
-    db_user = models.User(username=user.username, email=user.email, password_hash=user.password, role="registered_user")
+
+    if user.role:
+        role_value = models.UserRole[user.role]
+    else:
+        role_value = models.UserRole.registered_user
+
+    db_user = models.User(
+        username=user.username,
+        email=user.email,
+        password_hash=user.password,
+        role=role_value
+    )
+    
     db.add(db_user)
     try:
         db.commit()
@@ -16,18 +28,22 @@ def create_user(db: Session, user: schemas.UserCreate):
         raise HTTPException(status_code=500, detail="Database error")
     except Exception as e:
         db.rollback()
-        raise HTTPException(status_code=500, detail="An unexpected error occurred")
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 def get_user(db: Session, user_id: int):
     return db.query(models.User).filter(models.User.id == user_id).first()
 
-def update_user(db: Session, user_id: int, new_password: str):
-    db_existing_user = db.query(models.User).filter(models.User.id == user_id).first()
+def update_user(db: Session, user_id: int, new_password: str, new_email: str):
+    db_existing_user = db.query(models.User).filter(models.User.user_id == user_id).first()
     
     if not db_existing_user:
         raise HTTPException(status_code=404, detail="User not found")
     
-    db_existing_user.password_hash = new_password 
+    if new_password is not None:
+        db_existing_user.password_hash = new_password 
+    if new_email is not None:
+        db_existing_user.email = new_email
 
     try:
         db.commit()
@@ -44,15 +60,24 @@ def get_user_by_username_email_id(db: Session, username: str = None, email: str 
     query = db.query(models.User)
     
     if username:
-        query = query.filter(models.User.username == username)
+        username_query = query.filter(models.User.username == username)
+        user = username_query.first()
+        if user:
+            return user
     
     if email:
-        query = query.filter(models.User.email == email)
+        email_query = query.filter(models.User.email == email)
+        user = email_query.first()
+        if user:
+            return user
 
     if id:
-        query = query.filter(models.User.id == id)
+        id_query = query.filter(models.User.id == id)
+        user = id_query.first()
+        if user:
+            return user
 
-    return query.first()
+    return None
 
 def get_all_user_data(db: Session, username: str, email: str, password_hash: str):
     query = db.query(models.User)
@@ -62,7 +87,7 @@ def get_all_user_data(db: Session, username: str, email: str, password_hash: str
     return query.first()
 
 def delete_user(db: Session, user_id: int):
-    db_user = db.query(models.User).filter(models.User.id == user_id).first()
+    db_user = db.query(models.User).filter(models.User.user_id == user_id).first()
 
     if not db_user:
         raise HTTPException(status_code=404, detail="User not found")

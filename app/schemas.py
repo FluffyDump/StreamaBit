@@ -2,6 +2,9 @@ from pydantic import BaseModel
 from typing import List, Optional
 from datetime import datetime
 from typing import List
+from . import models
+from .models import UserRole
+
 
 class UserBase(BaseModel):
     username: str
@@ -9,6 +12,7 @@ class UserBase(BaseModel):
 class UserCreate(UserBase):
     email: str
     password: str
+    role: Optional[UserRole]
 
 class User(UserBase):
     created_at: datetime
@@ -18,8 +22,9 @@ class User(UserBase):
 
 class UserUpdatePassword(BaseModel):
     email:str
+    new_email: Optional[str]
     old_password: str
-    new_password: str
+    new_password: Optional[str]
 
     class Config:
         orm_mode = True

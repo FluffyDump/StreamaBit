@@ -21,7 +21,7 @@ def get_db():
         db.close()
 
 
-@app.post("/u", response_model=schemas.User, status_code=201,
+@app.post("/user", response_model=schemas.User, status_code=201,
         summary="Create a new user", 
         description="This endpoint allows you to create a new user by providing a username, email, and password. The input is validated for malicious content, and both username and email must follow the appropriate format. If the username or email is already in use, a 409 error is returned.",
         tags=["User Management"])  #Done C
@@ -32,8 +32,20 @@ def create_user(user: schemas.UserCreate, request: Request, db: Session = Depend
         validators.validate_username(user.username)
         validators.validate_email(user.email)
         validators.validate_password(user.password)
+        if(user.role):
+            validators.check_malicious_input(user.role)
+
+        if user.role and user.role in models.UserRole.__members__.values():
+            raise HTTPException(status_code=400, detail="Invalid request.")
+
+        if user.role == models.UserRole.admin:
+            # Add admin validation check here in the future
+            raise HTTPException(status_code=403, detail="Admin privileges required to assign the 'admin' role")
+        ###Add check based on if user has jwt and if jwt role is admin, then create new user with admin role###
+
 
         existing_user = crud.get_user_by_username_email_id(db=db, username=user.username, email=user.email)
+        print(existing_user)
         if existing_user:
             raise HTTPException(status_code=409, detail="Username or email already in use")
         
@@ -41,7 +53,7 @@ def create_user(user: schemas.UserCreate, request: Request, db: Session = Depend
     except validators.ValidationException as validation_exception:
         raise HTTPException(status_code=400, detail=str(validation_exception))
 
-@app.get("/users/{username}", response_model=schemas.User,
+@app.get("/user/{username}", response_model=schemas.User,
         summary="Retrieve user information", 
         description="Fetch details of a user by their username. If the user does not exist, a 404 error is returned.",
         tags=["User Management"]) #Done R
@@ -53,28 +65,34 @@ def read_user(username: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
 
-@app.patch("/users/{username}", response_model=schemas.User, status_code=200, 
-        summary="Update user password", 
-        description="Update the password of a user by providing the username, email, old password, and new password. The input is validated to ensure that the old and new passwords are different. If the user is not found, a 404 error is returned.",
+@app.patch("/user/{username}", response_model=schemas.User, status_code=200, 
+        summary="Update user password or email", 
+        description="Update the password or email address of a user by providing the username, email, new_email(optional), old password, and new password(optional). The input is validated to ensure that the old and new passwords(or email addresses) are different. If the user is not found, a 404 error is returned.",
         tags=["User Management"]) #Done U
-def update_user_password(username: str, data: schemas.UserUpdatePassword, db: Session = Depends(get_db)):
+def update_user_credentials(username: str, data: schemas.UserUpdatePassword, db: Session = Depends(get_db)):
 
-    validators.check_malicious_input(username, data.email, data.old_password, data.new_password)
+    validators.check_malicious_input(username, data.email, data.new_email, data.old_password, data.new_password)
+
+    if data.new_email is None and data.new_password is None:
+        raise HTTPException(status_code=400, detail="No new_email or new_password provided")
 
     validators.validate_username(username)
     validators.validate_email(data.email)
+    validators.validate_email(data.new_email)
     validators.validate_password(data.old_password)
     validators.validate_password(data.new_password)
 
     if data.old_password == data.new_password:
         raise HTTPException(status_code=400, detail="Old and new passwords must be different")
+    elif data.email == data.new_email:
+        raise HTTPException(status_code=400, detail="Old and new email addresses must be different")
 
     db_user = crud.get_all_user_data(db=db, username=username, email=data.email, password_hash=data.old_password)
 
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     
-    crud.update_user(db=db, user_id=db_user.id, new_password=data.new_password)
+    crud.update_user(db=db, user_id=db_user.user_id, new_password=data.new_password, new_email=data.new_email)
 
     return db_user
 
@@ -99,7 +117,7 @@ def delete_user(username: str, db: Session = Depends(get_db), data: schemas.User
             #raise HTTPException(status_code=404, detail="User not found")
         raise HTTPException(status_code=400, detail="Data is missing")
 
-    crud.delete_user(db=db, user_id=db_user.id)
+    crud.delete_user(db=db, user_id=db_user.user_id)
 
 @app.get("/admin/users", status_code=200,
         summary="List all users", 

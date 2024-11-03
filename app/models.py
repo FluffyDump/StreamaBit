@@ -4,15 +4,15 @@ from sqlalchemy.orm import relationship
 from datetime import datetime
 from .database import Base
 
-class UserRole(Enum):
-    REGISTERED_USER = "registered_user"
-    ADMIN = "admin"
+class UserRole(str, Enum):
+    registered_user = "registered_user"
+    admin = "admin"
 
 
 class ApprovalStatus(Enum):
-    APPROVED = "approved"
-    PENDING = "pending"
-    REJECTED = "rejected"
+    approve = "approved"
+    pending = "pending"
+    rejected = "rejected"
 
 
 class User(Base):
@@ -24,7 +24,7 @@ class User(Base):
     email = Column(String(100), unique=True, nullable=False)
     password_hash = Column(String(255), nullable=False)
     created_at = Column(TIMESTAMP, server_default="CURRENT_TIMESTAMP", nullable=False)
-    role = Column(SAEnum(UserRole), default=UserRole.REGISTERED_USER, nullable=False)
+    role = Column(SAEnum(UserRole), default=UserRole.registered_user, nullable=False)
 
     #Relationships
     file_likes = relationship("FileLike", back_populates="user")    #Access file likes of the user
@@ -96,7 +96,7 @@ class FileApproval(Base):
     approval_id = Column(BigInteger, primary_key=True, nullable=False)
     reason = Column(String(255), nullable=True)
     action_date = Column(TIMESTAMP, server_default="CURRENT_TIMESTAMP", nullable=False)
-    status = Column(SAEnum(ApprovalStatus), default=ApprovalStatus.PENDING, nullable=False)
+    status = Column(SAEnum(ApprovalStatus), default=ApprovalStatus.pending, nullable=False)
 
     #FK
     fk_public_upload_id = Column(BigInteger, ForeignKey('public_upload.public_upload_id'), nullable=False)

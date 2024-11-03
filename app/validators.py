@@ -7,7 +7,7 @@ import json
 import re
 
 def validate_password(password: str):
-    if len(password) < 8:
+    if password is not None and len(password) < 8:
         raise ValidationException("Password must be at least 8 characters long")
 
 def validate_username(username: str):
@@ -20,19 +20,20 @@ def validate_username(username: str):
         raise ValidationException("Username must not contain special symbols: " + invalid_chars)
 
 def validate_email(email: str):
-    allowed_chars = '.-_@%+'
-    if '@' not in email or len(email.split('@')) != 2:
-        raise ValidationException("Invalid email format")
+    if email is not None:
+        allowed_chars = '.-_@%+'
+        if '@' not in email or len(email.split('@')) != 2:
+            raise ValidationException("Invalid email format")
     
-    local_part, domain_part = email.split('@')
+        local_part, domain_part = email.split('@')
     
-    if (len(local_part) < 2 or
-        domain_part.startswith('.') or
-        '.' not in domain_part or
-        domain_part.endswith('.') or
-        domain_part.count('.') < 1 or
-        any(char not in allowed_chars and not char.isalnum() for char in email)):
-        raise ValidationException("Invalid email format")
+        if (len(local_part) < 2 or
+            domain_part.startswith('.') or
+            '.' not in domain_part or
+            domain_part.endswith('.') or
+            domain_part.count('.') < 1 or
+            any(char not in allowed_chars and not char.isalnum() for char in email)):
+            raise ValidationException("Invalid email format")
 
 def check_malicious_input(*args):
     malicious_patterns = [
@@ -49,8 +50,9 @@ def check_malicious_input(*args):
     pattern = re.compile("|".join(malicious_patterns), re.IGNORECASE)
     
     for arg in args:
-        if pattern.search(arg):
-            raise ValidationException("Malicious input detected")
+        if arg is not None:
+            if pattern.search(arg):
+                raise ValidationException("Malicious input detected")
         
 def validate_category(db: Session, category_id: int):
     category = db.query(models.Category).filter(models.Category.id == category_id).first()
@@ -77,7 +79,12 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
                 status_code=422,
                 content={"detail": f"Field '{error['loc'][-1]}' is required."},
             )
-        if error['type'] == 'json_invalid':
+        elif error['type'] == 'json_invalid':
+            return JSONResponse(
+                status_code=400,
+                content={"detail": "JSON format is invalid"},
+            )
+        elif error['type'] == 'type_error.enum':
             return JSONResponse(
                 status_code=400,
                 content={"detail": "JSON format is invalid"},
