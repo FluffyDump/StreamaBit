@@ -199,10 +199,10 @@ def update_file_title(db: Session, file_id: int, new_title: str):
     return None
 
 def get_file(db: Session, file_id: int):
-    return db.query(models.File).filter(models.File.id == file_id).first()
+    return db.query(models.File).filter(models.File.file_id == file_id).first()
 
 def delete_file(db: Session, file_id: int):
-    db_file = db.query(models.File).filter(models.File.id == file_id).first()
+    db_file = db.query(models.File).filter(models.File.file_id == file_id).first()
     if db_file:
         db.delete(db_file)
         db.commit()

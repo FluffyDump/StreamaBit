@@ -5,7 +5,6 @@ from app.database import SessionLocal, engine
 from sqlalchemy.orm import Session
 from typing import List
 
-
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
@@ -22,7 +21,7 @@ def get_db():
         db.close()
 
 
-@app.post("/users/", response_model=schemas.User, status_code=201,
+@app.post("/u", response_model=schemas.User, status_code=201,
         summary="Create a new user", 
         description="This endpoint allows you to create a new user by providing a username, email, and password. The input is validated for malicious content, and both username and email must follow the appropriate format. If the username or email is already in use, a 409 error is returned.",
         tags=["User Management"])  #Done C
@@ -54,7 +53,7 @@ def read_user(username: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
 
-@app.patch("/users/{username}/password", response_model=schemas.User, status_code=200, 
+@app.patch("/users/{username}", response_model=schemas.User, status_code=200, 
         summary="Update user password", 
         description="Update the password of a user by providing the username, email, old password, and new password. The input is validated to ensure that the old and new passwords are different. If the user is not found, a 404 error is returned.",
         tags=["User Management"]) #Done U
@@ -104,7 +103,7 @@ def delete_user(username: str, db: Session = Depends(get_db), data: schemas.User
 
 @app.get("/admin/users", status_code=200,
         summary="List all users", 
-        description="Retrieve a list of all registered users. This endpoint is generally restricted to admin access and returns a list of users in the system.",
+        description="Retrieve a list of all registered users. This endpoint is restricted to admin access and returns a list of users in the system.",
         tags=["User Management"]) #Done list all
 def list_users(db: Session = Depends(get_db)): #current_user: schemas.User = Depends(get_current_active_user)):    #Admino checkas
     #if current_user.role != "admin":  #Admino checkas
@@ -143,7 +142,7 @@ def read_category(category_name: str, db: Session = Depends(get_db)):
     
     return db_category
 
-@app.patch("/admin/categories/{category_name}/description", response_model=schemas.Category,
+@app.patch("/admin/categories/{category_name}", response_model=schemas.Category,
         summary="Update category description", 
         description="Update the description of an existing category. The name of the category and the new description are required. Input is validated, and the updated category details are returned.",
         tags=["Category Management"]) #Done U
@@ -207,6 +206,8 @@ def upload_file(file: schemas.FileCreate, user_id: int, db: Session = Depends(ge
         views=views
     )
 
+@app.get("/{username}/{category_name}/files")
+
 @app.get("/files/titles", response_model=schemas.TitleList,
         summary="List all file titles", 
         description="Retrieve a list of all file titles currently stored in the system. No user authentication is required for this endpoint.",
@@ -227,7 +228,7 @@ def read_file(file_id: int, db: Session = Depends(get_db)):
     
     return db_file
 
-@app.patch("/files/{file_id}/title", response_model=schemas.FileTitleUpdated, status_code=200,
+@app.patch("/files/{file_id}", response_model=schemas.FileTitleUpdated, status_code=200,
         summary="Update file title", 
         description="Allows the owner of a file to update its title. The user must provide the correct user ID and password for validation. If the file does not belong to the user or if the password is incorrect, appropriate error messages are returned.",
         tags=["File Management"]) #Done U
