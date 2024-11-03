@@ -1,8 +1,7 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, Extra
 from typing import List, Optional
 from datetime import datetime
 from typing import List
-from . import models
 from .models import UserRole
 
 
@@ -12,7 +11,10 @@ class UserBase(BaseModel):
 class UserCreate(UserBase):
     email: str
     password: str
-    role: Optional[UserRole]
+    role: Optional[UserRole] = Field(None)
+
+    class Config:
+        extra = Extra.forbid
 
 class User(UserBase):
     created_at: datetime
@@ -22,12 +24,13 @@ class User(UserBase):
 
 class UserUpdatePassword(BaseModel):
     email:str
-    new_email: Optional[str]
+    new_email: Optional[str] = Field(None)
     old_password: str
-    new_password: Optional[str]
+    new_password: Optional[str] = Field(None)
 
     class Config:
         orm_mode = True
+        extra = Extra.forbid
 
 class UserDelete(BaseModel):
     email:str
@@ -58,7 +61,11 @@ class Category(CategoryBase):
         orm_mode = True
 
 class CategoryUpdate(BaseModel):
-    description: str
+    new_name: Optional[str] = Field(None)
+    new_description: Optional[str] = Field(None)
+
+    class Config:
+        extra = Extra.forbid
 
 class CategorieList(BaseModel):
     name: List[str]

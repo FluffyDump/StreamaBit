@@ -130,13 +130,19 @@ def create_category(db: Session, category: schemas.CategoryCreate):
 def get_category(db: Session, category_name: str):
     return db.query(models.Category).filter(models.Category.name == category_name).first()
 
-def update_category_description(db: Session, category_name: str, description: str):
+def update_category(db: Session, category_name: str, new_name: str = None, new_description: str = None):
     category = db.query(models.Category).filter(models.Category.name == category_name).first()
     
     if not category:
         raise HTTPException(status_code=404, detail="Category not found")
+    
+    if category.name == new_name or category.description == new_description:
+        raise HTTPException(status_code=400, detail="Category new_name or new_description must be different than previously saved")
 
-    category.description = description
+    if new_name is not None:
+        category.name = new_name
+    if new_description is not None:
+        category.description = new_description
 
     try:
         db.commit()

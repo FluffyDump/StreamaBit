@@ -35,17 +35,23 @@ def create_user(user: schemas.UserCreate, request: Request, db: Session = Depend
         if(user.role):
             validators.check_malicious_input(user.role)
 
-        if user.role and user.role in models.UserRole.__members__.values():
-            raise HTTPException(status_code=400, detail="Invalid request.")
+        if user.role:
+            enum_values = []
+            for enum_value in models.UserRole.__members__.values():
+                enum_values.append(enum_value.value)
+            
+            if user.role.value not in enum_values:
+                raise HTTPException(status_code=400, detail="Invalid request.")
 
-        if user.role == models.UserRole.admin:
+            if user.role.value == models.UserRole.admin.value:
             # Add admin validation check here in the future
-            raise HTTPException(status_code=403, detail="Admin privileges required to assign the 'admin' role")
+                raise HTTPException(status_code=403, detail="Admin privileges required to assign the 'admin' role")
+        
+
         ###Add check based on if user has jwt and if jwt role is admin, then create new user with admin role###
 
 
         existing_user = crud.get_user_by_username_email_id(db=db, username=user.username, email=user.email)
-        print(existing_user)
         if existing_user:
             raise HTTPException(status_code=409, detail="Username or email already in use")
         
@@ -126,6 +132,10 @@ def delete_user(username: str, db: Session = Depends(get_db), data: schemas.User
 def list_users(db: Session = Depends(get_db)): #current_user: schemas.User = Depends(get_current_active_user)):    #Admino checkas
     #if current_user.role != "admin":  #Admino checkas
         #raise HTTPException(status_code=403, detail="Not authorized to perform this action")
+
+
+        ###Add check based on if user has jwt and if jwt role is admin, then return all users###
+
     
     users = crud.get_all_users(db=db)
     return users
@@ -139,10 +149,14 @@ def list_users(db: Session = Depends(get_db)): #current_user: schemas.User = Dep
         tags=["Category Management"]) #Done C
 def create_category(category: schemas.CategoryCreate, db: Session = Depends(get_db)):
     validators.check_malicious_input(category.name, category.description)
-
     existing_category = crud.get_category_by_name(db=db, name=category.name)
     if existing_category:
         raise HTTPException(status_code=409, detail="Category already exists")
+    
+
+        ###Add check based on if user has jwt and if jwt role is admin, then create new category###
+
+
 
     return crud.create_category(db=db, category=category)
 
@@ -155,19 +169,29 @@ def read_category(category_name: str, db: Session = Depends(get_db)):
 
     db_category = crud.get_category(db=db, category_name=category_name)
 
+    
+    ###Return all subcategories of specific category###
+
+
     if db_category is None:
         raise HTTPException(status_code=404, detail="Category not found")
     
     return db_category
 
 @app.patch("/admin/categories/{category_name}", response_model=schemas.Category,
-        summary="Update category description", 
-        description="Update the description of an existing category. The name of the category and the new description are required. Input is validated, and the updated category details are returned.",
+        summary="Update category name or description", 
+        description="Update the name or description of an existing category. The existing name of the category and the new name or new description are required. Input is validated, and the updated category details are returned.",
         tags=["Category Management"]) #Done U
-def update_category_description(category_name: str, category_update: schemas.CategoryUpdate, db: Session = Depends(get_db)):
-    validators.check_malicious_input(category_name, category_update.description)
+def update_category(category_name: str, category_update: schemas.CategoryUpdate, db: Session = Depends(get_db)):
+    validators.check_malicious_input(category_name, category_update.new_name, category_update.new_description)
 
-    return crud.update_category_description(db=db, category_name=category_name, description=category_update.description)
+    if category_update.new_name is None and category_update.new_description is None:
+        raise HTTPException(status_code=400, detail="No new_name or new_description provided")
+    
+
+    ###Add check based on if user has jwt and if jwt role is admin, then patch category name and description###
+
+    return crud.update_category(db=db, category_name=category_name, new_name=category_update.new_name, new_description=category_update.new_description)
 
 @app.delete("/admin/categories/{category_name}", status_code=204,
         summary="Delete a category", 
@@ -175,6 +199,9 @@ def update_category_description(category_name: str, category_update: schemas.Cat
         tags=["Category Management"]) #Done D
 def delete_category(category_name: str, db: Session = Depends(get_db)):
     validators.check_malicious_input(category_name)
+
+    ###Add check to prevent category removal if it contains sub-categories, if not - then delete category###
+    ###Add check based on if user has jwt and if jwt role is admin, then delete category###
 
     return crud.delete_category_by_name(db=db, category_name=category_name)
 
@@ -186,6 +213,8 @@ def list_categories(db: Session = Depends(get_db)):
 
     return crud.get_all_categories(db=db)
 
+
+################### Change to return sub-category files instead of category files
 @app.get("/categories/{category_name}/files/", status_code=200,
         summary="List files in a category", 
         description="Retrieve a list of files that belong to a specific category. The category name is required, and input is validated to ensure no malicious content.",
@@ -194,7 +223,7 @@ def list_files_in_category(category_name: str, db: Session = Depends(get_db)):
     validators.check_malicious_input(category_name)
 
     return crud.get_files_by_category(db=db, category_name=category_name)
-
+#################### Change to return sub-category files instead of category files
 
 
 
