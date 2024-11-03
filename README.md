@@ -22,7 +22,7 @@ Sukurta platforma skirta laikinai, lengvai, saugiai ir greitai dalintis failais 
 
 5.	Viešai pasidalinti failai reikalauja administratorių patvirtinimo; 
 
-6.	Hierarchinė failų saugojimo struktūra, naršant kategorijose bus galima pasiekti tokias hierarchines struktūras kaip: StreamaBit.com/music/some_artist/music_track1/comments. Tokia struktūra suteiks galimybę peržvelgti muzikos aplanko turinį, atsidaryti norimo artisto kolekciją ir tuomet pasiekti specifinio muzikos takelio puslapius ir peržiūrėti visus komentarus;
+6.	Hierarchinė failų saugojimo struktūra, naršant kategorijose bus galima pasiekti tokias hierarchines struktūras kaip: StreamaBit.com/music/music_track1. Tokia struktūra suteiks galimybę peržvelgti muzikos kategorijos turinį, peržiūrėti visus muzikinio failo komentarus bei atsisiųsti failą;
 
 7.	Svetainė palaiko apsaugotus atsisiuntimus slaptažodžiu;
 
@@ -33,7 +33,7 @@ Sukurta platforma skirta laikinai, lengvai, saugiai ir greitai dalintis failais 
 
 **Python** – suteikia lengvumo ir paprastumo kuriant serverio pusės logiką. Leidžia lengvai sukurti asinchronines API sąsajas(„FastAPI“), naudojantis papildomomis bibliotekomis manipuliuoti duomenų bazių įrašais.
 
-**Svelte** – vienas iš moderniausių kliento pusės karkasų kuris suteikia svetainėms didelį našumą bei supaprastina programavimą.
+**SvelteKit** – vienas iš moderniausių kliento pusės karkasų kuris suteikia svetainėms didelį našumą bei supaprastina programavimą.
 
 **PostgreSQL** – viena iš dažniausiai naudojamų duomenų bazių. Pasižymi atviru kodu ir yra reliacinė duomenų bazė.
 
