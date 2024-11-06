@@ -113,3 +113,32 @@ def update_user(db: Session, username: str, data: requestModel.UserUpdatePasswor
         logger.exception(f"\nUSER ACCOUNT HAS NOT BEEN CHANGED, EXCEPTION OCCURED: {ex}")
         shared_crud.rollback(db)
         raise
+
+
+#Remove user by finding exact user with provided credentials - username, email and password
+def remove_user(db: Session, username: str, data: requestModel.UserDelete):
+    try:
+        logger.info("\nREMOVING USER ACCOUNT")
+        shared_validator.validate_sql_malicious_input(username, data.email, data.password)
+        user_validator.validate_username(username)
+        user_validator.validate_email(data.email)
+        user_validator.validate_password(data.password)
+    
+        #Pass hashed password
+        db_user = user_crud.get_authenticated_user(db=db, username=username, email=data.email, password_hash=data.password)
+
+        shared_crud.flush(db)
+
+        if db_user is None:
+            logger.warning("CANNOT REMOVE USER ACCOUNT - USER WITH PROVIDED CREDENTIALS NOT FOUND")
+            raise HTTPException(status_code=404, detail="User not found")
+
+        #Verify user JWT token
+        user_crud.delete(db=db, user_id=db_user.user_id)
+        shared_crud.commit(db)
+        logger.info("\nUSER ACCOUNT REMOVED")
+
+    except Exception as ex:
+        logger.exception(f"\nUSER ACCOUNT HAS NOT BEEN REMOVED, EXCEPTION OCCURED: {ex}")
+        shared_crud.rollback(db)
+        raise

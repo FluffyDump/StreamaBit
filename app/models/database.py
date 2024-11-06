@@ -31,7 +31,7 @@ class User(Base):
     file_dislikes = relationship("FileDislike", back_populates="user")    #Access file dislikes of the user
     public_files = relationship("PublicUpload", back_populates="user")      #Access public uploads of the user
     private_files = relationship("PrivateUpload", back_populates="user")      #Access private uploads of the user
-    sessions = relationship("UserSession", back_populates="user")       #Access user sessions
+    sessions = relationship("UserSession", back_populates="user", cascade="all, delete-orphan")       #Access user sessions
     file_approvals = relationship("FileApproval", back_populates="user")    #Access admin file approvals
     comments = relationship("Comment", back_populates="user")   #Access user comments
 
@@ -83,7 +83,7 @@ class UserSession(Base):
     ip_address = Column(String(45), nullable=False)
 
     #FK
-    fk_user_id = Column(BigInteger, ForeignKey('user.user_id'), nullable=False)
+    fk_user_id = Column(BigInteger, ForeignKey('user.user_id', ondelete="CASCADE"), nullable=False)
 
     #Relationships
     user = relationship("User", back_populates="sessions")     #Access user who used the session

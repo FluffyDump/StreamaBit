@@ -119,9 +119,28 @@ def update(db: Session, usr_id: int, new_password: str, new_email: str):
 
     except IntegrityError as ex:
         logger.exception(f"IntegrityError with usr_id={usr_id}, new_email={new_email}: {ex}")
-        db.rollback()
         raise HTTPException(status_code=400, detail="An unexpected error occurred")
     except Exception as ex:
         logger.exception(f"Exception with usr_id={usr_id}, new_email={new_email}: {ex}")
-        db.rollback()
+        raise HTTPException(status_code=500, detail="An unexpected error occurred")
+    
+
+#Removes user account by using provided user_id
+def delete(db: Session, user_id: int):
+    try:
+        logger.info(f"Attempting to remove user account")
+        db_user = db.query(models.User).filter(models.User.user_id == user_id).first()
+
+        if not db_user:
+            logger.warning(f"User not found, provided user_id: {user_id}")
+            raise HTTPException(status_code=404, detail="User not found")
+
+        db.delete(db_user)
+        logger.info("User prepared for account removal, waiting for transaction commit")
+        
+    except IntegrityError as ex:
+        logger.exception(f"IntegrityError with user_id={user_id}: {ex}")
+        raise HTTPException(status_code=400, detail="An unexpected error occurred")
+    except Exception as ex:
+        logger.exception(f"Exception with user_id={user_id}: {ex}")
         raise HTTPException(status_code=500, detail="An unexpected error occurred")

@@ -53,32 +53,31 @@ def update_user_credentials(username: str, data: requestModel.UserUpdatePassword
     return user_services.update_user(db=db, username=username, data=data)
 
 
-
-
-
-
-
-
-
 @app.delete("/users/{username}", status_code=204, 
         summary="Delete a user", 
         description="Delete a user from the database using their username, email, and password. If the user does not exist, a 404 error is returned. This operation requires valid credentials.",
         tags=["User Management"]) #Done D
 def delete_user(username: str, db: Session = Depends(get_db), data: requestModel.UserDelete = None):
-    validators.check_malicious_input(username, data.email, data.password)
-    validators.validate_username(username)
-    validators.validate_email(data.email)
-    validators.validate_password(data.password)
-    
-    db_user = crud.get_all_user_data(db=db, username=username, email=data.email, password_hash=data.password)
-    if db_user is None:
-        raise HTTPException(status_code=404, detail="User not found")
+    return user_services.remove_user(db=db, username=username, data=data)
 
-    # JWT admino checkas
-    #db_user = crud.get_user_by_username(db=db, username=username)
-    #if db_user is None:
-        #raise HTTPException(status_code=404, detail="User not found")
-    crud.delete_user(db=db, user_id=db_user.user_id)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @app.get("/admin/users", status_code=200,
         summary="List all users", 
@@ -94,8 +93,6 @@ def list_users(db: Session = Depends(get_db)): #current_user: schemas.User = Dep
     
     users = crud.get_all_users(db=db)
     return users
-
-
 
 
 @app.post("/admin/categories/", response_model=responseModel.Category, status_code=201,

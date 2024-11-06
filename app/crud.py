@@ -6,19 +6,6 @@ import app.models.requests as requestModel
 import app.models.responses as responseModel
 from sqlalchemy import exc
 
-def delete_user(db: Session, user_id: int):
-    db_user = db.query(models.User).filter(models.User.user_id == user_id).first()
-
-    if not db_user:
-        raise HTTPException(status_code=404, detail="User not found")
-
-    try:
-        db.delete(db_user)
-        db.commit()
-        return {"message": "User deleted successfully"}
-    except Exception as e:
-        db.rollback()
-        raise HTTPException(status_code=500, detail="An unexpected error occurred")
     
 def get_all_users(db: Session):
     usernames = db.query(models.User.username).all()
