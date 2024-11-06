@@ -1,0 +1,214 @@
+2024-11-06 01:48:20.533 | ERROR    | app.services.user_service:create_user:29 - Exception occured: 'NoneType' object has no attribute 'value'
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x0000029C0B674860>
+    └ <WorkerThread(AnyIO worker thread, started 20180)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x0000029C10EC7B00>
+    └ <WorkerThread(AnyIO worker thread, started 20180)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_user at 0x0000029C10E753A0>, db=<sqlalchemy.orm.session.Session object at 0x0000029C10EB88...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x0000029C10EB89C0>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 36, in create_user
+    return user_services.create_user(db=db, user=user)
+           │             │              │        └ UserCreate(username='First23', email='firstUser23@gmail.com', password='Password1234$', role=None)
+           │             │              └ <sqlalchemy.orm.session.Session object at 0x0000029C10EB8850>
+           │             └ <function create_user at 0x0000029C0FB2D9E0>
+           └ <module 'app.services.user_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\service...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\user_service.py", line 16, in create_user
+    user_validator.validate_role(user.role.value)
+    │              │             │    └ None
+    │              │             └ UserCreate(username='First23', email='firstUser23@gmail.com', password='Password1234$', role=None)
+    │              └ <function validate_role at 0x0000029C0FB2E3E0>
+    └ <module 'app.validators.user_validator' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\val...
+
+AttributeError: 'NoneType' object has no attribute 'value'
+2024-11-06 01:50:58.090 | ERROR    | app.services.user_service:create_user:30 - Exception occured: 'NoneType' object has no attribute 'value'
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000002C9B1834860>
+    └ <WorkerThread(AnyIO worker thread, started 26164)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000002C9B707BB00>
+    └ <WorkerThread(AnyIO worker thread, started 26164)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_user at 0x000002C9B70253A0>, db=<sqlalchemy.orm.session.Session object at 0x000002C9B7063A...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000002C9B7021780>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 36, in create_user
+    return user_services.create_user(db=db, user=user)
+           │             │              │        └ UserCreate(username='First23', email='firstUser23@gmail.com', password='Password1234$', role=None)
+           │             │              └ <sqlalchemy.orm.session.Session object at 0x000002C9B7063A10>
+           │             └ <function create_user at 0x000002C9B5CDD9E0>
+           └ <module 'app.services.user_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\service...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\user_service.py", line 16, in create_user
+    print(user.role.value)
+          │    └ None
+          └ UserCreate(username='First23', email='firstUser23@gmail.com', password='Password1234$', role=None)
+
+AttributeError: 'NoneType' object has no attribute 'value'
+2024-11-06 02:05:18.456 | ERROR    | app.services.user_service:create_user:31 - Exception occured: 409: Username or email already in use
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x00000189653A4860>
+    └ <WorkerThread(AnyIO worker thread, started 23608)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000001896AB67C40>
+    └ <WorkerThread(AnyIO worker thread, started 23608)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_user at 0x000001896AB15440>, db=<sqlalchemy.orm.session.Session object at 0x000001896AB6F1...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000001896AB6DB00>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 37, in create_user
+    return user_services.create_user(db=db, user=user)
+           │             │              │        └ UserCreate(username='First24', email='firstUser24@gmail.com', password='Password1234$', role=<UserRole.admin: 'admin'>)
+           │             │              └ <sqlalchemy.orm.session.Session object at 0x000001896AB6F110>
+           │             └ <function create_user at 0x00000189697CDA80>
+           └ <module 'app.services.user_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\service...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\user_service.py", line 25, in create_user
+    raise HTTPException(status_code=409, detail="Username or email already in use")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 409: Username or email already in use
+2024-11-06 02:05:54.678 | ERROR    | app.services.user_service:create_user:31 - Exception occured: 409: Username or email already in use
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000002B6909D4860>
+    └ <WorkerThread(AnyIO worker thread, started 28572)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000002B696217BA0>
+    └ <WorkerThread(AnyIO worker thread, started 28572)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_user at 0x000002B6961C53A0>, db=<sqlalchemy.orm.session.Session object at 0x000002B6962025...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000002B696269440>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 37, in create_user
+    return user_services.create_user(db=db, user=user)
+           │             │              │        └ UserCreate(username='First24', email='firstUser24@gmail.com', password='Password1234$', role=<UserRole.admin: 'admin'>)
+           │             │              └ <sqlalchemy.orm.session.Session object at 0x000002B696202550>
+           │             └ <function create_user at 0x000002B694E7D9E0>
+           └ <module 'app.services.user_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\service...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\user_service.py", line 25, in create_user
+    raise HTTPException(status_code=409, detail="Username or email already in use")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 409: Username or email already in use
+2024-11-06 02:06:49.787 | ERROR    | app.services.user_service:create_user:31 - Exception occured: 411: Username or email already in use
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x00000281AEBF4860>
+    └ <WorkerThread(AnyIO worker thread, started 21820)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x00000281B43C7BA0>
+    └ <WorkerThread(AnyIO worker thread, started 21820)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_user at 0x00000281B43753A0>, db=<sqlalchemy.orm.session.Session object at 0x00000281B30007...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x00000281B43A25C0>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 37, in create_user
+    return user_services.create_user(db=db, user=user)
+           │             │              │        └ UserCreate(username='First24', email='firstUser24@gmail.com', password='Password1234$', role=<UserRole.admin: 'admin'>)
+           │             │              └ <sqlalchemy.orm.session.Session object at 0x00000281B3000750>
+           │             └ <function create_user at 0x00000281B302D940>
+           └ <module 'app.services.user_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\service...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\user_service.py", line 25, in create_user
+    raise HTTPException(status_code=411, detail="Username or email already in use")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 411: Username or email already in use
+2024-11-06 02:08:57.352 | ERROR    | app.services.user_service:create_user:31 - Exception occured: 409: Username or email already in use
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x00000263AB574860>
+    └ <WorkerThread(AnyIO worker thread, started 9816)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x00000263B0DB7BA0>
+    └ <WorkerThread(AnyIO worker thread, started 9816)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_user at 0x00000263B0D653A0>, db=<sqlalchemy.orm.session.Session object at 0x00000263B0DA3A...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x00000263B0DA8CC0>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 37, in create_user
+    return user_services.create_user(db=db, user=user)
+           │             │              │        └ UserCreate(username='First24', email='firstUser24@gmail.com', password='Password1234$', role=<UserRole.admin: 'admin'>)
+           │             │              └ <sqlalchemy.orm.session.Session object at 0x00000263B0DA3A10>
+           │             └ <function create_user at 0x00000263AFA1D940>
+           └ <module 'app.services.user_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\service...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\user_service.py", line 25, in create_user
+    raise HTTPException(status_code=409, detail="Username or email already in use")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 409: Username or email already in use
+2024-11-06 02:10:21.220 | ERROR    | app.services.user_service:create_user:31 - Exception occured: 409: Username or email already in use
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000001CF24684860>
+    └ <WorkerThread(AnyIO worker thread, started 4556)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000001CF29ED7BA0>
+    └ <WorkerThread(AnyIO worker thread, started 4556)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_user at 0x000001CF29E853A0>, db=<sqlalchemy.orm.session.Session object at 0x000001CF29EDB3...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000001CF29E96C40>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 37, in create_user
+    return user_services.create_user(db=db, user=user)
+           │             │              │        └ UserCreate(username='First24', email='firstUser24@gmail.com', password='Password1234$', role=<UserRole.admin: 'admin'>)
+           │             │              └ <sqlalchemy.orm.session.Session object at 0x000001CF29EDB310>
+           │             └ <function create_user at 0x000001CF28B3D940>
+           └ <module 'app.services.user_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\service...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\user_service.py", line 25, in create_user
+    raise HTTPException(status_code=409, detail="Username or email already in use")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 409: Username or email already in use

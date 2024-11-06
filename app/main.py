@@ -1,11 +1,19 @@
 from fastapi import FastAPI, Depends, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
-from . import models, schemas, crud, validators
-from app.database import SessionLocal, engine
+from app.config.db_connection import engine, SessionLocal
+from . import crud
+import app.models.database as databaseModel
+import app.models.requests as requestModel
+import app.models.responses as responseModel
+from app.models.database import Base
 from sqlalchemy.orm import Session
 from typing import List
+import app.config.logger
+import app.services.user_service as user_services
+import app.validators.shared_validator as validators
+import app.crud.user_crud as user_crud
 
-models.Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
@@ -21,61 +29,31 @@ def get_db():
         db.close()
 
 
-@app.post("/user", response_model=schemas.User, status_code=201,
+@app.post("/user", response_model=responseModel.User, status_code=201,
         summary="Create a new user", 
-        description="This endpoint allows you to create a new user by providing a username, email, and password. The input is validated for malicious content, and both username and email must follow the appropriate format. If the username or email is already in use, a 409 error is returned.",
-        tags=["User Management"])  #Done C
-def create_user(user: schemas.UserCreate, request: Request, db: Session = Depends(get_db)):
-    try:
-        validators.check_malicious_input(user.username, user.email, user.password)
-
-        validators.validate_username(user.username)
-        validators.validate_email(user.email)
-        validators.validate_password(user.password)
-        if(user.role):
-            validators.check_malicious_input(user.role)
-
-        if user.role:
-            enum_values = []
-            for enum_value in models.UserRole.__members__.values():
-                enum_values.append(enum_value.value)
-            
-            if user.role.value not in enum_values:
-                raise HTTPException(status_code=400, detail="Invalid request.")
-
-            if user.role.value == models.UserRole.admin.value:
-            # Add admin validation check here in the future
-                raise HTTPException(status_code=403, detail="Admin privileges required to assign the 'admin' role")
-        
-
-        ###Add check based on if user has jwt and if jwt role is admin, then create new user with admin role###
+        description="This endpoint allows you to create a new user by providing a username, email, password and role(optional). The input is validated for malicious content, and both username and email must follow the appropriate format. If the username or email is already in use, a 409 error is returned.",
+        tags=["User Management"])
+def create_user(user: requestModel.UserCreate, request: Request, db: Session = Depends(get_db)):
+    return user_services.create_user(db=db, user=user)
 
 
-        existing_user = crud.get_user_by_username_email_id(db=db, username=user.username, email=user.email)
-        if existing_user:
-            raise HTTPException(status_code=409, detail="Username or email already in use")
-        
-        return crud.create_user(db=db, user=user)
-    except validators.ValidationException as validation_exception:
-        raise HTTPException(status_code=400, detail=str(validation_exception))
-
-@app.get("/user/{username}", response_model=schemas.User,
+@app.get("/user/{username}", response_model=responseModel.User,
         summary="Retrieve user information", 
-        description="Fetch details of a user by their username. If the user does not exist, a 404 error is returned.",
-        tags=["User Management"]) #Done R
+        description="Fetch details of a user by their username. Results include user username, email, account creation date. If the user does not exist, a 404 error is returned.",
+        tags=["User Management"])
 def read_user(username: str, db: Session = Depends(get_db)):
-    validators.check_malicious_input(username)
+    return user_services.get_user_account_data(db=db, username=username)
 
-    db_user = crud.get_user_by_username_email_id(db=db, username=username)
-    if db_user is None:
-        raise HTTPException(status_code=404, detail="User not found")
-    return db_user
 
-@app.patch("/user/{username}", response_model=schemas.User, status_code=200, 
+
+
+
+
+@app.patch("/user/{username}", response_model=responseModel.User, status_code=200, 
         summary="Update user password or email", 
         description="Update the password or email address of a user by providing the username, email, new_email(optional), old password, and new password(optional). The input is validated to ensure that the old and new passwords(or email addresses) are different. If the user is not found, a 404 error is returned.",
         tags=["User Management"]) #Done U
-def update_user_credentials(username: str, data: schemas.UserUpdatePassword, db: Session = Depends(get_db)):
+def update_user_credentials(username: str, data: requestModel.UserUpdatePassword, db: Session = Depends(get_db)):
 
     validators.check_malicious_input(username, data.email, data.new_email, data.old_password, data.new_password)
 
@@ -99,30 +77,26 @@ def update_user_credentials(username: str, data: schemas.UserUpdatePassword, db:
         raise HTTPException(status_code=404, detail="User not found")
     
     crud.update_user(db=db, user_id=db_user.user_id, new_password=data.new_password, new_email=data.new_email)
-
     return db_user
 
 @app.delete("/users/{username}", status_code=204, 
         summary="Delete a user", 
         description="Delete a user from the database using their username, email, and password. If the user does not exist, a 404 error is returned. This operation requires valid credentials.",
         tags=["User Management"]) #Done D
-def delete_user(username: str, db: Session = Depends(get_db), data: schemas.UserDelete = None):
-    if data:
-        validators.check_malicious_input(username, data.email, data.password)
-        validators.validate_username(username)
-        validators.validate_email(data.email)
-        validators.validate_password(data.password)
+def delete_user(username: str, db: Session = Depends(get_db), data: requestModel.UserDelete = None):
+    validators.check_malicious_input(username, data.email, data.password)
+    validators.validate_username(username)
+    validators.validate_email(data.email)
+    validators.validate_password(data.password)
     
-        db_user = crud.get_all_user_data(db=db, username=username, email=data.email, password_hash=data.password)
-        if db_user is None:
-            raise HTTPException(status_code=404, detail="User not found")
-    else:
-        # JWT admino checkas
-        #db_user = crud.get_user_by_username(db=db, username=username)
-        #if db_user is None:
-            #raise HTTPException(status_code=404, detail="User not found")
-        raise HTTPException(status_code=400, detail="Data is missing")
+    db_user = crud.get_all_user_data(db=db, username=username, email=data.email, password_hash=data.password)
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
 
+    # JWT admino checkas
+    #db_user = crud.get_user_by_username(db=db, username=username)
+    #if db_user is None:
+        #raise HTTPException(status_code=404, detail="User not found")
     crud.delete_user(db=db, user_id=db_user.user_id)
 
 @app.get("/admin/users", status_code=200,
@@ -143,11 +117,11 @@ def list_users(db: Session = Depends(get_db)): #current_user: schemas.User = Dep
 
 
 
-@app.post("/admin/categories/", response_model=schemas.Category, status_code=201,
+@app.post("/admin/categories/", response_model=responseModel.Category, status_code=201,
         summary="Create a new category", 
         description="This endpoint allows an admin to create a new category by providing a name and an optional description. Input is validated for malicious content, and a 409 error is returned if the category already exists.",
         tags=["Category Management"]) #Done C
-def create_category(category: schemas.CategoryCreate, db: Session = Depends(get_db)):
+def create_category(category: requestModel.CategoryCreate, db: Session = Depends(get_db)):
     validators.check_malicious_input(category.name, category.description)
     existing_category = crud.get_category_by_name(db=db, name=category.name)
     if existing_category:
@@ -160,7 +134,7 @@ def create_category(category: schemas.CategoryCreate, db: Session = Depends(get_
 
     return crud.create_category(db=db, category=category)
 
-@app.get("/categories/{category_name}", response_model=schemas.Category,
+@app.get("/categories/{category_name}", response_model=responseModel.Category,
         summary="Retrieve category details", 
         description="Fetch details of a category by its name. If the category is not found, a 404 error is returned.",
         tags=["Category Management"]) #Done R
@@ -178,11 +152,11 @@ def read_category(category_name: str, db: Session = Depends(get_db)):
     
     return db_category
 
-@app.patch("/admin/categories/{category_name}", response_model=schemas.Category,
+@app.patch("/admin/categories/{category_name}", response_model=responseModel.Category,
         summary="Update category name or description", 
         description="Update the name or description of an existing category. The existing name of the category and the new name or new description are required. Input is validated, and the updated category details are returned.",
         tags=["Category Management"]) #Done U
-def update_category(category_name: str, category_update: schemas.CategoryUpdate, db: Session = Depends(get_db)):
+def update_category(category_name: str, category_update: requestModel.CategoryUpdate, db: Session = Depends(get_db)):
     validators.check_malicious_input(category_name, category_update.new_name, category_update.new_description)
 
     if category_update.new_name is None and category_update.new_description is None:
@@ -227,11 +201,11 @@ def list_files_in_category(category_name: str, db: Session = Depends(get_db)):
 
 
 
-@app.post("/files/", response_model=schemas.File, status_code=201,
+@app.post("/files/", response_model=responseModel.File, status_code=201,
         summary="Upload a new file", 
         description="This endpoint allows users to upload a new file by providing a title. The file's path is generated and stored in the database.",
         tags=["File Management"]) #Done C
-def upload_file(file: schemas.FileCreate, user_id: int, db: Session = Depends(get_db)):
+def upload_file(file: requestModel.FileCreate, user_id: int, db: Session = Depends(get_db)):
     validators.check_malicious_input(file.title)
 
     category_id = 13
@@ -255,14 +229,14 @@ def upload_file(file: schemas.FileCreate, user_id: int, db: Session = Depends(ge
 
 @app.get("/{username}/{category_name}/files")
 
-@app.get("/files/titles", response_model=schemas.TitleList,
+@app.get("/files/titles", response_model=responseModel.TitleList,
         summary="List all file titles", 
         description="Retrieve a list of all file titles currently stored in the system. No user authentication is required for this endpoint.",
         tags=["File Management"])
 def list_file_titles(db: Session = Depends(get_db)):
     return {"titles": crud.get_file_titles(db=db)}
 
-@app.get("/files/{file_id}", response_model=schemas.File,
+@app.get("/files/{file_id}", response_model=responseModel.File,
         summary="Retrieve file details", 
         description="Fetch the details of a file by its ID. If the file is not found, a 404 error is returned.",
         tags=["File Management"]) #Done R
@@ -275,11 +249,11 @@ def read_file(file_id: int, db: Session = Depends(get_db)):
     
     return db_file
 
-@app.patch("/files/{file_id}", response_model=schemas.FileTitleUpdated, status_code=200,
+@app.patch("/files/{file_id}", response_model=responseModel.FileTitleUpdated, status_code=200,
         summary="Update file title", 
         description="Allows the owner of a file to update its title. The user must provide the correct user ID and password for validation. If the file does not belong to the user or if the password is incorrect, appropriate error messages are returned.",
         tags=["File Management"]) #Done U
-def update_file_title(file_id: int, data: schemas.FileTitleUpdate, db: Session = Depends(get_db)):
+def update_file_title(file_id: int, data: requestModel.FileTitleUpdate, db: Session = Depends(get_db)):
     validators.check_malicious_input(data.new_title, data.password)
 
     db_user = crud.get_user_by_username_email_id(db=db, id=data.user_id)
@@ -301,7 +275,7 @@ def update_file_title(file_id: int, data: schemas.FileTitleUpdate, db: Session =
         summary="Delete a file", 
         description="Delete a file by its ID. The user must provide their user ID and password for validation. If the file does not belong to the user or if the password is incorrect, an error is returned. The file is permanently removed from the database.",
         tags=["File Management"]) #Done D
-def delete_file(file_id: int, data: schemas.FileDelete, db: Session = Depends(get_db)):
+def delete_file(file_id: int, data: requestModel.FileDelete, db: Session = Depends(get_db)):
 
     validators.check_malicious_input(data.password)
 

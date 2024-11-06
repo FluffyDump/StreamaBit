@@ -1,83 +1,11 @@
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
-from . import models, schemas
+import app.models.database as models
+import app.models.requests as requestModel
+import app.models.responses as responseModel
 from sqlalchemy import exc
 
-def create_user(db: Session, user: schemas.UserCreate):
-
-    if user.role:
-        role_value = models.UserRole[user.role]
-    else:
-        role_value = models.UserRole.registered_user
-
-    db_user = models.User(
-        username=user.username,
-        email=user.email,
-        password_hash=user.password,
-        role=role_value
-    )
-    
-    db.add(db_user)
-    try:
-        db.commit()
-        db.refresh(db_user)
-        return db_user
-    except IntegrityError as e:
-        db.rollback()
-        raise HTTPException(status_code=500, detail="Database error")
-    except Exception as e:
-        db.rollback()
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-def get_user(db: Session, user_id: int):
-    return db.query(models.User).filter(models.User.id == user_id).first()
-
-def update_user(db: Session, user_id: int, new_password: str, new_email: str):
-    db_existing_user = db.query(models.User).filter(models.User.user_id == user_id).first()
-    
-    if not db_existing_user:
-        raise HTTPException(status_code=404, detail="User not found")
-    
-    if new_password is not None:
-        db_existing_user.password_hash = new_password 
-    if new_email is not None:
-        db_existing_user.email = new_email
-
-    try:
-        db.commit()
-        db.refresh(db_existing_user)
-        return db_existing_user
-    except IntegrityError as e:
-        db.rollback()
-        raise HTTPException(status_code=400, detail="Database integrity error")
-    except Exception as e:
-        db.rollback()
-        raise HTTPException(status_code=500, detail="An unexpected error occurred")
-
-def get_user_by_username_email_id(db: Session, username: str = None, email: str = None, id: int = None):
-    query = db.query(models.User)
-    
-    if username:
-        username_query = query.filter(models.User.username == username)
-        user = username_query.first()
-        if user:
-            return user
-    
-    if email:
-        email_query = query.filter(models.User.email == email)
-        user = email_query.first()
-        if user:
-            return user
-
-    if id:
-        id_query = query.filter(models.User.id == id)
-        user = id_query.first()
-        if user:
-            return user
-
-    return None
 
 def get_all_user_data(db: Session, username: str, email: str, password_hash: str):
     query = db.query(models.User)
@@ -103,7 +31,7 @@ def delete_user(db: Session, user_id: int):
 def get_all_users(db: Session):
     usernames = db.query(models.User.username).all()
     username_list = [username[0] for username in usernames]
-    return schemas.UserList(usernames=username_list)
+    return requestModel.UserList(usernames=username_list)
 
 
 
@@ -115,7 +43,7 @@ def get_category_by_name(db: Session, name: str):
 
     return query.first()
 
-def create_category(db: Session, category: schemas.CategoryCreate):
+def create_category(db: Session, category: requestModel.CategoryCreate):
     db_category = models.Category(**category.dict())
 
     try:
@@ -168,7 +96,7 @@ def delete_category_by_name(db: Session, category_name: str):
 def get_all_categories(db: Session):
     categories = db.query(models.Category.name).all()
     categories_list = [category[0] for category in categories]
-    return schemas.CategorieList(name=categories_list)
+    return responseModel.CategorieList(name=categories_list)
 
 def get_files_by_category(db: Session, category_name: str):
     category = db.query(models.Category).filter(models.Category.name == category_name).first()
@@ -193,7 +121,7 @@ def get_files_by_category(db: Session, category_name: str):
 
 
 
-def create_file(db: Session, file: schemas.FileCreate, user_id: int, file_path: str, category_id: int, security_status: bool, views: int):
+def create_file(db: Session, file: requestModel.FileCreate, user_id: int, file_path: str, category_id: int, security_status: bool, views: int):
     db_file = models.File(
         user_id=user_id,
         title=file.title,

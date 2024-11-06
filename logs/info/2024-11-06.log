@@ -1,0 +1,709 @@
+2024-11-06 01:45:55.435 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 01:45:55.436 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 01:45:55.437 | INFO     | app.validators.user_validator:validate_username:16 - Validating username format
+2024-11-06 01:45:55.437 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 01:45:55.437 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 01:45:55.437 | INFO     | app.validators.shared_validator:letters_numbers_only:17 - Validating input
+2024-11-06 01:45:55.438 | INFO     | app.validators.shared_validator:letters_numbers_only:23 - Input passed validation
+2024-11-06 01:45:55.438 | INFO     | app.validators.user_validator:validate_username:30 - Username validation passed
+2024-11-06 01:45:55.438 | INFO     | app.validators.user_validator:validate_email:38 - Validating email format
+2024-11-06 01:45:55.438 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 01:45:55.438 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 01:45:55.439 | INFO     | app.validators.user_validator:validate_email:53 - Email validation passed
+2024-11-06 01:45:55.439 | INFO     | app.validators.user_validator:validate_password:61 - Validating password format
+2024-11-06 01:45:55.439 | INFO     | app.validators.user_validator:validate_password:82 - Password validation passed
+2024-11-06 01:48:20.529 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 01:48:20.530 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 01:48:20.531 | INFO     | app.validators.user_validator:validate_username:16 - Validating username format
+2024-11-06 01:48:20.531 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 01:48:20.531 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 01:48:20.531 | INFO     | app.validators.shared_validator:letters_numbers_only:17 - Validating input
+2024-11-06 01:48:20.531 | INFO     | app.validators.shared_validator:letters_numbers_only:23 - Input passed validation
+2024-11-06 01:48:20.532 | INFO     | app.validators.user_validator:validate_username:30 - Username validation passed
+2024-11-06 01:48:20.532 | INFO     | app.validators.user_validator:validate_email:38 - Validating email format
+2024-11-06 01:48:20.532 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 01:48:20.532 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 01:48:20.533 | INFO     | app.validators.user_validator:validate_email:53 - Email validation passed
+2024-11-06 01:48:20.533 | INFO     | app.validators.user_validator:validate_password:61 - Validating password format
+2024-11-06 01:48:20.533 | INFO     | app.validators.user_validator:validate_password:82 - Password validation passed
+2024-11-06 01:48:20.533 | ERROR    | app.services.user_service:create_user:29 - Exception occured: 'NoneType' object has no attribute 'value'
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x0000029C0B674860>
+    └ <WorkerThread(AnyIO worker thread, started 20180)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x0000029C10EC7B00>
+    └ <WorkerThread(AnyIO worker thread, started 20180)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_user at 0x0000029C10E753A0>, db=<sqlalchemy.orm.session.Session object at 0x0000029C10EB88...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x0000029C10EB89C0>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 36, in create_user
+    return user_services.create_user(db=db, user=user)
+           │             │              │        └ UserCreate(username='First23', email='firstUser23@gmail.com', password='Password1234$', role=None)
+           │             │              └ <sqlalchemy.orm.session.Session object at 0x0000029C10EB8850>
+           │             └ <function create_user at 0x0000029C0FB2D9E0>
+           └ <module 'app.services.user_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\service...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\user_service.py", line 16, in create_user
+    user_validator.validate_role(user.role.value)
+    │              │             │    └ None
+    │              │             └ UserCreate(username='First23', email='firstUser23@gmail.com', password='Password1234$', role=None)
+    │              └ <function validate_role at 0x0000029C0FB2E3E0>
+    └ <module 'app.validators.user_validator' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\val...
+
+AttributeError: 'NoneType' object has no attribute 'value'
+2024-11-06 01:50:58.085 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 01:50:58.087 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 01:50:58.087 | INFO     | app.validators.user_validator:validate_username:16 - Validating username format
+2024-11-06 01:50:58.087 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 01:50:58.087 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 01:50:58.088 | INFO     | app.validators.shared_validator:letters_numbers_only:17 - Validating input
+2024-11-06 01:50:58.088 | INFO     | app.validators.shared_validator:letters_numbers_only:23 - Input passed validation
+2024-11-06 01:50:58.088 | INFO     | app.validators.user_validator:validate_username:30 - Username validation passed
+2024-11-06 01:50:58.088 | INFO     | app.validators.user_validator:validate_email:38 - Validating email format
+2024-11-06 01:50:58.089 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 01:50:58.089 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 01:50:58.089 | INFO     | app.validators.user_validator:validate_email:53 - Email validation passed
+2024-11-06 01:50:58.090 | INFO     | app.validators.user_validator:validate_password:61 - Validating password format
+2024-11-06 01:50:58.090 | INFO     | app.validators.user_validator:validate_password:82 - Password validation passed
+2024-11-06 01:50:58.090 | ERROR    | app.services.user_service:create_user:30 - Exception occured: 'NoneType' object has no attribute 'value'
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000002C9B1834860>
+    └ <WorkerThread(AnyIO worker thread, started 26164)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000002C9B707BB00>
+    └ <WorkerThread(AnyIO worker thread, started 26164)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_user at 0x000002C9B70253A0>, db=<sqlalchemy.orm.session.Session object at 0x000002C9B7063A...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000002C9B7021780>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 36, in create_user
+    return user_services.create_user(db=db, user=user)
+           │             │              │        └ UserCreate(username='First23', email='firstUser23@gmail.com', password='Password1234$', role=None)
+           │             │              └ <sqlalchemy.orm.session.Session object at 0x000002C9B7063A10>
+           │             └ <function create_user at 0x000002C9B5CDD9E0>
+           └ <module 'app.services.user_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\service...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\user_service.py", line 16, in create_user
+    print(user.role.value)
+          │    └ None
+          └ UserCreate(username='First23', email='firstUser23@gmail.com', password='Password1234$', role=None)
+
+AttributeError: 'NoneType' object has no attribute 'value'
+2024-11-06 01:52:09.093 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 01:52:09.095 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 01:52:09.095 | INFO     | app.validators.user_validator:validate_username:16 - Validating username format
+2024-11-06 01:52:09.095 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 01:52:09.096 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 01:52:09.096 | INFO     | app.validators.shared_validator:letters_numbers_only:17 - Validating input
+2024-11-06 01:52:09.096 | INFO     | app.validators.shared_validator:letters_numbers_only:23 - Input passed validation
+2024-11-06 01:52:09.096 | INFO     | app.validators.user_validator:validate_username:30 - Username validation passed
+2024-11-06 01:52:09.096 | INFO     | app.validators.user_validator:validate_email:38 - Validating email format
+2024-11-06 01:52:09.096 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 01:52:09.097 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 01:52:09.097 | INFO     | app.validators.user_validator:validate_email:53 - Email validation passed
+2024-11-06 01:52:09.097 | INFO     | app.validators.user_validator:validate_password:61 - Validating password format
+2024-11-06 01:52:09.097 | INFO     | app.validators.user_validator:validate_password:82 - Password validation passed
+2024-11-06 01:52:09.120 | INFO     | app.crud.user:get_by_username_email_id:15 - Searching for user by username: First23
+2024-11-06 01:52:09.125 | INFO     | app.crud.user:get_by_username_email_id:23 - Searching for user by email: firstUser23@gmail.com
+2024-11-06 01:52:09.126 | INFO     | app.crud.user:get_by_username_email_id:38 - User not found with given parameters
+2024-11-06 01:52:09.126 | INFO     | app.crud.user:create:53 - Attempting to create user with username=First23, email=firstUser23@gmail.com
+2024-11-06 01:52:09.133 | INFO     | app.crud.user:create:70 - User created successfully with username=First23, email=firstUser23@gmail.com
+2024-11-06 02:01:58.821 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:01:58.822 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:01:58.822 | INFO     | app.validators.user_validator:validate_username:16 - Validating username format
+2024-11-06 02:01:58.823 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:01:58.823 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:01:58.823 | INFO     | app.validators.shared_validator:letters_numbers_only:17 - Validating input
+2024-11-06 02:01:58.823 | INFO     | app.validators.shared_validator:letters_numbers_only:23 - Input passed validation
+2024-11-06 02:01:58.824 | INFO     | app.validators.user_validator:validate_username:30 - Username validation passed
+2024-11-06 02:01:58.824 | INFO     | app.validators.user_validator:validate_email:38 - Validating email format
+2024-11-06 02:01:58.824 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:01:58.824 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:01:58.825 | INFO     | app.validators.user_validator:validate_email:53 - Email validation passed
+2024-11-06 02:01:58.825 | INFO     | app.validators.user_validator:validate_password:61 - Validating password format
+2024-11-06 02:01:58.825 | INFO     | app.validators.user_validator:validate_password:82 - Password validation passed
+2024-11-06 02:01:58.826 | INFO     | app.validators.user_validator:validate_role:87 - Validating user role
+2024-11-06 02:01:58.826 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:01:58.826 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:01:58.826 | INFO     | app.validators.user_validator:validate_role:104 - User role validation passed
+2024-11-06 02:01:58.849 | INFO     | app.crud.user:get_by_username_email_id:15 - Searching for user by username: First24
+2024-11-06 02:01:58.855 | INFO     | app.crud.user:get_by_username_email_id:23 - Searching for user by email: firstUser24@gmail.com
+2024-11-06 02:01:58.857 | INFO     | app.crud.user:get_by_username_email_id:38 - User not found with given parameters
+2024-11-06 02:01:58.858 | INFO     | app.crud.user:create:53 - Attempting to create user with username=First24, email=firstUser24@gmail.com
+2024-11-06 02:01:58.862 | INFO     | app.crud.user:create:70 - User created successfully with username=First24, email=firstUser24@gmail.com
+2024-11-06 02:05:18.420 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:05:18.421 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:05:18.421 | INFO     | app.validators.user_validator:validate_username:16 - Validating username format
+2024-11-06 02:05:18.421 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:05:18.422 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:05:18.422 | INFO     | app.validators.shared_validator:letters_numbers_only:17 - Validating input
+2024-11-06 02:05:18.422 | INFO     | app.validators.shared_validator:letters_numbers_only:23 - Input passed validation
+2024-11-06 02:05:18.423 | INFO     | app.validators.user_validator:validate_username:30 - Username validation passed
+2024-11-06 02:05:18.423 | INFO     | app.validators.user_validator:validate_email:38 - Validating email format
+2024-11-06 02:05:18.423 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:05:18.423 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:05:18.424 | INFO     | app.validators.user_validator:validate_email:53 - Email validation passed
+2024-11-06 02:05:18.424 | INFO     | app.validators.user_validator:validate_password:61 - Validating password format
+2024-11-06 02:05:18.424 | INFO     | app.validators.user_validator:validate_password:82 - Password validation passed
+2024-11-06 02:05:18.424 | INFO     | app.validators.user_validator:validate_role:87 - Validating user role
+2024-11-06 02:05:18.424 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:05:18.425 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:05:18.425 | INFO     | app.validators.user_validator:validate_role:104 - User role validation passed
+2024-11-06 02:05:18.446 | INFO     | app.crud.user:get_by_username_email_id:15 - Searching for user by username: First24
+2024-11-06 02:05:18.455 | INFO     | app.crud.user:get_by_username_email_id:19 - User found by username: First24
+2024-11-06 02:05:54.646 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:05:54.647 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:05:54.648 | INFO     | app.validators.user_validator:validate_username:16 - Validating username format
+2024-11-06 02:05:54.648 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:05:54.648 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:05:54.648 | INFO     | app.validators.shared_validator:letters_numbers_only:17 - Validating input
+2024-11-06 02:05:54.648 | INFO     | app.validators.shared_validator:letters_numbers_only:23 - Input passed validation
+2024-11-06 02:05:54.649 | INFO     | app.validators.user_validator:validate_username:30 - Username validation passed
+2024-11-06 02:05:54.649 | INFO     | app.validators.user_validator:validate_email:38 - Validating email format
+2024-11-06 02:05:54.649 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:05:54.649 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:05:54.649 | INFO     | app.validators.user_validator:validate_email:53 - Email validation passed
+2024-11-06 02:05:54.649 | INFO     | app.validators.user_validator:validate_password:61 - Validating password format
+2024-11-06 02:05:54.650 | INFO     | app.validators.user_validator:validate_password:82 - Password validation passed
+2024-11-06 02:05:54.650 | INFO     | app.validators.user_validator:validate_role:87 - Validating user role
+2024-11-06 02:05:54.650 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:05:54.650 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:05:54.650 | INFO     | app.validators.user_validator:validate_role:104 - User role validation passed
+2024-11-06 02:05:54.674 | INFO     | app.crud.user:get_by_username_email_id:15 - Searching for user by username: First24
+2024-11-06 02:05:54.678 | INFO     | app.crud.user:get_by_username_email_id:19 - User found by username: First24
+2024-11-06 02:05:54.678 | ERROR    | app.services.user_service:create_user:31 - Exception occured: 409: Username or email already in use
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000002B6909D4860>
+    └ <WorkerThread(AnyIO worker thread, started 28572)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000002B696217BA0>
+    └ <WorkerThread(AnyIO worker thread, started 28572)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_user at 0x000002B6961C53A0>, db=<sqlalchemy.orm.session.Session object at 0x000002B6962025...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000002B696269440>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 37, in create_user
+    return user_services.create_user(db=db, user=user)
+           │             │              │        └ UserCreate(username='First24', email='firstUser24@gmail.com', password='Password1234$', role=<UserRole.admin: 'admin'>)
+           │             │              └ <sqlalchemy.orm.session.Session object at 0x000002B696202550>
+           │             └ <function create_user at 0x000002B694E7D9E0>
+           └ <module 'app.services.user_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\service...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\user_service.py", line 25, in create_user
+    raise HTTPException(status_code=409, detail="Username or email already in use")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 409: Username or email already in use
+2024-11-06 02:06:49.751 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:06:49.752 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:06:49.752 | INFO     | app.validators.user_validator:validate_username:16 - Validating username format
+2024-11-06 02:06:49.752 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:06:49.752 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:06:49.752 | INFO     | app.validators.shared_validator:letters_numbers_only:17 - Validating input
+2024-11-06 02:06:49.753 | INFO     | app.validators.shared_validator:letters_numbers_only:23 - Input passed validation
+2024-11-06 02:06:49.753 | INFO     | app.validators.user_validator:validate_username:30 - Username validation passed
+2024-11-06 02:06:49.753 | INFO     | app.validators.user_validator:validate_email:38 - Validating email format
+2024-11-06 02:06:49.753 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:06:49.753 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:06:49.754 | INFO     | app.validators.user_validator:validate_email:53 - Email validation passed
+2024-11-06 02:06:49.754 | INFO     | app.validators.user_validator:validate_password:61 - Validating password format
+2024-11-06 02:06:49.754 | INFO     | app.validators.user_validator:validate_password:82 - Password validation passed
+2024-11-06 02:06:49.755 | INFO     | app.validators.user_validator:validate_role:87 - Validating user role
+2024-11-06 02:06:49.755 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:06:49.755 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:06:49.755 | INFO     | app.validators.user_validator:validate_role:104 - User role validation passed
+2024-11-06 02:06:49.782 | INFO     | app.crud.user:get_by_username_email_id:15 - Searching for user by username: First24
+2024-11-06 02:06:49.786 | INFO     | app.crud.user:get_by_username_email_id:19 - User found by username: First24
+2024-11-06 02:06:49.787 | ERROR    | app.services.user_service:create_user:31 - Exception occured: 411: Username or email already in use
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x00000281AEBF4860>
+    └ <WorkerThread(AnyIO worker thread, started 21820)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x00000281B43C7BA0>
+    └ <WorkerThread(AnyIO worker thread, started 21820)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_user at 0x00000281B43753A0>, db=<sqlalchemy.orm.session.Session object at 0x00000281B30007...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x00000281B43A25C0>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 37, in create_user
+    return user_services.create_user(db=db, user=user)
+           │             │              │        └ UserCreate(username='First24', email='firstUser24@gmail.com', password='Password1234$', role=<UserRole.admin: 'admin'>)
+           │             │              └ <sqlalchemy.orm.session.Session object at 0x00000281B3000750>
+           │             └ <function create_user at 0x00000281B302D940>
+           └ <module 'app.services.user_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\service...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\user_service.py", line 25, in create_user
+    raise HTTPException(status_code=411, detail="Username or email already in use")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 411: Username or email already in use
+2024-11-06 02:08:57.320 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:08:57.322 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:08:57.322 | INFO     | app.validators.user_validator:validate_username:16 - Validating username format
+2024-11-06 02:08:57.322 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:08:57.322 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:08:57.322 | INFO     | app.validators.shared_validator:letters_numbers_only:17 - Validating input
+2024-11-06 02:08:57.323 | INFO     | app.validators.shared_validator:letters_numbers_only:23 - Input passed validation
+2024-11-06 02:08:57.323 | INFO     | app.validators.user_validator:validate_username:30 - Username validation passed
+2024-11-06 02:08:57.323 | INFO     | app.validators.user_validator:validate_email:38 - Validating email format
+2024-11-06 02:08:57.323 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:08:57.323 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:08:57.323 | INFO     | app.validators.user_validator:validate_email:53 - Email validation passed
+2024-11-06 02:08:57.324 | INFO     | app.validators.user_validator:validate_password:61 - Validating password format
+2024-11-06 02:08:57.324 | INFO     | app.validators.user_validator:validate_password:82 - Password validation passed
+2024-11-06 02:08:57.324 | INFO     | app.validators.user_validator:validate_role:87 - Validating user role
+2024-11-06 02:08:57.324 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:08:57.324 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:08:57.324 | INFO     | app.validators.user_validator:validate_role:104 - User role validation passed
+2024-11-06 02:08:57.347 | INFO     | app.crud.user:get_by_username_email_id:15 - Searching for user by username: First24
+2024-11-06 02:08:57.351 | INFO     | app.crud.user:get_by_username_email_id:19 - User found by username: First24
+2024-11-06 02:08:57.352 | ERROR    | app.services.user_service:create_user:31 - Exception occured: 409: Username or email already in use
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x00000263AB574860>
+    └ <WorkerThread(AnyIO worker thread, started 9816)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x00000263B0DB7BA0>
+    └ <WorkerThread(AnyIO worker thread, started 9816)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_user at 0x00000263B0D653A0>, db=<sqlalchemy.orm.session.Session object at 0x00000263B0DA3A...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x00000263B0DA8CC0>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 37, in create_user
+    return user_services.create_user(db=db, user=user)
+           │             │              │        └ UserCreate(username='First24', email='firstUser24@gmail.com', password='Password1234$', role=<UserRole.admin: 'admin'>)
+           │             │              └ <sqlalchemy.orm.session.Session object at 0x00000263B0DA3A10>
+           │             └ <function create_user at 0x00000263AFA1D940>
+           └ <module 'app.services.user_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\service...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\user_service.py", line 25, in create_user
+    raise HTTPException(status_code=409, detail="Username or email already in use")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 409: Username or email already in use
+2024-11-06 02:09:47.484 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:09:47.485 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:09:47.486 | INFO     | app.validators.user_validator:validate_username:16 - Validating username format
+2024-11-06 02:09:47.486 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:09:47.486 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:09:47.486 | INFO     | app.validators.shared_validator:letters_numbers_only:17 - Validating input
+2024-11-06 02:09:47.486 | INFO     | app.validators.shared_validator:letters_numbers_only:23 - Input passed validation
+2024-11-06 02:09:47.486 | INFO     | app.validators.user_validator:validate_username:30 - Username validation passed
+2024-11-06 02:09:47.486 | INFO     | app.validators.user_validator:validate_email:38 - Validating email format
+2024-11-06 02:09:47.486 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:09:47.487 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:09:47.487 | INFO     | app.validators.user_validator:validate_email:53 - Email validation passed
+2024-11-06 02:09:47.487 | INFO     | app.validators.user_validator:validate_password:61 - Validating password format
+2024-11-06 02:09:47.488 | INFO     | app.validators.user_validator:validate_password:82 - Password validation passed
+2024-11-06 02:09:47.488 | INFO     | app.validators.user_validator:validate_role:87 - Validating user role
+2024-11-06 02:09:47.488 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:09:47.488 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:09:47.488 | INFO     | app.validators.user_validator:validate_role:104 - User role validation passed
+2024-11-06 02:09:47.512 | INFO     | app.crud.user:get_by_username_email_id:15 - Searching for user by username: First24
+2024-11-06 02:09:47.517 | INFO     | app.crud.user:get_by_username_email_id:19 - User found by username: First24
+2024-11-06 02:10:21.188 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:10:21.189 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:10:21.189 | INFO     | app.validators.user_validator:validate_username:16 - Validating username format
+2024-11-06 02:10:21.189 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:10:21.189 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:10:21.190 | INFO     | app.validators.shared_validator:letters_numbers_only:17 - Validating input
+2024-11-06 02:10:21.190 | INFO     | app.validators.shared_validator:letters_numbers_only:23 - Input passed validation
+2024-11-06 02:10:21.190 | INFO     | app.validators.user_validator:validate_username:30 - Username validation passed
+2024-11-06 02:10:21.190 | INFO     | app.validators.user_validator:validate_email:38 - Validating email format
+2024-11-06 02:10:21.190 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:10:21.190 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:10:21.191 | INFO     | app.validators.user_validator:validate_email:53 - Email validation passed
+2024-11-06 02:10:21.191 | INFO     | app.validators.user_validator:validate_password:61 - Validating password format
+2024-11-06 02:10:21.191 | INFO     | app.validators.user_validator:validate_password:82 - Password validation passed
+2024-11-06 02:10:21.191 | INFO     | app.validators.user_validator:validate_role:87 - Validating user role
+2024-11-06 02:10:21.191 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:10:21.191 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:10:21.192 | INFO     | app.validators.user_validator:validate_role:104 - User role validation passed
+2024-11-06 02:10:21.214 | INFO     | app.crud.user:get_by_username_email_id:15 - Searching for user by username: First24
+2024-11-06 02:10:21.220 | INFO     | app.crud.user:get_by_username_email_id:19 - User found by username: First24
+2024-11-06 02:10:21.220 | ERROR    | app.services.user_service:create_user:31 - Exception occured: 409: Username or email already in use
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000001CF24684860>
+    └ <WorkerThread(AnyIO worker thread, started 4556)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000001CF29ED7BA0>
+    └ <WorkerThread(AnyIO worker thread, started 4556)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_user at 0x000001CF29E853A0>, db=<sqlalchemy.orm.session.Session object at 0x000001CF29EDB3...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000001CF29E96C40>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 37, in create_user
+    return user_services.create_user(db=db, user=user)
+           │             │              │        └ UserCreate(username='First24', email='firstUser24@gmail.com', password='Password1234$', role=<UserRole.admin: 'admin'>)
+           │             │              └ <sqlalchemy.orm.session.Session object at 0x000001CF29EDB310>
+           │             └ <function create_user at 0x000001CF28B3D940>
+           └ <module 'app.services.user_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\service...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\user_service.py", line 25, in create_user
+    raise HTTPException(status_code=409, detail="Username or email already in use")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 409: Username or email already in use
+2024-11-06 02:11:14.313 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:11:14.314 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:11:14.314 | INFO     | app.validators.user_validator:validate_username:16 - Validating username format
+2024-11-06 02:11:14.314 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:11:14.315 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:11:14.315 | INFO     | app.validators.shared_validator:letters_numbers_only:17 - Validating input
+2024-11-06 02:11:14.315 | INFO     | app.validators.shared_validator:letters_numbers_only:23 - Input passed validation
+2024-11-06 02:11:14.315 | INFO     | app.validators.user_validator:validate_username:30 - Username validation passed
+2024-11-06 02:11:14.316 | INFO     | app.validators.user_validator:validate_email:38 - Validating email format
+2024-11-06 02:11:14.316 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:11:14.316 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:11:14.316 | INFO     | app.validators.user_validator:validate_email:53 - Email validation passed
+2024-11-06 02:11:14.316 | INFO     | app.validators.user_validator:validate_password:61 - Validating password format
+2024-11-06 02:11:14.318 | INFO     | app.validators.user_validator:validate_password:82 - Password validation passed
+2024-11-06 02:11:14.318 | INFO     | app.validators.user_validator:validate_role:87 - Validating user role
+2024-11-06 02:11:14.318 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:11:14.318 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:11:14.319 | INFO     | app.validators.user_validator:validate_role:104 - User role validation passed
+2024-11-06 02:11:14.340 | INFO     | app.crud.user:get_by_username_email_id:15 - Searching for user by username: First24
+2024-11-06 02:11:14.345 | INFO     | app.crud.user:get_by_username_email_id:19 - User found by username: First24
+2024-11-06 02:16:03.017 | INFO     | app.services.user_service:create_user:11 - CREATING USER ACCOUNT
+2024-11-06 02:16:03.018 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:16:03.018 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:16:03.018 | INFO     | app.validators.user_validator:validate_username:16 - Validating username format
+2024-11-06 02:16:03.018 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:16:03.019 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:16:03.019 | INFO     | app.validators.shared_validator:letters_numbers_only:17 - Validating input
+2024-11-06 02:16:03.019 | INFO     | app.validators.shared_validator:letters_numbers_only:23 - Input passed validation
+2024-11-06 02:16:03.019 | INFO     | app.validators.user_validator:validate_username:30 - Username validation passed
+2024-11-06 02:16:03.019 | INFO     | app.validators.user_validator:validate_email:38 - Validating email format
+2024-11-06 02:16:03.019 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:16:03.021 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:16:03.021 | INFO     | app.validators.user_validator:validate_email:53 - Email validation passed
+2024-11-06 02:16:03.021 | INFO     | app.validators.user_validator:validate_password:61 - Validating password format
+2024-11-06 02:16:03.021 | INFO     | app.validators.user_validator:validate_password:82 - Password validation passed
+2024-11-06 02:16:03.021 | INFO     | app.validators.user_validator:validate_role:87 - Validating user role
+2024-11-06 02:16:03.022 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:16:03.022 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:16:03.022 | INFO     | app.validators.user_validator:validate_role:104 - User role validation passed
+2024-11-06 02:16:03.043 | INFO     | app.crud.user:get_by_username_email_id:15 - Searching for user by username: First24
+2024-11-06 02:16:03.048 | INFO     | app.crud.user:get_by_username_email_id:19 - User found by username: First24
+2024-11-06 02:16:03.049 | WARNING  | app.services.user_service:create_user:25 - USER ACCOUNT CANNOT BE CREATED AS THERE IS AN EXISTING USER WITH THE SAME USERNAME OR EMAIL
+2024-11-06 02:17:08.255 | INFO     | app.services.user_service:create_user:11 - CREATING USER ACCOUNT
+2024-11-06 02:17:08.256 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:17:08.256 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:17:08.257 | INFO     | app.validators.user_validator:validate_username:16 - Validating username format
+2024-11-06 02:17:08.257 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:17:08.257 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:17:08.257 | INFO     | app.validators.shared_validator:letters_numbers_only:17 - Validating input
+2024-11-06 02:17:08.257 | INFO     | app.validators.shared_validator:letters_numbers_only:23 - Input passed validation
+2024-11-06 02:17:08.257 | INFO     | app.validators.user_validator:validate_username:30 - Username validation passed
+2024-11-06 02:17:08.257 | INFO     | app.validators.user_validator:validate_email:38 - Validating email format
+2024-11-06 02:17:08.257 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:17:08.257 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:17:08.257 | INFO     | app.validators.user_validator:validate_email:53 - Email validation passed
+2024-11-06 02:17:08.257 | INFO     | app.validators.user_validator:validate_password:61 - Validating password format
+2024-11-06 02:17:08.258 | INFO     | app.validators.user_validator:validate_password:82 - Password validation passed
+2024-11-06 02:17:08.258 | INFO     | app.validators.user_validator:validate_role:87 - Validating user role
+2024-11-06 02:17:08.258 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:17:08.258 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:17:08.258 | INFO     | app.validators.user_validator:validate_role:104 - User role validation passed
+2024-11-06 02:17:08.258 | INFO     | app.crud.user:get_by_username_email_id:15 - Searching for user by username: First25
+2024-11-06 02:17:08.259 | INFO     | app.crud.user:get_by_username_email_id:23 - Searching for user by email: firstUser25@gmail.com
+2024-11-06 02:17:08.261 | INFO     | app.crud.user:get_by_username_email_id:38 - User not found with given parameters
+2024-11-06 02:17:08.261 | INFO     | app.crud.user:create:53 - Attempting to create user with username=First25, email=firstUser25@gmail.com
+2024-11-06 02:17:08.267 | INFO     | app.crud.user:create:70 - User created successfully with username=First25, email=firstUser25@gmail.com
+2024-11-06 02:17:08.267 | INFO     | app.services.user_service:create_user:33 - USER ACCOUNT HAS BEEN CREATED
+2024-11-06 02:18:18.065 | INFO     | app.services.user_service:create_user:11 - CREATING USER ACCOUNT
+2024-11-06 02:18:18.065 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:18:18.066 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:18:18.066 | INFO     | app.validators.user_validator:validate_username:16 - Validating username format
+2024-11-06 02:18:18.066 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:18:18.067 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:18:18.067 | INFO     | app.validators.shared_validator:letters_numbers_only:17 - Validating input
+2024-11-06 02:18:18.067 | INFO     | app.validators.shared_validator:letters_numbers_only:23 - Input passed validation
+2024-11-06 02:18:18.067 | INFO     | app.validators.user_validator:validate_username:30 - Username validation passed
+2024-11-06 02:18:18.067 | INFO     | app.validators.user_validator:validate_email:38 - Validating email format
+2024-11-06 02:18:18.068 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:18:18.068 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:18:18.068 | INFO     | app.validators.user_validator:validate_email:53 - Email validation passed
+2024-11-06 02:18:18.068 | INFO     | app.validators.user_validator:validate_password:61 - Validating password format
+2024-11-06 02:18:18.068 | INFO     | app.validators.user_validator:validate_password:82 - Password validation passed
+2024-11-06 02:18:18.068 | INFO     | app.validators.user_validator:validate_role:87 - Validating user role
+2024-11-06 02:18:18.069 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:18:18.069 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:18:18.069 | INFO     | app.validators.user_validator:validate_role:104 - User role validation passed
+2024-11-06 02:18:18.091 | INFO     | app.crud.user:get_by_username_email_id:15 - Searching for user by username: First25
+2024-11-06 02:18:18.095 | INFO     | app.crud.user:get_by_username_email_id:19 - User found by username: First25
+2024-11-06 02:18:18.096 | WARNING  | app.services.user_service:create_user:25 - 
+USER ACCOUNT CANNOT BE CREATED AS THERE IS AN EXISTING USER WITH THE SAME USERNAME OR EMAIL
+2024-11-06 02:18:52.639 | INFO     | app.services.user_service:create_user:11 - 
+CREATING USER ACCOUNT
+2024-11-06 02:18:52.640 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:18:52.641 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:18:52.641 | INFO     | app.validators.user_validator:validate_username:16 - Validating username format
+2024-11-06 02:18:52.641 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:18:52.641 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:18:52.641 | INFO     | app.validators.shared_validator:letters_numbers_only:17 - Validating input
+2024-11-06 02:18:52.642 | INFO     | app.validators.shared_validator:letters_numbers_only:23 - Input passed validation
+2024-11-06 02:18:52.642 | INFO     | app.validators.user_validator:validate_username:30 - Username validation passed
+2024-11-06 02:18:52.642 | INFO     | app.validators.user_validator:validate_email:38 - Validating email format
+2024-11-06 02:18:52.642 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:18:52.642 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:18:52.642 | INFO     | app.validators.user_validator:validate_email:53 - Email validation passed
+2024-11-06 02:18:52.643 | INFO     | app.validators.user_validator:validate_password:61 - Validating password format
+2024-11-06 02:18:52.643 | INFO     | app.validators.user_validator:validate_password:82 - Password validation passed
+2024-11-06 02:18:52.643 | INFO     | app.validators.user_validator:validate_role:87 - Validating user role
+2024-11-06 02:18:52.643 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:18:52.643 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:18:52.643 | INFO     | app.validators.user_validator:validate_role:104 - User role validation passed
+2024-11-06 02:18:52.664 | INFO     | app.crud.user:get_by_username_email_id:15 - Searching for user by username: First25
+2024-11-06 02:18:52.669 | INFO     | app.crud.user:get_by_username_email_id:19 - User found by username: First25
+2024-11-06 02:18:52.670 | WARNING  | app.services.user_service:create_user:25 - 
+USER ACCOUNT CANNOT BE CREATED AS THERE IS AN EXISTING USER WITH THE SAME USERNAME OR EMAIL
+2024-11-06 02:19:07.948 | INFO     | app.services.user_service:create_user:11 - 
+CREATING USER ACCOUNT
+2024-11-06 02:19:07.949 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:19:07.949 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:19:07.949 | INFO     | app.validators.user_validator:validate_username:16 - Validating username format
+2024-11-06 02:19:07.949 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:19:07.950 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:19:07.950 | INFO     | app.validators.shared_validator:letters_numbers_only:17 - Validating input
+2024-11-06 02:19:07.950 | INFO     | app.validators.shared_validator:letters_numbers_only:23 - Input passed validation
+2024-11-06 02:19:07.950 | INFO     | app.validators.user_validator:validate_username:30 - Username validation passed
+2024-11-06 02:19:07.950 | INFO     | app.validators.user_validator:validate_email:38 - Validating email format
+2024-11-06 02:19:07.951 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:19:07.951 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:19:07.951 | INFO     | app.validators.user_validator:validate_email:53 - Email validation passed
+2024-11-06 02:19:07.951 | INFO     | app.validators.user_validator:validate_password:61 - Validating password format
+2024-11-06 02:19:07.951 | INFO     | app.validators.user_validator:validate_password:82 - Password validation passed
+2024-11-06 02:19:07.952 | INFO     | app.validators.user_validator:validate_role:87 - Validating user role
+2024-11-06 02:19:07.952 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:19:07.952 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:19:07.952 | INFO     | app.validators.user_validator:validate_role:104 - User role validation passed
+2024-11-06 02:19:07.952 | INFO     | app.crud.user:get_by_username_email_id:15 - Searching for user by username: First26
+2024-11-06 02:19:07.953 | INFO     | app.crud.user:get_by_username_email_id:23 - Searching for user by email: firstUser26@gmail.com
+2024-11-06 02:19:07.955 | INFO     | app.crud.user:get_by_username_email_id:38 - User not found with given parameters
+2024-11-06 02:19:07.955 | INFO     | app.crud.user:create:53 - Attempting to create user with username=First26, email=firstUser26@gmail.com
+2024-11-06 02:19:07.960 | INFO     | app.crud.user:create:70 - User created successfully with username=First26, email=firstUser26@gmail.com
+2024-11-06 02:19:07.960 | INFO     | app.services.user_service:create_user:33 - 
+USER ACCOUNT HAS BEEN CREATED
+2024-11-06 02:22:13.898 | INFO     | app.services.user_service:create_user:11 - 
+CREATING USER ACCOUNT
+2024-11-06 02:22:13.899 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:22:13.900 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:22:13.900 | INFO     | app.validators.user_validator:validate_username:16 - Validating username format
+2024-11-06 02:22:13.901 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:22:13.901 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:22:13.901 | INFO     | app.validators.shared_validator:letters_numbers_only:17 - Validating input
+2024-11-06 02:22:13.901 | INFO     | app.validators.shared_validator:letters_numbers_only:23 - Input passed validation
+2024-11-06 02:22:13.902 | INFO     | app.validators.user_validator:validate_username:30 - Username validation passed
+2024-11-06 02:22:13.902 | INFO     | app.validators.user_validator:validate_email:38 - Validating email format
+2024-11-06 02:22:13.902 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:22:13.902 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:22:13.902 | INFO     | app.validators.user_validator:validate_email:53 - Email validation passed
+2024-11-06 02:22:13.903 | INFO     | app.validators.user_validator:validate_password:61 - Validating password format
+2024-11-06 02:22:13.903 | INFO     | app.validators.user_validator:validate_password:82 - Password validation passed
+2024-11-06 02:22:13.903 | INFO     | app.validators.user_validator:validate_role:87 - Validating user role
+2024-11-06 02:22:13.903 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:22:13.903 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:22:13.903 | INFO     | app.validators.user_validator:validate_role:104 - User role validation passed
+2024-11-06 02:22:13.925 | INFO     | app.crud.user_crud:get_by_username_email_id:15 - Searching for user by username: First26
+2024-11-06 02:22:13.929 | INFO     | app.crud.user_crud:get_by_username_email_id:19 - User found by username: First26
+2024-11-06 02:22:13.930 | WARNING  | app.services.user_service:create_user:25 - 
+USER ACCOUNT CANNOT BE CREATED AS THERE IS AN EXISTING USER WITH THE SAME USERNAME OR EMAIL
+2024-11-06 02:22:51.892 | INFO     | app.services.user_service:create_user:11 - 
+CREATING USER ACCOUNT
+2024-11-06 02:22:51.892 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:22:51.893 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:22:51.893 | INFO     | app.validators.user_validator:validate_username:16 - Validating username format
+2024-11-06 02:22:51.893 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:22:51.893 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:22:51.893 | INFO     | app.validators.shared_validator:letters_numbers_only:17 - Validating input
+2024-11-06 02:22:51.894 | INFO     | app.validators.shared_validator:letters_numbers_only:23 - Input passed validation
+2024-11-06 02:22:51.894 | INFO     | app.validators.user_validator:validate_username:30 - Username validation passed
+2024-11-06 02:22:51.894 | INFO     | app.validators.user_validator:validate_email:38 - Validating email format
+2024-11-06 02:22:51.894 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:22:51.894 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:22:51.894 | INFO     | app.validators.user_validator:validate_email:53 - Email validation passed
+2024-11-06 02:22:51.895 | INFO     | app.validators.user_validator:validate_password:61 - Validating password format
+2024-11-06 02:22:51.895 | INFO     | app.validators.user_validator:validate_password:82 - Password validation passed
+2024-11-06 02:22:51.895 | INFO     | app.validators.user_validator:validate_role:87 - Validating user role
+2024-11-06 02:22:51.895 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:22:51.895 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:22:51.895 | INFO     | app.validators.user_validator:validate_role:104 - User role validation passed
+2024-11-06 02:22:51.895 | INFO     | app.crud.user_crud:get_by_username_email_id:15 - Searching for user by username: First27
+2024-11-06 02:22:51.896 | INFO     | app.crud.user_crud:get_by_username_email_id:23 - Searching for user by email: firstUser27@gmail.com
+2024-11-06 02:22:51.898 | INFO     | app.crud.user_crud:get_by_username_email_id:38 - User not found with given parameters
+2024-11-06 02:22:51.898 | INFO     | app.crud.user_crud:create:53 - Attempting to create user with username=First27, email=firstUser27@gmail.com
+2024-11-06 02:22:51.904 | INFO     | app.crud.user_crud:create:70 - User created successfully with username=First27, email=firstUser27@gmail.com
+2024-11-06 02:22:51.904 | INFO     | app.services.user_service:create_user:33 - 
+USER ACCOUNT HAS BEEN CREATED
+2024-11-06 02:23:36.853 | INFO     | app.services.user_service:create_user:11 - 
+CREATING USER ACCOUNT
+2024-11-06 02:23:36.855 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:23:36.855 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:23:36.856 | INFO     | app.validators.user_validator:validate_username:16 - Validating username format
+2024-11-06 02:23:36.856 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:23:36.857 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:23:36.857 | INFO     | app.validators.shared_validator:letters_numbers_only:17 - Validating input
+2024-11-06 02:23:36.857 | INFO     | app.validators.shared_validator:letters_numbers_only:23 - Input passed validation
+2024-11-06 02:23:36.857 | INFO     | app.validators.user_validator:validate_username:30 - Username validation passed
+2024-11-06 02:23:36.859 | INFO     | app.validators.user_validator:validate_email:38 - Validating email format
+2024-11-06 02:23:36.859 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:23:36.860 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:23:36.860 | INFO     | app.validators.user_validator:validate_email:53 - Email validation passed
+2024-11-06 02:23:36.860 | INFO     | app.validators.user_validator:validate_password:61 - Validating password format
+2024-11-06 02:23:36.862 | INFO     | app.validators.user_validator:validate_password:82 - Password validation passed
+2024-11-06 02:23:36.862 | INFO     | app.crud.user_crud:get_by_username_email_id:15 - Searching for user by username: First28
+2024-11-06 02:23:36.864 | INFO     | app.crud.user_crud:get_by_username_email_id:23 - Searching for user by email: firstUser28@gmail.com
+2024-11-06 02:23:36.865 | INFO     | app.crud.user_crud:get_by_username_email_id:38 - User not found with given parameters
+2024-11-06 02:23:36.865 | INFO     | app.crud.user_crud:create:53 - Attempting to create user with username=First28, email=firstUser28@gmail.com
+2024-11-06 02:23:36.868 | INFO     | app.crud.user_crud:create:70 - User created successfully with username=First28, email=firstUser28@gmail.com
+2024-11-06 02:23:36.868 | INFO     | app.services.user_service:create_user:33 - 
+USER ACCOUNT HAS BEEN CREATED
+2024-11-06 02:24:35.755 | INFO     | app.services.user_service:create_user:11 - 
+CREATING USER ACCOUNT
+2024-11-06 02:24:35.756 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:24:35.757 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:24:35.757 | INFO     | app.validators.user_validator:validate_username:16 - Validating username format
+2024-11-06 02:24:35.757 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:24:35.758 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:24:35.758 | INFO     | app.validators.shared_validator:letters_numbers_only:17 - Validating input
+2024-11-06 02:24:35.758 | INFO     | app.validators.shared_validator:letters_numbers_only:23 - Input passed validation
+2024-11-06 02:24:35.759 | INFO     | app.validators.user_validator:validate_username:30 - Username validation passed
+2024-11-06 02:24:35.759 | INFO     | app.validators.user_validator:validate_email:38 - Validating email format
+2024-11-06 02:24:35.759 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:24:35.759 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:24:35.760 | INFO     | app.validators.user_validator:validate_email:53 - Email validation passed
+2024-11-06 02:24:35.760 | INFO     | app.validators.user_validator:validate_password:61 - Validating password format
+2024-11-06 02:24:35.760 | INFO     | app.validators.user_validator:validate_password:82 - Password validation passed
+2024-11-06 02:24:35.780 | INFO     | app.crud.user_crud:get_by_username_email_id:15 - Searching for user by username: First29
+2024-11-06 02:24:35.785 | INFO     | app.crud.user_crud:get_by_username_email_id:23 - Searching for user by email: firstUser29@gmail.com
+2024-11-06 02:24:35.787 | INFO     | app.crud.user_crud:get_by_username_email_id:38 - User not found with given parameters
+2024-11-06 02:24:35.787 | INFO     | app.crud.user_crud:create:53 - Attempting to create user with username=First29, email=firstUser29@gmail.com
+2024-11-06 02:24:35.792 | INFO     | app.crud.user_crud:create:70 - User created successfully with username=First29, email=firstUser29@gmail.com
+2024-11-06 02:24:35.792 | INFO     | app.services.user_service:create_user:34 - 
+USER ACCOUNT HAS BEEN CREATED
+2024-11-06 02:25:45.888 | INFO     | app.services.user_service:create_user:11 - 
+CREATING USER ACCOUNT
+2024-11-06 02:25:45.889 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:25:45.890 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:25:45.890 | INFO     | app.validators.user_validator:validate_username:16 - Validating username format
+2024-11-06 02:25:45.891 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:25:45.891 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:25:45.891 | INFO     | app.validators.shared_validator:letters_numbers_only:17 - Validating input
+2024-11-06 02:25:45.892 | INFO     | app.validators.shared_validator:letters_numbers_only:23 - Input passed validation
+2024-11-06 02:25:45.892 | INFO     | app.validators.user_validator:validate_username:30 - Username validation passed
+2024-11-06 02:25:45.893 | INFO     | app.validators.user_validator:validate_email:38 - Validating email format
+2024-11-06 02:25:45.893 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:25:45.893 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:25:45.893 | INFO     | app.validators.user_validator:validate_email:53 - Email validation passed
+2024-11-06 02:25:45.893 | INFO     | app.validators.user_validator:validate_password:61 - Validating password format
+2024-11-06 02:25:45.894 | INFO     | app.validators.user_validator:validate_password:82 - Password validation passed
+2024-11-06 02:25:45.894 | INFO     | app.services.user_service:create_user:21 - Got empty user role, proceeding further
+2024-11-06 02:25:45.916 | INFO     | app.crud.user_crud:get_by_username_email_id:15 - Searching for user by username: First30
+2024-11-06 02:25:45.922 | INFO     | app.crud.user_crud:get_by_username_email_id:23 - Searching for user by email: firstUser29@gmail.com
+2024-11-06 02:25:45.924 | INFO     | app.crud.user_crud:get_by_username_email_id:27 - User found by email: firstUser29@gmail.com
+2024-11-06 02:25:45.924 | WARNING  | app.services.user_service:create_user:28 - 
+USER ACCOUNT CANNOT BE CREATED AS THERE IS AN EXISTING USER WITH THE SAME USERNAME OR EMAIL
+2024-11-06 02:25:57.824 | INFO     | app.services.user_service:create_user:11 - 
+CREATING USER ACCOUNT
+2024-11-06 02:25:57.825 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:25:57.825 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:25:57.825 | INFO     | app.validators.user_validator:validate_username:16 - Validating username format
+2024-11-06 02:25:57.826 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:25:57.826 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:25:57.826 | INFO     | app.validators.shared_validator:letters_numbers_only:17 - Validating input
+2024-11-06 02:25:57.826 | INFO     | app.validators.shared_validator:letters_numbers_only:23 - Input passed validation
+2024-11-06 02:25:57.826 | INFO     | app.validators.user_validator:validate_username:30 - Username validation passed
+2024-11-06 02:25:57.826 | INFO     | app.validators.user_validator:validate_email:38 - Validating email format
+2024-11-06 02:25:57.826 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:25:57.827 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:25:57.827 | INFO     | app.validators.user_validator:validate_email:53 - Email validation passed
+2024-11-06 02:25:57.827 | INFO     | app.validators.user_validator:validate_password:61 - Validating password format
+2024-11-06 02:25:57.827 | INFO     | app.validators.user_validator:validate_password:82 - Password validation passed
+2024-11-06 02:25:57.827 | INFO     | app.services.user_service:create_user:21 - Got empty user role, proceeding further
+2024-11-06 02:25:57.828 | INFO     | app.crud.user_crud:get_by_username_email_id:15 - Searching for user by username: First30
+2024-11-06 02:25:57.829 | INFO     | app.crud.user_crud:get_by_username_email_id:23 - Searching for user by email: firstUser30@gmail.com
+2024-11-06 02:25:57.829 | INFO     | app.crud.user_crud:get_by_username_email_id:38 - User not found with given parameters
+2024-11-06 02:25:57.830 | INFO     | app.crud.user_crud:create:53 - Attempting to create user with username=First30, email=firstUser30@gmail.com
+2024-11-06 02:25:57.835 | INFO     | app.crud.user_crud:create:70 - User created successfully with username=First30, email=firstUser30@gmail.com
+2024-11-06 02:25:57.835 | INFO     | app.services.user_service:create_user:36 - 
+USER ACCOUNT HAS BEEN CREATED
+2024-11-06 02:28:34.486 | INFO     | app.services.user_service:create_user:11 - 
+CREATING USER ACCOUNT
+2024-11-06 02:28:34.487 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:28:34.487 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:28:34.487 | INFO     | app.validators.user_validator:validate_username:16 - Validating username format
+2024-11-06 02:28:34.488 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:28:34.488 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:28:34.488 | INFO     | app.validators.shared_validator:letters_numbers_only:17 - Validating input
+2024-11-06 02:28:34.488 | INFO     | app.validators.shared_validator:letters_numbers_only:23 - Input passed validation
+2024-11-06 02:28:34.488 | INFO     | app.validators.user_validator:validate_username:30 - Username validation passed
+2024-11-06 02:28:34.488 | INFO     | app.validators.user_validator:validate_email:38 - Validating email format
+2024-11-06 02:28:34.489 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:28:34.489 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:28:34.489 | INFO     | app.validators.user_validator:validate_email:53 - Email validation passed
+2024-11-06 02:28:34.489 | INFO     | app.validators.user_validator:validate_password:61 - Validating password format
+2024-11-06 02:28:34.489 | INFO     | app.validators.user_validator:validate_password:82 - Password validation passed
+2024-11-06 02:28:34.489 | INFO     | app.services.user_service:create_user:21 - Got empty user role, proceeding further
+2024-11-06 02:28:34.512 | INFO     | app.crud.user_crud:get_by_username_email_id:15 - Searching for user by username: First30
+2024-11-06 02:28:34.519 | INFO     | app.crud.user_crud:get_by_username_email_id:19 - User found by username: First30
+2024-11-06 02:28:34.519 | WARNING  | app.services.user_service:create_user:28 - 
+USER ACCOUNT CANNOT BE CREATED AS THERE IS AN EXISTING USER WITH THE SAME USERNAME OR EMAIL
+2024-11-06 02:38:31.349 | INFO     | app.services.user_service:get_user_account_data:42 - 
+GETTING USER ACCOUNT DATA
+2024-11-06 02:38:31.350 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:38:31.351 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:38:31.372 | INFO     | app.crud.user_crud:get_by_username_email_id:15 - Searching for user by username: First10
+2024-11-06 02:38:31.378 | INFO     | app.crud.user_crud:get_by_username_email_id:19 - User found by username: First10
+2024-11-06 02:38:31.378 | INFO     | app.services.user_service:get_user_account_data:50 - 
+USER ACCOUNT DATA HAS BEEN PARSED
+2024-11-06 02:39:23.341 | INFO     | app.services.user_service:get_user_account_data:42 - 
+GETTING USER ACCOUNT DATA
+2024-11-06 02:39:23.341 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:29 - Validating input
+2024-11-06 02:39:23.342 | INFO     | app.validators.shared_validator:validate_sql_malicious_input:60 - Input passed validation
+2024-11-06 02:39:23.364 | INFO     | app.crud.user_crud:get_by_username_email_id:15 - Searching for user by username: First10
+2024-11-06 02:39:23.374 | INFO     | app.crud.user_crud:get_by_username_email_id:19 - User found by username: First10
+2024-11-06 02:39:23.374 | INFO     | app.services.user_service:get_user_account_data:50 - 
+USER ACCOUNT DATA HAS BEEN PARSED

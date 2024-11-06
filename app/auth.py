@@ -4,7 +4,7 @@ from passlib.context import CryptContext
 from fastapi import Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from . import crud, models, schemas
-from .database import get_db
+from .config.database import get_db
 
 SECRET_KEY = "your-secret-key"
 ALGORITHM = "HS256"
