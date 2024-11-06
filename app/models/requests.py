@@ -21,8 +21,8 @@ class UserCreate(UserBase):
 
 class UserUpdatePassword(BaseModel):
     email:str
+    password: str
     new_email: Optional[str] = Field(None)
-    old_password: str
     new_password: Optional[str] = Field(None)
 
     class Config:

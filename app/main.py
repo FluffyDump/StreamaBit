@@ -34,7 +34,7 @@ def get_db():
         description="This endpoint allows you to create a new user by providing a username, email, password and role(optional). The input is validated for malicious content, and both username and email must follow the appropriate format. If the username or email is already in use, a 409 error is returned.",
         tags=["User Management"])
 def create_user(user: requestModel.UserCreate, request: Request, db: Session = Depends(get_db)):
-    return user_services.create_user(db=db, user=user)
+    return user_services.create_user(db=db, request=request, user=user)
 
 
 @app.get("/user/{username}", response_model=responseModel.User,
@@ -45,39 +45,20 @@ def read_user(username: str, db: Session = Depends(get_db)):
     return user_services.get_user_account_data(db=db, username=username)
 
 
-
-
-
-
 @app.patch("/user/{username}", response_model=responseModel.User, status_code=200, 
         summary="Update user password or email", 
         description="Update the password or email address of a user by providing the username, email, new_email(optional), old password, and new password(optional). The input is validated to ensure that the old and new passwords(or email addresses) are different. If the user is not found, a 404 error is returned.",
-        tags=["User Management"]) #Done U
+        tags=["User Management"])
 def update_user_credentials(username: str, data: requestModel.UserUpdatePassword, db: Session = Depends(get_db)):
+    return user_services.update_user(db=db, username=username, data=data)
 
-    validators.check_malicious_input(username, data.email, data.new_email, data.old_password, data.new_password)
 
-    if data.new_email is None and data.new_password is None:
-        raise HTTPException(status_code=400, detail="No new_email or new_password provided")
 
-    validators.validate_username(username)
-    validators.validate_email(data.email)
-    validators.validate_email(data.new_email)
-    validators.validate_password(data.old_password)
-    validators.validate_password(data.new_password)
 
-    if data.old_password == data.new_password:
-        raise HTTPException(status_code=400, detail="Old and new passwords must be different")
-    elif data.email == data.new_email:
-        raise HTTPException(status_code=400, detail="Old and new email addresses must be different")
 
-    db_user = crud.get_all_user_data(db=db, username=username, email=data.email, password_hash=data.old_password)
 
-    if db_user is None:
-        raise HTTPException(status_code=404, detail="User not found")
-    
-    crud.update_user(db=db, user_id=db_user.user_id, new_password=data.new_password, new_email=data.new_email)
-    return db_user
+
+
 
 @app.delete("/users/{username}", status_code=204, 
         summary="Delete a user", 

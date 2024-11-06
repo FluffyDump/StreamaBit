@@ -6,14 +6,6 @@ import app.models.requests as requestModel
 import app.models.responses as responseModel
 from sqlalchemy import exc
 
-
-def get_all_user_data(db: Session, username: str, email: str, password_hash: str):
-    query = db.query(models.User)
-    
-    query = query.filter(models.User.username == username, models.User.email == email, models.User.password_hash == password_hash)
-
-    return query.first()
-
 def delete_user(db: Session, user_id: int):
     db_user = db.query(models.User).filter(models.User.user_id == user_id).first()
 
