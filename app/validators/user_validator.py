@@ -10,6 +10,7 @@ MIN_EMAIL_LENGTH = 5
 MAX_EMAIL_LENGTH = 100
 
 MIN_PASSWORD_LENGTH = 8
+MAX_PASSWORD_LENGTH = 255
 
 #Validate username to make sure it has no special symbols, SQL queries.
 def validate_username(username: str):
@@ -45,7 +46,7 @@ def validate_email(email: str):
             logger.warning(f"Email length out of bounds, provided email: {email}")
             raise shared_validator.ValidationException(f"Email must be between {MIN_EMAIL_LENGTH} and {MAX_EMAIL_LENGTH} characters long")
 
-        email_pattern = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+        email_pattern = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$')
         if not email_pattern.match(email):
             logger.warning(f"Provided email is invalid: {email}")
             raise shared_validator.ValidationException("Invalid email format")
@@ -64,9 +65,15 @@ def validate_password(password: str):
         logger.warning("No password provided") 
         raise shared_validator.ValidationException("Missing password") 
     
-    if len(password) < MIN_PASSWORD_LENGTH: 
+    password_length = len(password)
+    
+    if password_length < MIN_PASSWORD_LENGTH: 
         logger.warning("Provided password is too short") 
         raise shared_validator.ValidationException(f"Password must be at least {MIN_PASSWORD_LENGTH} characters long") 
+    
+    if password_length > MAX_PASSWORD_LENGTH:
+        logger.warning("Provided password is too long") 
+        raise shared_validator.ValidationException(f"Password length cannot exceed {MAX_PASSWORD_LENGTH} characters") 
     
     if not re.search(r'[A-Z]', password): 
         logger.warning("Password must contain at least one uppercase letter") 

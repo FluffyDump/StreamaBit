@@ -38,13 +38,14 @@ def create_user(db: Session, user: requestModel.UserCreate):
     return user
 
 
+#Parse user account specific data - email and account creation date. Method requires user username to parse account data.
 def get_user_account_data(db: Session, username: str):
     logger.info("\nGETTING USER ACCOUNT DATA") 
     shared_validator.validate_sql_malicious_input(username)
 
     db_user = user_crud.get_by_username_email_id(db=db, username=username)
     if db_user is None:
-        logger.warning(f"\nCANNOT GET USER ACCOUNT DATA - USER NOT FOUND") 
+        logger.warning(f"\nCANNOT GET USER ACCOUNT DATA - USER: {username} HAS NOT BEEN FOUND") 
         raise HTTPException(status_code=404, detail="User not found")
     
     logger.info("\nUSER ACCOUNT DATA HAS BEEN PARSED") 

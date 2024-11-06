@@ -212,3 +212,170 @@ Traceback (most recent call last):
           └ <class 'fastapi.exceptions.HTTPException'>
 
 fastapi.exceptions.HTTPException: 409: Username or email already in use
+2024-11-06 02:56:31.804 | ERROR    | app.crud.user_crud:create:77 - Exception with username=First33, email=firstUser33@gmail.com, role:UserRole.registered_user: (psycopg2.errors.StringDataRightTruncation) value too long for type character varying(255)
+
+[SQL: INSERT INTO "user" (username, email, password_hash, role) VALUES (%(username)s, %(email)s, %(password_hash)s, %(role)s) RETURNING "user".user_id, "user".created_at]
+[parameters: {'username': 'First33', 'email': 'firstUser33@gmail.com', 'password_hash': 'Password1234$ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss', 'role': 'registered_user'}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    │    │       └ <function DefaultDialect.do_execute at 0x000002C6EAE8C400>
+    │    └ <sqlalchemy.dialects.postgresql.psycopg2.PGDialect_psycopg2 object at 0x000002C6EB254850>
+    └ <sqlalchemy.engine.base.Connection object at 0x000002C6ECA6A710>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+    │      │       │          └ {'username': 'First33', 'email': 'firstUser33@gmail.com', 'password_hash': 'Password1234$ssssssssssssssssssssssssssssssssssss...
+    │      │       └ 'INSERT INTO "user" (username, email, password_hash, role) VALUES (%(username)s, %(email)s, %(password_hash)s, %(role)s) RETU...
+    │      └ <method 'execute' of 'psycopg2.extensions.cursor' objects>
+    └ <cursor object at 0x000002C6ECA5CC80; closed: -1>
+
+psycopg2.errors.StringDataRightTruncation: value too long for type character varying(255)
+
+
+
+The above exception was the direct cause of the following exception:
+
+
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000002C6E7104860>
+    └ <WorkerThread(AnyIO worker thread, started 9532)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000002C6EC5C7B00>
+    └ <WorkerThread(AnyIO worker thread, started 9532)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_user at 0x000002C6EC579300>, db=<sqlalchemy.orm.session.Session object at 0x000002C6EC5BB3...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000002C6EB57BF00>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 37, in create_user
+    return user_services.create_user(db=db, user=user)
+           │             │              │        └ UserCreate(username='First33', email='firstUser33@gmail.com', password='Password1234$ssssssssssssssssssssssssssssssssssssssss...
+           │             │              └ <sqlalchemy.orm.session.Session object at 0x000002C6EC5BB310>
+           │             └ <function create_user at 0x000002C6EB56D760>
+           └ <module 'app.services.user_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\service...
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\user_service.py", line 33, in create_user
+    user = user_crud.create(db=db, user=user)
+           │         │         │        └ UserCreate(username='First33', email='firstUser33@gmail.com', password='Password1234$ssssssssssssssssssssssssssssssssssssssss...
+           │         │         └ <sqlalchemy.orm.session.Session object at 0x000002C6EC5BB310>
+           │         └ <function create at 0x000002C6EB56DE40>
+           └ <module 'app.crud.user_crud' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\crud\\user_cru...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\crud\user_crud.py", line 68, in create
+    db.commit()
+    │  └ <function Session.commit at 0x000002C6EB151A80>
+    └ <sqlalchemy.orm.session.Session object at 0x000002C6EC5BB310>
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 2028, in commit
+    trans.commit(_to_root=True)
+    │     └ <function SessionTransaction.commit at 0x000002C6EB150B80>
+    └ <sqlalchemy.orm.session.SessionTransaction object at 0x000002C6EC5964E0>
+  File "<string>", line 2, in commit
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                │  │      │      └ {'_to_root': True}
+                │  │      └ ()
+                │  └ <sqlalchemy.orm.session.SessionTransaction object at 0x000002C6EC5964E0>
+                └ <function SessionTransaction.commit at 0x000002C6EB1509A0>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 1313, in commit
+    self._prepare_impl()
+    │    └ <function SessionTransaction._prepare_impl at 0x000002C6EB150860>
+    └ <sqlalchemy.orm.session.SessionTransaction object at 0x000002C6EC5964E0>
+  File "<string>", line 2, in _prepare_impl
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                │  │      │      └ {}
+                │  │      └ ()
+                │  └ <sqlalchemy.orm.session.SessionTransaction object at 0x000002C6EC5964E0>
+                └ <function SessionTransaction._prepare_impl at 0x000002C6EB1507C0>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 1288, in _prepare_impl
+    self.session.flush()
+    │    │       └ <function Session.flush at 0x000002C6EB1609A0>
+    │    └ <sqlalchemy.orm.session.Session object at 0x000002C6EC5BB310>
+    └ <sqlalchemy.orm.session.SessionTransaction object at 0x000002C6EC5964E0>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 4352, in flush
+    self._flush(objects)
+    │    │      └ None
+    │    └ <function Session._flush at 0x000002C6EB160B80>
+    └ <sqlalchemy.orm.session.Session object at 0x000002C6EC5BB310>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 4487, in _flush
+    with util.safe_reraise():
+         │    └ <class 'sqlalchemy.util.langhelpers.safe_reraise'>
+         └ <module 'sqlalchemy.util' from 'C:\\Users\\tomas\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\sqlalchemy...
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+          │         │              └ <traceback object at 0x000002C6ECA6B380>
+          │         └ <method 'with_traceback' of 'BaseException' objects>
+          └ DataError('(psycopg2.errors.StringDataRightTruncation) value too long for type character varying(255)\n')
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 4448, in _flush
+    flush_context.execute()
+    │             └ <function UOWTransaction.execute at 0x000002C6EB149440>
+    └ <sqlalchemy.orm.unitofwork.UOWTransaction object at 0x000002C6ECA57AD0>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 466, in execute
+    rec.execute(self)
+    │   │       └ <sqlalchemy.orm.unitofwork.UOWTransaction object at 0x000002C6ECA57AD0>
+    │   └ <function SaveUpdateAll.execute at 0x000002C6EB149F80>
+    └ SaveUpdateAll(Mapper[User(user)])
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+    │    │         │               └ <function save_obj at 0x000002C6EB0F5B20>
+    │    │         └ <module 'sqlalchemy.orm.persistence' from 'C:\\Users\\tomas\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\...
+    │    └ <module 'sqlalchemy.util.preloaded' from 'C:\\Users\\tomas\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\...
+    └ <module 'sqlalchemy.util' from 'C:\\Users\\tomas\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\sqlalchemy...
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+    └ <function _emit_insert_statements at 0x000002C6EB140220>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1233, in _emit_insert_statements
+    result = connection.execute(
+             │          └ <function Connection.execute at 0x000002C6EADC8400>
+             └ <sqlalchemy.engine.base.Connection object at 0x000002C6ECA6A710>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1418, in execute
+    return meth(
+           └ <bound method ClauseElement._execute_on_connection of <sqlalchemy.sql.dml.Insert object at 0x000002C6ECA6AC50>>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\sql\elements.py", line 515, in _execute_on_connection
+    return connection._execute_clauseelement(
+           │          └ <function Connection._execute_clauseelement at 0x000002C6EADC8720>
+           └ <sqlalchemy.engine.base.Connection object at 0x000002C6ECA6A710>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1640, in _execute_clauseelement
+    ret = self._execute_context(
+          │    └ <function Connection._execute_context at 0x000002C6EADC8900>
+          └ <sqlalchemy.engine.base.Connection object at 0x000002C6ECA6A710>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           │    └ <function Connection._exec_single_context at 0x000002C6EADC89A0>
+           └ <sqlalchemy.engine.base.Connection object at 0x000002C6ECA6A710>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+    │    └ <function Connection._handle_dbapi_exception at 0x000002C6EADC8C20>
+    └ <sqlalchemy.engine.base.Connection object at 0x000002C6ECA6A710>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+          │                    │              │                 └ StringDataRightTruncation('value too long for type character varying(255)\n')
+          │                    │              └ (<class 'psycopg2.errors.StringDataRightTruncation'>, StringDataRightTruncation('value too long for type character varying(25...
+          │                    └ <method 'with_traceback' of 'BaseException' objects>
+          └ DataError('(psycopg2.errors.StringDataRightTruncation) value too long for type character varying(255)\n')
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+    │    │       └ <function DefaultDialect.do_execute at 0x000002C6EAE8C400>
+    │    └ <sqlalchemy.dialects.postgresql.psycopg2.PGDialect_psycopg2 object at 0x000002C6EB254850>
+    └ <sqlalchemy.engine.base.Connection object at 0x000002C6ECA6A710>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+    │      │       │          └ {'username': 'First33', 'email': 'firstUser33@gmail.com', 'password_hash': 'Password1234$ssssssssssssssssssssssssssssssssssss...
+    │      │       └ 'INSERT INTO "user" (username, email, password_hash, role) VALUES (%(username)s, %(email)s, %(password_hash)s, %(role)s) RETU...
+    │      └ <method 'execute' of 'psycopg2.extensions.cursor' objects>
+    └ <cursor object at 0x000002C6ECA5CC80; closed: -1>
+
+sqlalchemy.exc.DataError: (psycopg2.errors.StringDataRightTruncation) value too long for type character varying(255)
+
+[SQL: INSERT INTO "user" (username, email, password_hash, role) VALUES (%(username)s, %(email)s, %(password_hash)s, %(role)s) RETURNING "user".user_id, "user".created_at]
+[parameters: {'username': 'First33', 'email': 'firstUser33@gmail.com', 'password_hash': 'Password1234$ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss', 'role': 'registered_user'}]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)
