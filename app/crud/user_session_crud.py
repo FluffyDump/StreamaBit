@@ -8,7 +8,7 @@ from fastapi import HTTPException
 #Create a new user session entry in database by provided user ip
 def create(db: Session, user_id: int, user_ip: str):
     try:
-        logger.info(f"Attempting to create user session")
+        logger.info("Attempting to create user session")
 
         if user_id and user_ip:
             db_session = models.UserSession(
@@ -17,9 +17,9 @@ def create(db: Session, user_id: int, user_ip: str):
             )
 
             db.add(db_session)
-            logger.info(f"Session prepared for creation, waiting for transaction commit")
+            logger.info("Session prepared for creation, waiting for transaction commit")
         else:
-            logger.error(f"Session cannot be created - user_id or user_ip not provided")
+            logger.error("Session cannot be created - user_id or user_ip not provided")
 
     except IntegrityError as ex:
         logger.exception(f"IntegrityError with user_id={user_id}, user_ip={user_ip}: {ex}")

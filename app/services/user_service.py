@@ -6,20 +6,19 @@ from sqlalchemy.orm import Session
 from fastapi import HTTPException
 from fastapi import Request
 
-#Creates a new user - validate inputs, roles, jwt access token, hash the password and save freshly created user
+#Create a new user - validate inputs, roles, jwt access token, hash the password and save freshly created user
 def create_user(db: Session, request: Request, user: requestModel.UserCreate):
     try:
-        logger.info("\nCREATING USER ACCOUNT") 
-        shared_validator.validate_sql_malicious_input(user.username, user.email, user.password)
+        logger.info("\nCREATING USER ACCOUNT")
         user_validator.validate_username(user.username)
         user_validator.validate_email(user.email)
         user_validator.validate_password(user.password)
         
         if user.role:
-            logger.info(f"User provided role: {user.role.value}") 
+            logger.info(f"USER PROVIDED ROLE: {user.role.value}") 
             user_validator.validate_role(user.role.value)
         else:
-            logger.info("Got empty user role, proceeding further") 
+            logger.info("GOT EMPTY USER ROLE, PROCEEDING FURTHER") 
 
         #Check role if user.role.value == databaseModel.UserRole.admin.value:
         #Add admin validation check here in the future
@@ -70,7 +69,6 @@ def get_user_account_data(db: Session, username: str):
 def update_user(db: Session, username: str, data: requestModel.UserUpdatePassword):
     try:
         logger.info("\nUPDATING USER ACCOUNT DATA")
-        shared_validator.validate_sql_malicious_input(username, data.email, data.new_email, data.password, data.new_password)
 
         if data.new_email is None and data.new_password is None:
             logger.warning("CANNOT UPDATE USER ACCOUNT DATA - NO new_email OR new_password PROVIDED")
@@ -119,7 +117,6 @@ def update_user(db: Session, username: str, data: requestModel.UserUpdatePasswor
 def remove_user(db: Session, username: str, data: requestModel.UserDelete):
     try:
         logger.info("\nREMOVING USER ACCOUNT")
-        shared_validator.validate_sql_malicious_input(username, data.email, data.password)
         user_validator.validate_username(username)
         user_validator.validate_email(data.email)
         user_validator.validate_password(data.password)

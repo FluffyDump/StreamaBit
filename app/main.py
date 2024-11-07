@@ -1,17 +1,17 @@
 from fastapi import FastAPI, Depends, HTTPException, Request
-from fastapi.exceptions import RequestValidationError
 from app.config.db_connection import engine, SessionLocal
-from . import crud
+from app.services import user_service, category_service
+from fastapi.exceptions import RequestValidationError
+import app.validators.shared_validator as validators
+import app.models.responses as responseModel
 import app.models.database as databaseModel
 import app.models.requests as requestModel
-import app.models.responses as responseModel
+import app.crud.user_crud as user_crud
 from app.models.database import Base
 from sqlalchemy.orm import Session
-from typing import List
 import app.config.logger
-import app.services.user_service as user_services
-import app.validators.shared_validator as validators
-import app.crud.user_crud as user_crud
+from typing import List
+from . import crud
 
 Base.metadata.create_all(bind=engine)
 
@@ -34,7 +34,7 @@ def get_db():
         description="This endpoint allows you to create a new user by providing a username, email, password and role(optional). The input is validated for malicious content, and both username and email must follow the appropriate format. If the username or email is already in use, a 409 error is returned.",
         tags=["User Management"])
 def create_user(user: requestModel.UserCreate, request: Request, db: Session = Depends(get_db)):
-    return user_services.create_user(db=db, request=request, user=user)
+    return user_service.create_user(db=db, request=request, user=user)
 
 
 @app.get("/user/{username}", response_model=responseModel.User,
@@ -42,7 +42,7 @@ def create_user(user: requestModel.UserCreate, request: Request, db: Session = D
         description="Fetch details of a user by their username. Results include user username, email, account creation date. If the user does not exist, a 404 error is returned.",
         tags=["User Management"])
 def read_user(username: str, db: Session = Depends(get_db)):
-    return user_services.get_user_account_data(db=db, username=username)
+    return user_service.get_user_account_data(db=db, username=username)
 
 
 @app.patch("/user/{username}", response_model=responseModel.User, status_code=200, 
@@ -50,67 +50,50 @@ def read_user(username: str, db: Session = Depends(get_db)):
         description="Update the password or email address of a user by providing the username, email, new_email(optional), old password, and new password(optional). The input is validated to ensure that the old and new passwords(or email addresses) are different. If the user is not found, a 404 error is returned.",
         tags=["User Management"])
 def update_user_credentials(username: str, data: requestModel.UserUpdatePassword, db: Session = Depends(get_db)):
-    return user_services.update_user(db=db, username=username, data=data)
+    return user_service.update_user(db=db, username=username, data=data)
 
 
 @app.delete("/users/{username}", status_code=204, 
         summary="Delete a user", 
         description="Delete a user from the database using their username, email, and password. If the user does not exist, a 404 error is returned. This operation requires valid credentials.",
-        tags=["User Management"]) #Done D
+        tags=["User Management"])
 def delete_user(username: str, db: Session = Depends(get_db), data: requestModel.UserDelete = None):
-    return user_services.remove_user(db=db, username=username, data=data)
+    return user_service.remove_user(db=db, username=username, data=data)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@app.get("/admin/users", status_code=200,
-        summary="List all users", 
-        description="Retrieve a list of all registered users. This endpoint is restricted to admin access and returns a list of users in the system.",
-        tags=["User Management"]) #Done list all
-def list_users(db: Session = Depends(get_db)): #current_user: schemas.User = Depends(get_current_active_user)):    #Admino checkas
-    #if current_user.role != "admin":  #Admino checkas
-        #raise HTTPException(status_code=403, detail="Not authorized to perform this action")
-
-
-        ###Add check based on if user has jwt and if jwt role is admin, then return all users###
-
-    
-    users = crud.get_all_users(db=db)
-    return users
 
 
 @app.post("/admin/categories/", response_model=responseModel.Category, status_code=201,
         summary="Create a new category", 
         description="This endpoint allows an admin to create a new category by providing a name and an optional description. Input is validated for malicious content, and a 409 error is returned if the category already exists.",
-        tags=["Category Management"]) #Done C
+        tags=["Category Management"])
 def create_category(category: requestModel.CategoryCreate, db: Session = Depends(get_db)):
-    validators.check_malicious_input(category.name, category.description)
-    existing_category = crud.get_category_by_name(db=db, name=category.name)
-    if existing_category:
-        raise HTTPException(status_code=409, detail="Category already exists")
-    
-
-        ###Add check based on if user has jwt and if jwt role is admin, then create new category###
+    return category_service.create_category(db=db, category=category)
 
 
+@app.get("/categories/", response_model=List[responseModel.CategorieList], status_code=200,
+        summary="List all categories", 
+        description="Retrieve a list of all categories in the system. Endpoint and returns the names of the categories.",
+        tags=["Category Management"])
+def list_categories(db: Session = Depends(get_db)):
+    return category_service.get_categories(db=db)
 
-    return crud.create_category(db=db, category=category)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @app.get("/categories/{category_name}", response_model=responseModel.Category,
         summary="Retrieve category details", 
@@ -129,6 +112,23 @@ def read_category(category_name: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Category not found")
     
     return db_category
+
+
+@app.get("/admin/users", status_code=200,
+        summary="List all users", 
+        description="Retrieve a list of all registered users. This endpoint is restricted to admin access and returns a list of users in the system.",
+        tags=["User Management"]) #Done list all
+def list_users(db: Session = Depends(get_db)): #current_user: schemas.User = Depends(get_current_active_user)):    #Admino checkas
+    #if current_user.role != "admin":  #Admino checkas
+        #raise HTTPException(status_code=403, detail="Not authorized to perform this action")
+
+
+        ###Add check based on if user has jwt and if jwt role is admin, then return all users###
+
+    
+    users = crud.get_all_users(db=db)
+    return users
+
 
 @app.patch("/admin/categories/{category_name}", response_model=responseModel.Category,
         summary="Update category name or description", 
@@ -156,14 +156,6 @@ def delete_category(category_name: str, db: Session = Depends(get_db)):
     ###Add check based on if user has jwt and if jwt role is admin, then delete category###
 
     return crud.delete_category_by_name(db=db, category_name=category_name)
-
-@app.get("/categories/", status_code=200, 
-        summary="List all categories", 
-        description="Retrieve a list of all categories in the system. This is a public endpoint and returns the names and descriptions of the categories.",
-        tags=["Category Management"]) #Done list all
-def list_categories(db: Session = Depends(get_db)):
-
-    return crud.get_all_categories(db=db)
 
 
 ################### Change to return sub-category files instead of category files

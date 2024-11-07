@@ -15,24 +15,7 @@ def get_all_users(db: Session):
 
 
 
-def get_category_by_name(db: Session, name: str):
-    query = db.query(models.Category)
-    
-    query = query.filter(models.Category.name == name)
 
-    return query.first()
-
-def create_category(db: Session, category: requestModel.CategoryCreate):
-    db_category = models.Category(**category.dict())
-
-    try:
-        db.add(db_category)
-        db.commit()
-        db.refresh(db_category)
-        return db_category
-    except Exception as e:
-        db.rollback()
-        raise HTTPException(status_code=500, detail="An unexpected error occurred")
 
 def get_category(db: Session, category_name: str):
     return db.query(models.Category).filter(models.Category.name == category_name).first()
@@ -72,10 +55,6 @@ def delete_category_by_name(db: Session, category_name: str):
         db.rollback()
         raise HTTPException(status_code=500, detail="An unexpected error occurred")
 
-def get_all_categories(db: Session):
-    categories = db.query(models.Category.name).all()
-    categories_list = [category[0] for category in categories]
-    return responseModel.CategorieList(name=categories_list)
 
 def get_files_by_category(db: Session, category_name: str):
     category = db.query(models.Category).filter(models.Category.name == category_name).first()

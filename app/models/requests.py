@@ -8,7 +8,7 @@ class UserBase(BaseModel):
 
 class CategoryBase(BaseModel):
     name: str
-    description: str
+    description: Optional[str] = Field(None)
 
 
 class UserCreate(UserBase):

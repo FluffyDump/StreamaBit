@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Extra
+from pydantic import BaseModel, Extra, Field
 from typing import List, Optional
 from datetime import datetime
 
@@ -7,7 +7,7 @@ class UserBase(BaseModel):
 
 class CategoryBase(BaseModel):
     name: str
-    description: str
+    description: Optional[str] = Field(None)
 
 class FileBase(BaseModel):
     title: str
@@ -30,7 +30,8 @@ class Category(CategoryBase):
         extra = Extra.forbid
 
 class CategorieList(BaseModel):
-    name: List[str]
+    name: str
+    #icon: str  #For icons
 
     class Config:
         orm_mode = True

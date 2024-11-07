@@ -2211,3 +2211,1430 @@ Traceback (most recent call last):
           └ <class 'fastapi.exceptions.HTTPException'>
 
 fastapi.exceptions.HTTPException: 404: User not found
+2024-11-07 16:48:34.589 | ERROR    | app.services.user_service:get_user_account_data:65 - USER: First33k DATA CANNOT BE PARSED, EXCEPTION OCCURED: 404: User not found
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x0000020708FC4860>
+    └ <WorkerThread(AnyIO worker thread, started 28380)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000002070E7FC4A0>
+    └ <WorkerThread(AnyIO worker thread, started 28380)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function read_user at 0x000002070E752160>, db=<sqlalchemy.orm.session.Session object at 0x000002070E806350...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000002070E7AB380>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 45, in read_user
+    return user_services.get_user_account_data(db=db, username=username)
+           │             │                        │            └ 'First33k'
+           │             │                        └ <sqlalchemy.orm.session.Session object at 0x000002070E806350>
+           │             └ <function get_user_account_data at 0x000002070D40E480>
+           └ <module 'app.services.user_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\service...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\user_service.py", line 60, in get_user_account_data
+    raise HTTPException(status_code=404, detail="User not found")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 404: User not found
+2024-11-07 16:49:33.389 | ERROR    | app.services.user_service:create_user:46 - 
+USER ACCOUNT HAS NOT BEEN CREATED, EXCEPTION OCCURED: 409: Username or email already in use
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x0000020708FC4860>
+    └ <WorkerThread(AnyIO worker thread, started 28380)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000002070E7FC4A0>
+    └ <WorkerThread(AnyIO worker thread, started 28380)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_user at 0x000002070E751C60>, db=<sqlalchemy.orm.session.Session object at 0x000002070D4205...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000002070E7AA7C0>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 37, in create_user
+    return user_services.create_user(db=db, request=request, user=user)
+           │             │              │           │             └ UserCreate(username='First56', email='firstUser56@gmail.com', password='Password1234$', role=None)
+           │             │              │           └ <starlette.requests.Request object at 0x000002070E955410>
+           │             │              └ <sqlalchemy.orm.session.Session object at 0x000002070D420550>
+           │             └ <function create_user at 0x000002070D40D6C0>
+           └ <module 'app.services.user_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\service...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\user_service.py", line 30, in create_user
+    raise HTTPException(status_code=409, detail="Username or email already in use")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 409: Username or email already in use
+2024-11-07 16:56:23.660 | ERROR    | app.services.user_service:remove_user:142 - 
+USER ACCOUNT HAS NOT BEEN REMOVED, EXCEPTION OCCURED: 404: User not found
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x0000020708FC4860>
+    └ <WorkerThread(AnyIO worker thread, started 28380)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000002070E7FC4A0>
+    └ <WorkerThread(AnyIO worker thread, started 28380)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function delete_user at 0x000002070E752660>, db=<sqlalchemy.orm.session.Session object at 0x000002070E79C6...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000002070E79D380>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 61, in delete_user
+    return user_services.remove_user(db=db, username=username, data=data)
+           │             │              │            │              └ UserDelete(email='firstUser56@gmail.comc', password='Password1234$')
+           │             │              │            └ 'First56'
+           │             │              └ <sqlalchemy.orm.session.Session object at 0x000002070E79C610>
+           │             └ <function remove_user at 0x000002070D40EC00>
+           └ <module 'app.services.user_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\service...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\user_service.py", line 134, in remove_user
+    raise HTTPException(status_code=404, detail="User not found")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 404: User not found
+2024-11-07 17:13:42.588 | ERROR    | app.services.user_service:create_user:46 - 
+USER ACCOUNT HAS NOT BEEN CREATED, EXCEPTION OCCURED: 409: Username or email already in use
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x0000027A11544860>
+    └ <WorkerThread(AnyIO worker thread, started 8124)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x0000027A16DCC540>
+    └ <WorkerThread(AnyIO worker thread, started 8124)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_user at 0x0000027A16D25DA0>, db=<sqlalchemy.orm.session.Session object at 0x0000027A114A4F...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x0000027A16D63D40>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 37, in create_user
+    return user_service.create_user(db=db, request=request, user=user)
+           │            │              │           │             └ UserCreate(username='First56', email='firstUser56@gmail.com', password='Password1234$', role=None)
+           │            │              │           └ <starlette.requests.Request object at 0x0000027A16D7A650>
+           │            │              └ <sqlalchemy.orm.session.Session object at 0x0000027A114A4F10>
+           │            └ <function create_user at 0x0000027A158947C0>
+           └ <module 'app.services.user_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\service...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\user_service.py", line 30, in create_user
+    raise HTTPException(status_code=409, detail="Username or email already in use")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 409: Username or email already in use
+2024-11-07 17:14:01.846 | ERROR    | app.services.user_service:remove_user:142 - 
+USER ACCOUNT HAS NOT BEEN REMOVED, EXCEPTION OCCURED: 404: User not found
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x0000027A11544860>
+    └ <WorkerThread(AnyIO worker thread, started 8124)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x0000027A16DCC540>
+    └ <WorkerThread(AnyIO worker thread, started 8124)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function delete_user at 0x0000027A16D267A0>, db=<sqlalchemy.orm.session.Session object at 0x0000027A16ED6A...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x0000027A16D3F5C0>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 61, in delete_user
+    return user_service.remove_user(db=db, username=username, data=data)
+           │            │              │            │              └ UserDelete(email='firstUser56@gmail.comc', password='Password1234$')
+           │            │              │            └ 'First56'
+           │            │              └ <sqlalchemy.orm.session.Session object at 0x0000027A16ED6A10>
+           │            └ <function remove_user at 0x0000027A159DA340>
+           └ <module 'app.services.user_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\service...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\user_service.py", line 134, in remove_user
+    raise HTTPException(status_code=404, detail="User not found")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 404: User not found
+2024-11-07 17:27:17.760 | ERROR    | app.services.user_service:create_user:46 - 
+USER ACCOUNT HAS NOT BEEN CREATED, EXCEPTION OCCURED: Username must be between 4 and 50 characters long
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x0000027FBB5F4860>
+    └ <WorkerThread(AnyIO worker thread, started 16048)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x0000027FC0E9C540>
+    └ <WorkerThread(AnyIO worker thread, started 16048)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_user at 0x0000027FC0DF5DA0>, db=<sqlalchemy.orm.session.Session object at 0x0000027FC0E1B5...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x0000027FC0E236C0>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 37, in create_user
+    return user_service.create_user(db=db, request=request, user=user)
+           │            │              │           │             └ UserCreate(username='First566666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666...
+           │            │              │           └ <starlette.requests.Request object at 0x0000027FC0E4AC50>
+           │            │              └ <sqlalchemy.orm.session.Session object at 0x0000027FC0E1B590>
+           │            └ <function create_user at 0x0000027FBF9647C0>
+           └ <module 'app.services.user_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\service...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\user_service.py", line 14, in create_user
+    user_validator.validate_username(user.username)
+    │              │                 │    └ 'First56666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666...
+    │              │                 └ UserCreate(username='First566666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666...
+    │              └ <function validate_username at 0x0000027FC09BC5E0>
+    └ <module 'app.validators.user_validator' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\val...
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\validators\user_validator.py", line 26, in validate_username
+    raise shared_validator.ValidationException(f"Username must be between {MIN_USERNAME_LENGTH} and {MAX_USERNAME_LENGTH} characters long")
+          │                └ <class 'app.validators.shared_validator.ValidationException'>
+          └ <module 'app.validators.shared_validator' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\v...
+
+app.validators.shared_validator.ValidationException: Username must be between 4 and 50 characters long
+2024-11-07 17:28:12.154 | ERROR    | app.services.user_service:create_user:46 - 
+USER ACCOUNT HAS NOT BEEN CREATED, EXCEPTION OCCURED: Email must be between 5 and 100 characters long
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x0000027FBB5F4860>
+    └ <WorkerThread(AnyIO worker thread, started 16048)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x0000027FC0E9C540>
+    └ <WorkerThread(AnyIO worker thread, started 16048)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_user at 0x0000027FC0DF5DA0>, db=<sqlalchemy.orm.session.Session object at 0x0000027FC09DD6...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x0000027FC0E0EE00>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 37, in create_user
+    return user_service.create_user(db=db, request=request, user=user)
+           │            │              │           │             └ UserCreate(username='First56', email='firstUser566666666666666666666666666666666666666666666666666666666666666666666666666666...
+           │            │              │           └ <starlette.requests.Request object at 0x0000027FC0F23D90>
+           │            │              └ <sqlalchemy.orm.session.Session object at 0x0000027FC09DD650>
+           │            └ <function create_user at 0x0000027FBF9647C0>
+           └ <module 'app.services.user_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\service...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\user_service.py", line 15, in create_user
+    user_validator.validate_email(user.email)
+    │              │              │    └ 'firstUser5666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666...
+    │              │              └ UserCreate(username='First56', email='firstUser566666666666666666666666666666666666666666666666666666666666666666666666666666...
+    │              └ <function validate_email at 0x0000027FC09BC7C0>
+    └ <module 'app.validators.user_validator' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\val...
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\validators\user_validator.py", line 47, in validate_email
+    raise shared_validator.ValidationException(f"Email must be between {MIN_EMAIL_LENGTH} and {MAX_EMAIL_LENGTH} characters long")
+          │                └ <class 'app.validators.shared_validator.ValidationException'>
+          └ <module 'app.validators.shared_validator' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\v...
+
+app.validators.shared_validator.ValidationException: Email must be between 5 and 100 characters long
+2024-11-07 20:13:18.499 | ERROR    | app.services.category_service:create_category:37 - 
+CATEGORY HAS NOT BEEN CREATED, EXCEPTION OCCURED: module 'app.config.logger' has no attribute 'info'
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000001FBD7E04860>
+    └ <WorkerThread(AnyIO worker thread, started 28500)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000001FBDD65C9A0>
+    └ <WorkerThread(AnyIO worker thread, started 28500)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_category at 0x000001FBDD5B2E80>, db=<sqlalchemy.orm.session.Session object at 0x000001FBDD...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000001FBDD5EFB40>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 72, in create_category
+    return category_service.create_category(db=db, category=category)
+           │                │                  │            └ CategoryCreate(name='Kategorija7', description='Kategorijos aprasymas.')
+           │                │                  └ <sqlalchemy.orm.session.Session object at 0x000001FBDD5BEE90>
+           │                └ <function create_category at 0x000001FBDC26A480>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 13, in create_category
+    category_validator.validate_category_name(category_name=category.name)
+    │                  │                                    │        └ 'Kategorija7'
+    │                  │                                    └ CategoryCreate(name='Kategorija7', description='Kategorijos aprasymas.')
+    │                  └ <function validate_category_name at 0x000001FBDC26A8E0>
+    └ <module 'app.validators.category_validator' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\...
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\validators\category_validator.py", line 12, in validate_category_name
+    logger.info(f"Validating category name")
+    └ <module 'app.config.logger' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\config\\logger....
+
+AttributeError: module 'app.config.logger' has no attribute 'info'
+2024-11-07 20:17:12.466 | ERROR    | app.services.category_service:create_category:37 - 
+CATEGORY HAS NOT BEEN CREATED, EXCEPTION OCCURED: 409: Category already exists
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x0000023DD2914860>
+    └ <WorkerThread(AnyIO worker thread, started 30908)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x0000023DD819C9A0>
+    └ <WorkerThread(AnyIO worker thread, started 30908)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_category at 0x0000023DD80F2E80>, db=<sqlalchemy.orm.session.Session object at 0x0000023DD8...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x0000023DD8141D40>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 72, in create_category
+    return category_service.create_category(db=db, category=category)
+           │                │                  │            └ CategoryCreate(name='Kategorija7', description='Kategorijos aprasymas.')
+           │                │                  └ <sqlalchemy.orm.session.Session object at 0x0000023DD811B890>
+           │                └ <function create_category at 0x0000023DD6DAA520>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 23, in create_category
+    raise HTTPException(status_code=409, detail="Category already exists")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 409: Category already exists
+2024-11-07 20:28:16.144 | ERROR    | app.services.category_service:create_category:37 - 
+CATEGORY HAS NOT BEEN CREATED, EXCEPTION OCCURED: 409: Category already exists
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x0000023DD2914860>
+    └ <WorkerThread(AnyIO worker thread, started 30908)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x0000023DD819C9A0>
+    └ <WorkerThread(AnyIO worker thread, started 30908)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_category at 0x0000023DD80F2E80>, db=<sqlalchemy.orm.session.Session object at 0x0000023DD8...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x0000023DD814B1C0>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 72, in create_category
+    return category_service.create_category(db=db, category=category)
+           │                │                  │            └ CategoryCreate(name='Kategorija7', description='Kategorijos aprasymass.')
+           │                │                  └ <sqlalchemy.orm.session.Session object at 0x0000023DD8286090>
+           │                └ <function create_category at 0x0000023DD6DAA520>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 23, in create_category
+    raise HTTPException(status_code=409, detail="Category already exists")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 409: Category already exists
+2024-11-07 20:28:25.119 | ERROR    | app.services.category_service:create_category:37 - 
+CATEGORY HAS NOT BEEN CREATED, EXCEPTION OCCURED: 409: Category already exists
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x0000023DD2914860>
+    └ <WorkerThread(AnyIO worker thread, started 30908)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x0000023DD819C9A0>
+    └ <WorkerThread(AnyIO worker thread, started 30908)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_category at 0x0000023DD80F2E80>, db=<sqlalchemy.orm.session.Session object at 0x0000023DD8...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x0000023DD8303640>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 72, in create_category
+    return category_service.create_category(db=db, category=category)
+           │                │                  │            └ CategoryCreate(name='Kategorija7', description=None)
+           │                │                  └ <sqlalchemy.orm.session.Session object at 0x0000023DD81A6890>
+           │                └ <function create_category at 0x0000023DD6DAA520>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 23, in create_category
+    raise HTTPException(status_code=409, detail="Category already exists")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 409: Category already exists
+2024-11-07 20:54:50.252 | ERROR    | app.services.category_service:create_category:37 - 
+CATEGORY HAS NOT BEEN CREATED, EXCEPTION OCCURED: 409: Category already exists
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000001E306474860>
+    └ <WorkerThread(AnyIO worker thread, started 17696)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000001E30BC9C9A0>
+    └ <WorkerThread(AnyIO worker thread, started 17696)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_category at 0x000001E30BBF2E80>, db=<sqlalchemy.orm.session.Session object at 0x000001E30B...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000001E30BC2FA40>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 72, in create_category
+    return category_service.create_category(db=db, category=category)
+           │                │                  │            └ CategoryCreate(name='Kategorija8', description='Kategorijos aprasymas.')
+           │                │                  └ <sqlalchemy.orm.session.Session object at 0x000001E30BC4B890>
+           │                └ <function create_category at 0x000001E30A8AA480>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 23, in create_category
+    raise HTTPException(status_code=409, detail="Category already exists")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 409: Category already exists
+2024-11-07 20:58:09.516 | ERROR    | app.services.category_service:create_category:37 - 
+CATEGORY HAS NOT BEEN CREATED, EXCEPTION OCCURED: 409: Category already exists
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000001E306474860>
+    └ <WorkerThread(AnyIO worker thread, started 17696)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000001E30BC9C9A0>
+    └ <WorkerThread(AnyIO worker thread, started 17696)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_category at 0x000001E30BBF2E80>, db=<sqlalchemy.orm.session.Session object at 0x000001E30B...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000001E30BC033C0>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 72, in create_category
+    return category_service.create_category(db=db, category=category)
+           │                │                  │            └ CategoryCreate(name='Kategorija9', description='Kategorijos aprasymas.')
+           │                │                  └ <sqlalchemy.orm.session.Session object at 0x000001E30BD05050>
+           │                └ <function create_category at 0x000001E30A8AA480>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 23, in create_category
+    raise HTTPException(status_code=409, detail="Category already exists")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 409: Category already exists
+2024-11-07 21:00:17.762 | ERROR    | app.services.category_service:create_category:37 - 
+CATEGORY HAS NOT BEEN CREATED, EXCEPTION OCCURED: 409: Category already exists
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000001A1E29D4860>
+    └ <WorkerThread(AnyIO worker thread, started 29912)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000001A1E825CA40>
+    └ <WorkerThread(AnyIO worker thread, started 29912)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_category at 0x000001A1E81B2F20>, db=<sqlalchemy.orm.session.Session object at 0x000001A1E8...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000001A1E81DBB80>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 72, in create_category
+    return category_service.create_category(db=db, category=category)
+           │                │                  │            └ CategoryCreate(name='Kategorija10', description=None)
+           │                │                  └ <sqlalchemy.orm.session.Session object at 0x000001A1E8201D50>
+           │                └ <function create_category at 0x000001A1E7E3A520>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 23, in create_category
+    raise HTTPException(status_code=409, detail="Category already exists")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 409: Category already exists
+2024-11-07 21:03:46.578 | ERROR    | app.services.category_service:create_category:37 - 
+CATEGORY HAS NOT BEEN CREATED, EXCEPTION OCCURED: 409: Category already exists
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000001F55BE64860>
+    └ <WorkerThread(AnyIO worker thread, started 21684)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000001F5616CCA40>
+    └ <WorkerThread(AnyIO worker thread, started 21684)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_category at 0x000001F561622F20>, db=<sqlalchemy.orm.session.Session object at 0x000001F561...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000001F56030EB80>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 72, in create_category
+    return category_service.create_category(db=db, category=category)
+           │                │                  │            └ CategoryCreate(name='Kategorija11', description=None)
+           │                │                  └ <sqlalchemy.orm.session.Session object at 0x000001F561672150>
+           │                └ <function create_category at 0x000001F5602DA520>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 23, in create_category
+    raise HTTPException(status_code=409, detail="Category already exists")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 409: Category already exists
+2024-11-07 21:04:06.644 | ERROR    | app.services.category_service:create_category:37 - 
+CATEGORY HAS NOT BEEN CREATED, EXCEPTION OCCURED: 409: Category already exists
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000001DC65334860>
+    └ <WorkerThread(AnyIO worker thread, started 32324)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000001DC6AAFCA40>
+    └ <WorkerThread(AnyIO worker thread, started 32324)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_category at 0x000001DC6AA52F20>, db=<sqlalchemy.orm.session.Session object at 0x000001DC6A...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000001DC6AA81500>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 72, in create_category
+    return category_service.create_category(db=db, category=category)
+           │                │                  │            └ CategoryCreate(name='Kategorija12', description=None)
+           │                │                  └ <sqlalchemy.orm.session.Session object at 0x000001DC6AAABA10>
+           │                └ <function create_category at 0x000001DC6970A520>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 23, in create_category
+    raise HTTPException(status_code=409, detail="Category already exists")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 409: Category already exists
+2024-11-07 21:05:43.787 | ERROR    | app.services.category_service:create_category:37 - 
+CATEGORY HAS NOT BEEN CREATED, EXCEPTION OCCURED: 409: Category already exists
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x0000021077534860>
+    └ <WorkerThread(AnyIO worker thread, started 33424)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000002107CD2CA40>
+    └ <WorkerThread(AnyIO worker thread, started 33424)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_category at 0x000002107CC82F20>, db=<sqlalchemy.orm.session.Session object at 0x000002107C...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000002107CCDAF00>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 72, in create_category
+    return category_service.create_category(db=db, category=category)
+           │                │                  │            └ CategoryCreate(name='Kategorija14', description=None)
+           │                │                  └ <sqlalchemy.orm.session.Session object at 0x000002107CCABC90>
+           │                └ <function create_category at 0x000002107B93A520>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 23, in create_category
+    raise HTTPException(status_code=409, detail="Category already exists")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 409: Category already exists
+2024-11-07 21:21:58.743 | ERROR    | app.services.category_service:create_category:37 - 
+CATEGORY HAS NOT BEEN CREATED, EXCEPTION OCCURED: 409: Category already exists
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x0000021077534860>
+    └ <WorkerThread(AnyIO worker thread, started 33424)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000002107CD2CA40>
+    └ <WorkerThread(AnyIO worker thread, started 33424)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_category at 0x000002107CC82F20>, db=<sqlalchemy.orm.session.Session object at 0x000002107C...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000002107CC9FC80>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 72, in create_category
+    return category_service.create_category(db=db, category=category)
+           │                │                  │            └ CategoryCreate(name='Kategorija15', description=None)
+           │                │                  └ <sqlalchemy.orm.session.Session object at 0x000002107CE8BB10>
+           │                └ <function create_category at 0x000002107B93A520>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 23, in create_category
+    raise HTTPException(status_code=409, detail="Category already exists")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 409: Category already exists
+2024-11-07 21:27:14.278 | ERROR    | app.services.category_service:create_category:37 - 
+CATEGORY HAS NOT BEEN CREATED, EXCEPTION OCCURED: Category description must be less than 255 characters long
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x0000021077534860>
+    └ <WorkerThread(AnyIO worker thread, started 33424)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000002107CD2CA40>
+    └ <WorkerThread(AnyIO worker thread, started 33424)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_category at 0x000002107CC82F20>, db=<sqlalchemy.orm.session.Session object at 0x000002107C...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000002107CC9D0C0>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 72, in create_category
+    return category_service.create_category(db=db, category=category)
+           │                │                  │            └ CategoryCreate(name='Kategorija18', description='1000000000000000000000000000000000000000000000000000000000000000000000000000...
+           │                │                  └ <sqlalchemy.orm.session.Session object at 0x000002107CE86590>
+           │                └ <function create_category at 0x000002107B93A520>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 16, in create_category
+    category_validator.validate_category_description(description=category.description)
+    │                  │                                         │        └ '1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000...
+    │                  │                                         └ CategoryCreate(name='Kategorija18', description='1000000000000000000000000000000000000000000000000000000000000000000000000000...
+    │                  └ <function validate_category_description at 0x000002107B93A980>
+    └ <module 'app.validators.category_validator' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\...
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\validators\category_validator.py", line 38, in validate_category_description
+    raise shared_validator.ValidationException(f"Category description must be less than {MAX_DESCRIPTION_LENGTH} characters long")
+          │                └ <class 'app.validators.shared_validator.ValidationException'>
+          └ <module 'app.validators.shared_validator' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\v...
+
+app.validators.shared_validator.ValidationException: Category description must be less than 255 characters long
+2024-11-07 21:27:38.950 | ERROR    | app.services.category_service:create_category:37 - 
+CATEGORY HAS NOT BEEN CREATED, EXCEPTION OCCURED: Category name must be between 4 and 50 characters long
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x0000021077534860>
+    └ <WorkerThread(AnyIO worker thread, started 33424)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000002107CD2CA40>
+    └ <WorkerThread(AnyIO worker thread, started 33424)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_category at 0x000002107CC82F20>, db=<sqlalchemy.orm.session.Session object at 0x000002107C...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000002107CE86C40>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 72, in create_category
+    return category_service.create_category(db=db, category=category)
+           │                │                  │            └ CategoryCreate(name='Kategorija1999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999...
+           │                │                  └ <sqlalchemy.orm.session.Session object at 0x000002107CE94F50>
+           │                └ <function create_category at 0x000002107B93A520>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 13, in create_category
+    category_validator.validate_category_name(category_name=category.name)
+    │                  │                                    │        └ 'Kategorija199999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999...
+    │                  │                                    └ CategoryCreate(name='Kategorija1999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999...
+    │                  └ <function validate_category_name at 0x000002107B93A8E0>
+    └ <module 'app.validators.category_validator' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\...
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\validators\category_validator.py", line 21, in validate_category_name
+    raise shared_validator.ValidationException(f"Category name must be between {MIN_CATEGORY_NAME_LENGTH} and {MAX_CATEGORY_NAME_LENGTH} characters long")
+          │                └ <class 'app.validators.shared_validator.ValidationException'>
+          └ <module 'app.validators.shared_validator' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\v...
+
+app.validators.shared_validator.ValidationException: Category name must be between 4 and 50 characters long
+2024-11-07 22:39:47.211 | ERROR    | app.crud.category_crud:get_all_categories:57 - Exception: 'Session' object has no attribute 'get_all_categories'
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000001BE4B2C4860>
+    └ <WorkerThread(AnyIO worker thread, started 30128)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000001BE50AD0C20>
+    └ <WorkerThread(AnyIO worker thread, started 30128)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function list_categories at 0x000001BE50A234C0>, db=<sqlalchemy.orm.session.Session object at 0x000001BE50...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000001BE50A6D180>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 79, in list_categories
+    return category_service.get_categories(db=db)
+           │                │                 └ <sqlalchemy.orm.session.Session object at 0x000001BE50A3F710>
+           │                └ <function get_categories at 0x000001BE506AA660>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 46, in get_categories
+    categories = category_crud.get_all_categories(db=db)
+                 │             │                     └ <sqlalchemy.orm.session.Session object at 0x000001BE50A3F710>
+                 │             └ <function get_all_categories at 0x000001BE506AA7A0>
+                 └ <module 'app.crud.category_crud' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\crud\\cate...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\crud\category_crud.py", line 51, in get_all_categories
+    categories = db.get_all_categories(db=db)
+                 │                        └ <sqlalchemy.orm.session.Session object at 0x000001BE50A3F710>
+                 └ <sqlalchemy.orm.session.Session object at 0x000001BE50A3F710>
+
+AttributeError: 'Session' object has no attribute 'get_all_categories'
+2024-11-07 22:39:47.239 | ERROR    | app.services.category_service:get_categories:53 - 
+CATEGORIES HAVE NOT BEEN PARSED, EXCEPTION OCCURED: 500: An unexpected error occurred
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\crud\category_crud.py", line 51, in get_all_categories
+    categories = db.get_all_categories(db=db)
+                 │                        └ <sqlalchemy.orm.session.Session object at 0x000001BE50A3F710>
+                 └ <sqlalchemy.orm.session.Session object at 0x000001BE50A3F710>
+
+AttributeError: 'Session' object has no attribute 'get_all_categories'
+
+
+During handling of the above exception, another exception occurred:
+
+
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000001BE4B2C4860>
+    └ <WorkerThread(AnyIO worker thread, started 30128)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000001BE50AD0C20>
+    └ <WorkerThread(AnyIO worker thread, started 30128)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function list_categories at 0x000001BE50A234C0>, db=<sqlalchemy.orm.session.Session object at 0x000001BE50...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000001BE50A6D180>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 79, in list_categories
+    return category_service.get_categories(db=db)
+           │                │                 └ <sqlalchemy.orm.session.Session object at 0x000001BE50A3F710>
+           │                └ <function get_categories at 0x000001BE506AA660>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 46, in get_categories
+    categories = category_crud.get_all_categories(db=db)
+                 │             │                     └ <sqlalchemy.orm.session.Session object at 0x000001BE50A3F710>
+                 │             └ <function get_all_categories at 0x000001BE506AA7A0>
+                 └ <module 'app.crud.category_crud' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\crud\\cate...
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\crud\category_crud.py", line 58, in get_all_categories
+    raise HTTPException(status_code=500, detail="An unexpected error occurred")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 500: An unexpected error occurred
+2024-11-07 22:43:26.833 | ERROR    | app.crud.category_crud:get_all_categories:57 - Exception: 'Session' object has no attribute 'get_all_categories'
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x0000023ED3594860>
+    └ <WorkerThread(AnyIO worker thread, started 3032)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x0000023ED8E20C20>
+    └ <WorkerThread(AnyIO worker thread, started 3032)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function list_categories at 0x0000023ED8D734C0>, db=<sqlalchemy.orm.session.Session object at 0x0000023ED8...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x0000023ED8DCB940>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 79, in list_categories
+    return category_service.get_categories(db=db)
+           │                │                 └ <sqlalchemy.orm.session.Session object at 0x0000023ED8DE10D0>
+           │                └ <function get_categories at 0x0000023ED7A2A660>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 46, in get_categories
+    categories = category_crud.get_all_categories(db=db)
+                 │             │                     └ <sqlalchemy.orm.session.Session object at 0x0000023ED8DE10D0>
+                 │             └ <function get_all_categories at 0x0000023ED7A2A7A0>
+                 └ <module 'app.crud.category_crud' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\crud\\cate...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\crud\category_crud.py", line 51, in get_all_categories
+    categories = db.get_all_categories(db=db)
+                 │                        └ <sqlalchemy.orm.session.Session object at 0x0000023ED8DE10D0>
+                 └ <sqlalchemy.orm.session.Session object at 0x0000023ED8DE10D0>
+
+AttributeError: 'Session' object has no attribute 'get_all_categories'
+2024-11-07 22:43:26.840 | ERROR    | app.services.category_service:get_categories:53 - 
+CATEGORIES HAVE NOT BEEN PARSED, EXCEPTION OCCURED: 500: An unexpected error occurred
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\crud\category_crud.py", line 51, in get_all_categories
+    categories = db.get_all_categories(db=db)
+                 │                        └ <sqlalchemy.orm.session.Session object at 0x0000023ED8DE10D0>
+                 └ <sqlalchemy.orm.session.Session object at 0x0000023ED8DE10D0>
+
+AttributeError: 'Session' object has no attribute 'get_all_categories'
+
+
+During handling of the above exception, another exception occurred:
+
+
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x0000023ED3594860>
+    └ <WorkerThread(AnyIO worker thread, started 3032)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x0000023ED8E20C20>
+    └ <WorkerThread(AnyIO worker thread, started 3032)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function list_categories at 0x0000023ED8D734C0>, db=<sqlalchemy.orm.session.Session object at 0x0000023ED8...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x0000023ED8DCB940>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 79, in list_categories
+    return category_service.get_categories(db=db)
+           │                │                 └ <sqlalchemy.orm.session.Session object at 0x0000023ED8DE10D0>
+           │                └ <function get_categories at 0x0000023ED7A2A660>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 46, in get_categories
+    categories = category_crud.get_all_categories(db=db)
+                 │             │                     └ <sqlalchemy.orm.session.Session object at 0x0000023ED8DE10D0>
+                 │             └ <function get_all_categories at 0x0000023ED7A2A7A0>
+                 └ <module 'app.crud.category_crud' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\crud\\cate...
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\crud\category_crud.py", line 58, in get_all_categories
+    raise HTTPException(status_code=500, detail="An unexpected error occurred")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 500: An unexpected error occurred
+2024-11-07 22:52:29.561 | ERROR    | app.crud.category_crud:get_all_categories:58 - Exception: 'Category' object is not subscriptable
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000001C569BB4860>
+    └ <WorkerThread(AnyIO worker thread, started 32220)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000001C56F450D60>
+    └ <WorkerThread(AnyIO worker thread, started 32220)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function list_categories at 0x000001C56F3A34C0>, db=<sqlalchemy.orm.session.Session object at 0x000001C56C...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000001C56F3FA0C0>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 79, in list_categories
+    return category_service.get_categories(db=db)
+           │                │                 └ <sqlalchemy.orm.session.Session object at 0x000001C56C53EF90>
+           │                └ <function get_categories at 0x000001C56E05A660>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 46, in get_categories
+    categories = category_crud.get_all_categories(db=db)
+                 │             │                     └ <sqlalchemy.orm.session.Session object at 0x000001C56C53EF90>
+                 │             └ <function get_all_categories at 0x000001C56E05A840>
+                 └ <module 'app.crud.category_crud' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\crud\\cate...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\crud\category_crud.py", line 52, in get_all_categories
+    categories_list = [category[0] for category in categories]
+                                                   └ [<app.models.database.Category object at 0x000001C56F5499D0>, <app.models.database.Category object at 0x000001C56F3CBE50>, <a...
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\crud\category_crud.py", line 52, in <listcomp>
+    categories_list = [category[0] for category in categories]
+                       │               └ <app.models.database.Category object at 0x000001C56F5499D0>
+                       └ <app.models.database.Category object at 0x000001C56F5499D0>
+
+TypeError: 'Category' object is not subscriptable
+2024-11-07 22:52:29.571 | ERROR    | app.services.category_service:get_categories:53 - 
+CATEGORIES HAVE NOT BEEN PARSED, EXCEPTION OCCURED: 500: An unexpected error occurred
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\crud\category_crud.py", line 52, in get_all_categories
+    categories_list = [category[0] for category in categories]
+                                                   └ [<app.models.database.Category object at 0x000001C56F5499D0>, <app.models.database.Category object at 0x000001C56F3CBE50>, <a...
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\crud\category_crud.py", line 52, in <listcomp>
+    categories_list = [category[0] for category in categories]
+                       │               └ <app.models.database.Category object at 0x000001C56F5499D0>
+                       └ <app.models.database.Category object at 0x000001C56F5499D0>
+
+TypeError: 'Category' object is not subscriptable
+
+
+During handling of the above exception, another exception occurred:
+
+
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000001C569BB4860>
+    └ <WorkerThread(AnyIO worker thread, started 32220)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000001C56F450D60>
+    └ <WorkerThread(AnyIO worker thread, started 32220)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function list_categories at 0x000001C56F3A34C0>, db=<sqlalchemy.orm.session.Session object at 0x000001C56C...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000001C56F3FA0C0>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 79, in list_categories
+    return category_service.get_categories(db=db)
+           │                │                 └ <sqlalchemy.orm.session.Session object at 0x000001C56C53EF90>
+           │                └ <function get_categories at 0x000001C56E05A660>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 46, in get_categories
+    categories = category_crud.get_all_categories(db=db)
+                 │             │                     └ <sqlalchemy.orm.session.Session object at 0x000001C56C53EF90>
+                 │             └ <function get_all_categories at 0x000001C56E05A840>
+                 └ <module 'app.crud.category_crud' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\crud\\cate...
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\crud\category_crud.py", line 59, in get_all_categories
+    raise HTTPException(status_code=500, detail="An unexpected error occurred")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 500: An unexpected error occurred
+2024-11-07 22:52:51.387 | ERROR    | app.crud.category_crud:get_all_categories:58 - Exception: 'Category' object is not subscriptable
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000002DE4BE44860>
+    └ <WorkerThread(AnyIO worker thread, started 28440)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000002DE51610D60>
+    └ <WorkerThread(AnyIO worker thread, started 28440)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function list_categories at 0x000002DE515634C0>, db=<sqlalchemy.orm.session.Session object at 0x000002DE4E...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000002DE5157F300>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 79, in list_categories
+    return category_service.get_categories(db=db)
+           │                │                 └ <sqlalchemy.orm.session.Session object at 0x000002DE4E6FEF90>
+           │                └ <function get_categories at 0x000002DE511EA660>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 46, in get_categories
+    categories = category_crud.get_all_categories(db=db)
+                 │             │                     └ <sqlalchemy.orm.session.Session object at 0x000002DE4E6FEF90>
+                 │             └ <function get_all_categories at 0x000002DE511EA840>
+                 └ <module 'app.crud.category_crud' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\crud\\cate...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\crud\category_crud.py", line 52, in get_all_categories
+    categories_list = [category[0] for category in categories]
+                                                   └ [<app.models.database.Category object at 0x000002DE51709BD0>, <app.models.database.Category object at 0x000002DE51709C50>, <a...
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\crud\category_crud.py", line 52, in <listcomp>
+    categories_list = [category[0] for category in categories]
+                       │               └ <app.models.database.Category object at 0x000002DE51709BD0>
+                       └ <app.models.database.Category object at 0x000002DE51709BD0>
+
+TypeError: 'Category' object is not subscriptable
+2024-11-07 22:52:51.395 | ERROR    | app.services.category_service:get_categories:53 - 
+CATEGORIES HAVE NOT BEEN PARSED, EXCEPTION OCCURED: 500: An unexpected error occurred
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\crud\category_crud.py", line 52, in get_all_categories
+    categories_list = [category[0] for category in categories]
+                                                   └ [<app.models.database.Category object at 0x000002DE51709BD0>, <app.models.database.Category object at 0x000002DE51709C50>, <a...
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\crud\category_crud.py", line 52, in <listcomp>
+    categories_list = [category[0] for category in categories]
+                       │               └ <app.models.database.Category object at 0x000002DE51709BD0>
+                       └ <app.models.database.Category object at 0x000002DE51709BD0>
+
+TypeError: 'Category' object is not subscriptable
+
+
+During handling of the above exception, another exception occurred:
+
+
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000002DE4BE44860>
+    └ <WorkerThread(AnyIO worker thread, started 28440)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000002DE51610D60>
+    └ <WorkerThread(AnyIO worker thread, started 28440)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function list_categories at 0x000002DE515634C0>, db=<sqlalchemy.orm.session.Session object at 0x000002DE4E...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000002DE5157F300>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 79, in list_categories
+    return category_service.get_categories(db=db)
+           │                │                 └ <sqlalchemy.orm.session.Session object at 0x000002DE4E6FEF90>
+           │                └ <function get_categories at 0x000002DE511EA660>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 46, in get_categories
+    categories = category_crud.get_all_categories(db=db)
+                 │             │                     └ <sqlalchemy.orm.session.Session object at 0x000002DE4E6FEF90>
+                 │             └ <function get_all_categories at 0x000002DE511EA840>
+                 └ <module 'app.crud.category_crud' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\crud\\cate...
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\crud\category_crud.py", line 59, in get_all_categories
+    raise HTTPException(status_code=500, detail="An unexpected error occurred")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 500: An unexpected error occurred
+2024-11-07 22:55:35.613 | ERROR    | app.crud.category_crud:get_all_categories:58 - Exception: 'Category' object is not subscriptable
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x00000192B4F34860>
+    └ <WorkerThread(AnyIO worker thread, started 31928)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x00000192BA470C20>
+    └ <WorkerThread(AnyIO worker thread, started 31928)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function list_categories at 0x00000192BA3C34C0>, db=<sqlalchemy.orm.session.Session object at 0x00000192BA...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x00000192BA3DFA00>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 79, in list_categories
+    return category_service.get_categories(db=db)
+           │                │                 └ <sqlalchemy.orm.session.Session object at 0x00000192BA41BE90>
+           │                └ <function get_categories at 0x00000192BA38A660>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 46, in get_categories
+    categories = category_crud.get_all_categories(db=db)
+                 │             │                     └ <sqlalchemy.orm.session.Session object at 0x00000192BA41BE90>
+                 │             └ <function get_all_categories at 0x00000192BA38A840>
+                 └ <module 'app.crud.category_crud' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\crud\\cate...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\crud\category_crud.py", line 52, in get_all_categories
+    categories_list = [category[0] for category in categories]
+                                                   └ [<app.models.database.Category object at 0x00000192BA8A5190>, <app.models.database.Category object at 0x00000192BA3D1C10>, <a...
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\crud\category_crud.py", line 52, in <listcomp>
+    categories_list = [category[0] for category in categories]
+                       │               └ <app.models.database.Category object at 0x00000192BA8A5190>
+                       └ <app.models.database.Category object at 0x00000192BA8A5190>
+
+TypeError: 'Category' object is not subscriptable
+2024-11-07 22:55:35.621 | ERROR    | app.services.category_service:get_categories:53 - 
+CATEGORIES HAVE NOT BEEN PARSED, EXCEPTION OCCURED: 500: An unexpected error occurred
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\crud\category_crud.py", line 52, in get_all_categories
+    categories_list = [category[0] for category in categories]
+                                                   └ [<app.models.database.Category object at 0x00000192BA8A5190>, <app.models.database.Category object at 0x00000192BA3D1C10>, <a...
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\crud\category_crud.py", line 52, in <listcomp>
+    categories_list = [category[0] for category in categories]
+                       │               └ <app.models.database.Category object at 0x00000192BA8A5190>
+                       └ <app.models.database.Category object at 0x00000192BA8A5190>
+
+TypeError: 'Category' object is not subscriptable
+
+
+During handling of the above exception, another exception occurred:
+
+
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x00000192B4F34860>
+    └ <WorkerThread(AnyIO worker thread, started 31928)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x00000192BA470C20>
+    └ <WorkerThread(AnyIO worker thread, started 31928)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function list_categories at 0x00000192BA3C34C0>, db=<sqlalchemy.orm.session.Session object at 0x00000192BA...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x00000192BA3DFA00>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 79, in list_categories
+    return category_service.get_categories(db=db)
+           │                │                 └ <sqlalchemy.orm.session.Session object at 0x00000192BA41BE90>
+           │                └ <function get_categories at 0x00000192BA38A660>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 46, in get_categories
+    categories = category_crud.get_all_categories(db=db)
+                 │             │                     └ <sqlalchemy.orm.session.Session object at 0x00000192BA41BE90>
+                 │             └ <function get_all_categories at 0x00000192BA38A840>
+                 └ <module 'app.crud.category_crud' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\crud\\cate...
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\crud\category_crud.py", line 59, in get_all_categories
+    raise HTTPException(status_code=500, detail="An unexpected error occurred")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 500: An unexpected error occurred
+2024-11-07 22:55:59.374 | ERROR    | app.crud.category_crud:get_all_categories:58 - Exception: 'Category' object is not subscriptable
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000002A0E8634860>
+    └ <WorkerThread(AnyIO worker thread, started 29096)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000002A0EDB70C20>
+    └ <WorkerThread(AnyIO worker thread, started 29096)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function list_categories at 0x000002A0EDAC34C0>, db=<sqlalchemy.orm.session.Session object at 0x000002A0ED...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000002A0EDB03F40>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 79, in list_categories
+    return category_service.get_categories(db=db)
+           │                │                 └ <sqlalchemy.orm.session.Session object at 0x000002A0EDB30590>
+           │                └ <function get_categories at 0x000002A0ECABA660>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 46, in get_categories
+    categories = category_crud.get_all_categories(db=db)
+                 │             │                     └ <sqlalchemy.orm.session.Session object at 0x000002A0EDB30590>
+                 │             └ <function get_all_categories at 0x000002A0ECABA840>
+                 └ <module 'app.crud.category_crud' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\crud\\cate...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\crud\category_crud.py", line 52, in get_all_categories
+    categories_list = [category[0] for category in categories]
+                                                   └ [<app.models.database.Category object at 0x000002A0EDFA51D0>, <app.models.database.Category object at 0x000002A0EDFA5250>, <a...
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\crud\category_crud.py", line 52, in <listcomp>
+    categories_list = [category[0] for category in categories]
+                       │               └ <app.models.database.Category object at 0x000002A0EDFA51D0>
+                       └ <app.models.database.Category object at 0x000002A0EDFA51D0>
+
+TypeError: 'Category' object is not subscriptable
+2024-11-07 22:55:59.382 | ERROR    | app.services.category_service:get_categories:53 - 
+CATEGORIES HAVE NOT BEEN PARSED, EXCEPTION OCCURED: 500: An unexpected error occurred
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\crud\category_crud.py", line 52, in get_all_categories
+    categories_list = [category[0] for category in categories]
+                                                   └ [<app.models.database.Category object at 0x000002A0EDFA51D0>, <app.models.database.Category object at 0x000002A0EDFA5250>, <a...
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\crud\category_crud.py", line 52, in <listcomp>
+    categories_list = [category[0] for category in categories]
+                       │               └ <app.models.database.Category object at 0x000002A0EDFA51D0>
+                       └ <app.models.database.Category object at 0x000002A0EDFA51D0>
+
+TypeError: 'Category' object is not subscriptable
+
+
+During handling of the above exception, another exception occurred:
+
+
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000002A0E8634860>
+    └ <WorkerThread(AnyIO worker thread, started 29096)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000002A0EDB70C20>
+    └ <WorkerThread(AnyIO worker thread, started 29096)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function list_categories at 0x000002A0EDAC34C0>, db=<sqlalchemy.orm.session.Session object at 0x000002A0ED...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000002A0EDB03F40>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 79, in list_categories
+    return category_service.get_categories(db=db)
+           │                │                 └ <sqlalchemy.orm.session.Session object at 0x000002A0EDB30590>
+           │                └ <function get_categories at 0x000002A0ECABA660>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 46, in get_categories
+    categories = category_crud.get_all_categories(db=db)
+                 │             │                     └ <sqlalchemy.orm.session.Session object at 0x000002A0EDB30590>
+                 │             └ <function get_all_categories at 0x000002A0ECABA840>
+                 └ <module 'app.crud.category_crud' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\crud\\cate...
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\crud\category_crud.py", line 59, in get_all_categories
+    raise HTTPException(status_code=500, detail="An unexpected error occurred")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 500: An unexpected error occurred
+2024-11-07 23:27:11.942 | ERROR    | app.services.user_service:create_user:45 - 
+USER ACCOUNT HAS NOT BEEN CREATED, EXCEPTION OCCURED: 409: Username or email already in use
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000001ED08AD4860>
+    └ <WorkerThread(AnyIO worker thread, started 15728)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000001ED0E2E0E00>
+    └ <WorkerThread(AnyIO worker thread, started 15728)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_user at 0x000001ED0E232480>, db=<sqlalchemy.orm.session.Session object at 0x000001ED0B1C77...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000001ED0E25A3C0>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 37, in create_user
+    return user_service.create_user(db=db, request=request, user=user)
+           │            │              │           │             └ UserCreate(username='First56', email='firstUser56@gmail.com', password='Password1234$', role=None)
+           │            │              │           └ <starlette.requests.Request object at 0x000001ED0E3D84D0>
+           │            │              └ <sqlalchemy.orm.session.Session object at 0x000001ED0B1C7790>
+           │            └ <function create_user at 0x000001ED0CDA4860>
+           └ <module 'app.services.user_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\service...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\user_service.py", line 29, in create_user
+    raise HTTPException(status_code=409, detail="Username or email already in use")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 409: Username or email already in use
+2024-11-07 23:27:13.242 | ERROR    | app.services.user_service:create_user:45 - 
+USER ACCOUNT HAS NOT BEEN CREATED, EXCEPTION OCCURED: 409: Username or email already in use
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000001ED08AD4860>
+    └ <WorkerThread(AnyIO worker thread, started 15728)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000001ED0E2E0E00>
+    └ <WorkerThread(AnyIO worker thread, started 15728)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_user at 0x000001ED0E232480>, db=<sqlalchemy.orm.session.Session object at 0x000001ED0E3C4F...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000001ED0E3C62C0>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 37, in create_user
+    return user_service.create_user(db=db, request=request, user=user)
+           │            │              │           │             └ UserCreate(username='First56', email='firstUser56@gmail.com', password='Password1234$', role=None)
+           │            │              │           └ <starlette.requests.Request object at 0x000001ED0E3F8AD0>
+           │            │              └ <sqlalchemy.orm.session.Session object at 0x000001ED0E3C4F90>
+           │            └ <function create_user at 0x000001ED0CDA4860>
+           └ <module 'app.services.user_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\service...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\user_service.py", line 29, in create_user
+    raise HTTPException(status_code=409, detail="Username or email already in use")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 409: Username or email already in use
+2024-11-07 23:27:47.224 | ERROR    | app.services.user_service:update_user:111 - 
+USER ACCOUNT HAS NOT BEEN CHANGED, EXCEPTION OCCURED: 404: User not found
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000001ED08AD4860>
+    └ <WorkerThread(AnyIO worker thread, started 15728)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000001ED0E2E0E00>
+    └ <WorkerThread(AnyIO worker thread, started 15728)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function update_user_credentials at 0x000001ED0E232C00>, db=<sqlalchemy.orm.session.Session object at 0x00...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000001ED0E24FF40>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 53, in update_user_credentials
+    return user_service.update_user(db=db, username=username, data=data)
+           │            │              │            │              └ UserUpdatePassword(email='firstUser56@gmail.comcs', password='Password1234$$', new_email='firstUser56@gmail.com', new_passwor...
+           │            │              │            └ 'First56'
+           │            │              └ <sqlalchemy.orm.session.Session object at 0x000001ED0E242E50>
+           │            └ <function update_user at 0x000001ED0CEEA340>
+           └ <module 'app.services.user_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\service...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\user_service.py", line 100, in update_user
+    raise HTTPException(status_code=404, detail="User not found")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 404: User not found
+2024-11-07 23:28:12.392 | ERROR    | app.services.category_service:create_category:37 - 
+CATEGORY HAS NOT BEEN CREATED, EXCEPTION OCCURED: 409: Category already exists
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000001ED08AD4860>
+    └ <WorkerThread(AnyIO worker thread, started 15728)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000001ED0E2E0E00>
+    └ <WorkerThread(AnyIO worker thread, started 15728)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_category at 0x000001ED0E233100>, db=<sqlalchemy.orm.session.Session object at 0x000001ED0E...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000001ED0E27DF80>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 71, in create_category
+    return category_service.create_category(db=db, category=category)
+           │                │                  │            └ CategoryCreate(name='Kategorija19', description='Kategorijos aprasymas.')
+           │                │                  └ <sqlalchemy.orm.session.Session object at 0x000001ED0E24FED0>
+           │                └ <function create_category at 0x000001ED0CEEA5C0>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 23, in create_category
+    raise HTTPException(status_code=409, detail="Category already exists")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 409: Category already exists
+2024-11-07 23:28:52.864 | ERROR    | app.services.category_service:create_category:37 - 
+CATEGORY HAS NOT BEEN CREATED, EXCEPTION OCCURED: 409: Category already exists
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000001ED08AD4860>
+    └ <WorkerThread(AnyIO worker thread, started 15728)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000001ED0E2E0E00>
+    └ <WorkerThread(AnyIO worker thread, started 15728)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_category at 0x000001ED0E233100>, db=<sqlalchemy.orm.session.Session object at 0x000001ED0E...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000001ED0E46EBC0>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 71, in create_category
+    return category_service.create_category(db=db, category=category)
+           │                │                  │            └ CategoryCreate(name='Kategorija20', description='Kategorijos aprasymas.')
+           │                │                  └ <sqlalchemy.orm.session.Session object at 0x000001ED0E5B3290>
+           │                └ <function create_category at 0x000001ED0CEEA5C0>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 23, in create_category
+    raise HTTPException(status_code=409, detail="Category already exists")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 409: Category already exists
+2024-11-07 23:29:18.354 | ERROR    | app.services.user_service:remove_user:139 - 
+USER ACCOUNT HAS NOT BEEN REMOVED, EXCEPTION OCCURED: 404: User not found
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000001ED08AD4860>
+    └ <WorkerThread(AnyIO worker thread, started 15728)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000001ED0E2E0E00>
+    └ <WorkerThread(AnyIO worker thread, started 15728)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function delete_user at 0x000001ED0E232E80>, db=<sqlalchemy.orm.session.Session object at 0x000001ED0E3DF1...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000001ED0E4588C0>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 61, in delete_user
+    return user_service.remove_user(db=db, username=username, data=data)
+           │            │              │            │              └ UserDelete(email='firstUser56@gmail.com', password='Password1234$')
+           │            │              │            └ 'First56'
+           │            │              └ <sqlalchemy.orm.session.Session object at 0x000001ED0E3DF150>
+           │            └ <function remove_user at 0x000001ED0CEEA3E0>
+           └ <module 'app.services.user_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\service...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\user_service.py", line 131, in remove_user
+    raise HTTPException(status_code=404, detail="User not found")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 404: User not found
+2024-11-07 23:29:27.436 | ERROR    | app.services.category_service:create_category:37 - 
+CATEGORY HAS NOT BEEN CREATED, EXCEPTION OCCURED: 409: Category already exists
+Traceback (most recent call last):
+
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1002, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000001ED08AD4860>
+    └ <WorkerThread(AnyIO worker thread, started 15728)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+    │    └ <function WorkerThread.run at 0x000001ED0E2E0E00>
+    └ <WorkerThread(AnyIO worker thread, started 15728)>
+  File "C:\Users\tomas\AppData\Local\Programs\Python\Python311\Lib\site-packages\anyio\_backends\_asyncio.py", line 914, in run
+    result = context.run(func, *args)
+             │       │   │      └ ()
+             │       │   └ functools.partial(<function create_category at 0x000001ED0E233100>, db=<sqlalchemy.orm.session.Session object at 0x000001ED0E...
+             │       └ <method 'run' of '_contextvars.Context' objects>
+             └ <_contextvars.Context object at 0x000001ED0E5CAFC0>
+
+  File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\main.py", line 71, in create_category
+    return category_service.create_category(db=db, category=category)
+           │                │                  │            └ CategoryCreate(name='Kategorija20', description='Kategorijos aprasymas.')
+           │                │                  └ <sqlalchemy.orm.session.Session object at 0x000001ED0E5C9590>
+           │                └ <function create_category at 0x000001ED0CEEA5C0>
+           └ <module 'app.services.category_service' from 'C:\\Users\\tomas\\Documents\\Saityno Progr. Projektavimas\\StreamaBit\\app\\ser...
+
+> File "C:\Users\tomas\Documents\Saityno Progr. Projektavimas\StreamaBit\app\services\category_service.py", line 23, in create_category
+    raise HTTPException(status_code=409, detail="Category already exists")
+          └ <class 'fastapi.exceptions.HTTPException'>
+
+fastapi.exceptions.HTTPException: 409: Category already exists

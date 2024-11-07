@@ -12,7 +12,8 @@ MAX_EMAIL_LENGTH = 100
 MIN_PASSWORD_LENGTH = 8
 MAX_PASSWORD_LENGTH = 255
 
-#Validate username to make sure it has no special symbols, SQL queries.
+
+#Validate username to make sure it has no special symbols, SQL queries and length of username is within specified bounds
 def validate_username(username: str):
     logger.info(f"Validating username format")
 
@@ -30,11 +31,11 @@ def validate_username(username: str):
     
         logger.info("Username validation passed")
     else:
-        logger.warning("None username provided")
+        logger.warning("No username provided")
         raise shared_validator.ValidationException("Missing username")
     
 
-#Validate username to make sure email format is correct and email is clear of possible SQL queries
+#Validate username to make sure email format is correct, email length is within specified bounds and email is clear of possible SQL queries
 def validate_email(email: str):
     logger.info("Validating email format")
     
@@ -89,7 +90,7 @@ def validate_password(password: str):
     logger.info("Password validation passed") 
 
 
-#Validate if user role is correct - if it is defined in database enumerator
+#Validate if user role to make sure if it has SQL queries, if specified role is defined in database enumerator
 def validate_role(role: str):
     logger.info("Validating user role") 
 
@@ -105,7 +106,7 @@ def validate_role(role: str):
             raise shared_validator.ValidationException("Incorrect user role") 
         
     else:
-        logger.warning("User role is None") 
+        logger.warning("No user role provided") 
         raise shared_validator.ValidationException("Missing user role") 
     
     logger.info("User role validation passed")
