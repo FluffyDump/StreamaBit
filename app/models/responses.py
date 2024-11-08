@@ -9,6 +9,9 @@ class CategoryBase(BaseModel):
     name: str
     description: Optional[str] = Field(None)
 
+class SubCategory(BaseModel):
+    name: str
+
 class FileBase(BaseModel):
     title: str
     file_path: str
@@ -22,8 +25,16 @@ class User(UserBase):
         orm_mode = True
         extra = Extra.forbid
 
-class Category(CategoryBase):
+class NewCategory(CategoryBase):
     created_at: datetime
+
+    class Config:
+        orm_mode = True
+        extra = Extra.forbid
+
+class SubCategories(BaseModel):
+    category_name: str
+    sub_categories: Optional[List[SubCategory]] = Field(None)
 
     class Config:
         orm_mode = True

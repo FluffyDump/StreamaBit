@@ -68,10 +68,38 @@ def get_all_categories(db: Session):
         #    for category in categories
         #]      #For icons
 
+        logger.info("Categories parsed")
+
         return categories_list
     except IntegrityError as ex:
         logger.exception(f"IntegrityError: {ex}")
         raise HTTPException(status_code=400, detail="An unexpected error occurred")
     except Exception as ex:
         logger.exception(f"Exception: {ex}")
+        raise HTTPException(status_code=500, detail="An unexpected error occurred")
+    
+
+#Update category name and/or description
+def update_category(db: Session, category_name: str, new_name: str, new_description: str):
+    try:
+        logger.info("Attempting to update category data")
+        category = db.query(db_models.Category).filter(db_models.Category.name == category_name).first()
+    
+        if not category:
+            logger.warning("Category cannot be updated - category with provided name not found")
+            raise HTTPException(status_code=404, detail="Category not found")
+
+        if new_name is not None:
+            category.name = new_name
+        if new_description is not None:
+            category.description = new_description
+
+        logger.info("Category prepared to get fields updated, waiting for transaction commit")
+
+        return category
+    except IntegrityError as ex:
+        logger.exception(f"IntegrityError with category name={category.name}, new_name={new_name}, new_description={new_description}: {ex}")
+        raise HTTPException(status_code=400, detail="An unexpected error occurred")
+    except Exception as ex:
+        logger.exception(f"Exception with category name={category.name}, new_name={new_name}, new_description={new_description}: {ex}")
         raise HTTPException(status_code=500, detail="An unexpected error occurred")

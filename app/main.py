@@ -63,7 +63,7 @@ def delete_user(username: str, db: Session = Depends(get_db), data: requestModel
 
 
 
-@app.post("/admin/categories/", response_model=responseModel.Category, status_code=201,
+@app.post("/admin/categories/", response_model=responseModel.NewCategory, status_code=201,
         summary="Create a new category", 
         description="This endpoint allows an admin to create a new category by providing a name and an optional description. Input is validated for malicious content, and a 409 error is returned if the category already exists.",
         tags=["Category Management"])
@@ -79,39 +79,33 @@ def list_categories(db: Session = Depends(get_db)):
     return category_service.get_categories(db=db)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@app.get("/categories/{category_name}", response_model=responseModel.Category,
-        summary="Retrieve category details", 
-        description="Fetch details of a category by its name. If the category is not found, a 404 error is returned.",
-        tags=["Category Management"]) #Done R
+@app.get("/categories/{category_name}", response_model=responseModel.SubCategories, status_code=200,
+        summary="Retrieve all specific category sub-categories", 
+        description="Fetch sub-categories of a category by its name. If the category is not found, a 404 error is returned.",
+        tags=["Category Management"])
 def read_category(category_name: str, db: Session = Depends(get_db)):
-    validators.check_malicious_input(category_name)
-
-    db_category = crud.get_category(db=db, category_name=category_name)
-
-    
-    ###Return all subcategories of specific category###
+    return category_service.get_category_with_subcategories(db=db, category_name=category_name)
 
 
-    if db_category is None:
-        raise HTTPException(status_code=404, detail="Category not found")
-    
-    return db_category
+@app.patch("/admin/categories/{category_name}", response_model=responseModel.NewCategory,
+        summary="Update category name or description", 
+        description="Update the name or description of an existing category. The existing name of the category and the new name or new description are required. Input is validated, and the updated category details are returned.",
+        tags=["Category Management"])
+def update_category(category_name: str, category_update: requestModel.CategoryUpdate, db: Session = Depends(get_db)):
+    return category_service.update_category(db=db, category_name=category_name, data=category_update)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @app.get("/admin/users", status_code=200,
@@ -130,20 +124,6 @@ def list_users(db: Session = Depends(get_db)): #current_user: schemas.User = Dep
     return users
 
 
-@app.patch("/admin/categories/{category_name}", response_model=responseModel.Category,
-        summary="Update category name or description", 
-        description="Update the name or description of an existing category. The existing name of the category and the new name or new description are required. Input is validated, and the updated category details are returned.",
-        tags=["Category Management"]) #Done U
-def update_category(category_name: str, category_update: requestModel.CategoryUpdate, db: Session = Depends(get_db)):
-    validators.check_malicious_input(category_name, category_update.new_name, category_update.new_description)
-
-    if category_update.new_name is None and category_update.new_description is None:
-        raise HTTPException(status_code=400, detail="No new_name or new_description provided")
-    
-
-    ###Add check based on if user has jwt and if jwt role is admin, then patch category name and description###
-
-    return crud.update_category(db=db, category_name=category_name, new_name=category_update.new_name, new_description=category_update.new_description)
 
 @app.delete("/admin/categories/{category_name}", status_code=204,
         summary="Delete a category", 
